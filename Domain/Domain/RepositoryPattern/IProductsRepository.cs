@@ -9,10 +9,10 @@ namespace Domain.RepositoryPattern
 {
     public interface IProductsRepository
     {
-        public Task CreateProductAsync(Product product);
-        public Task DeleteProductAsync(Product product);
-        public Task UpdateProductAsync(Product product);
-        public Task<Product> FindProductAsync(Guid productId);
+        public Task AddProduct(Product product);
+        public Task DeleteProduct(Product product);
+        public Task UpdateProduct(Product product);
+        public Task<Product> FindProduct(Guid productId); 
 
     }
 }

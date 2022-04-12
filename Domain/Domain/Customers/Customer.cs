@@ -15,7 +15,6 @@ namespace Domain.Customers
             LastName = lastName;
             Username = username;
             Password = password;
-            this.ShoppingCart = new ShoppingCart();
 
             if (string.IsNullOrEmpty(firstName))
                 throw new ArgumentNullException("Null_firstName");
@@ -31,12 +30,16 @@ namespace Domain.Customers
 
         }
 
-        public Guid Id { get; }
-        public string FirstName { get; }
-        public string LastName { get; }
-        public string Username { get; }
-        public string Password { get; }
-        public ShoppingCart ShoppingCart { get; }
+        public Customer()
+        {
+
+        }
+
+        public Guid Id { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string Username { get; set; }
+        public string Password { get; set; }
 
 
     }
