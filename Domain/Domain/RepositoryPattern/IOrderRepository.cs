@@ -11,8 +11,10 @@ namespace Domain.RepositoryPattern
     {
         public void AddOrder(Order order);
         public bool DeleteOrder(Guid orderId);
-        public bool UpdateOrder(Order Order);
-        public Order GetOrder(Guid orderId);
-        public IEnumerable<Order> GetAllOrders();
+        public Order UpdateOrder(Order Order);
+        public Task<Order> GetOrder(Guid orderId);
+        public Task<IEnumerable<Order>> GetAllOrders();
+        public Task<Guid> AddProductToOrder(Order order, Product product);
+        public Task<int> SaveChangesAsync();
     }
 }

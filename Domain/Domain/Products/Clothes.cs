@@ -9,8 +9,8 @@ namespace Domain.Products
 {
     public class Clothes : Product
     {
-
         
+
         public Clothes(ClothesSize size, ClothesGender gender, string name, string description, string brand, float price) : base(name, Category.Clothes, description, brand, price)
         {
             
@@ -18,10 +18,11 @@ namespace Domain.Products
             Gender = gender;
 
         }
+
         public Clothes() : base()
         {
-
         }
+
         public ClothesSize Size { get; set; }
         public ClothesGender Gender { get; set; }
 

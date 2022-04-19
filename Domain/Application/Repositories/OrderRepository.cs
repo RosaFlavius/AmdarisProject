@@ -1,5 +1,7 @@
 ﻿using Domain.Products;
 using Domain.RepositoryPattern;
+using Infrastructure.Data;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,57 +12,70 @@ namespace Application.Repositories
 {
     public class OrderRepository : IOrderRepository
     {
-        private readonly List<Order> _orders;
+        private readonly DataDbContext _dbContext;
 
         public OrderRepository()
         {
-            _orders = new();
+            _dbContext = new DataDbContext();
         }
 
         public void AddOrder(Order order)
         {
-            _orders.Add(order);
+            _dbContext.Add(order);
 
         }
 
         public bool DeleteOrder(Guid id)
         {
-            var order = _orders.FirstOrDefault(item => item.Id == id);
+            var order = _dbContext.Orders.FirstOrDefault(item => item.Id == id);
             if (order != null)
             {
-                _orders.Remove(order);
+                _dbContext.Remove(order);
                 return true;
             }
             return false;
         }
 
-        public bool UpdateOrder(Order item)
+        public Order UpdateOrder(Order item)
         {
-            var order = _orders.FirstOrDefault(i => i.Id == item.Id);
+            var order = _dbContext.Orders.FirstOrDefault(i => i.Id == item.Id);
+            order = item;
+            return order;
 
-            if (order != null)
-            {
-                
-                return true;
-            }
-            return false;
         }
 
-        public Order GetOrder(Guid id)
+        public async Task<Order> GetOrder(Guid id)
         {
-            var order = _orders.FirstOrDefault(item => item.Id == id);
+            var order = await _dbContext.Orders.FirstOrDefaultAsync(item => item.Id == id);
 
             if (order != null)
             {
                 return order;
             }
-            return null;
+            throw new ApplicationException($"Order with id: {id} does not exist");
 
         }
 
-        public IEnumerable<Order> GetAllOrders()
+        public async Task<IEnumerable<Order>> GetAllOrders()
         {
-            return _orders;
+            return _dbContext.Orders;
+        }
+
+        public async Task<int> SaveChangesAsync()
+        {
+
+            return await _dbContext.SaveChangesAsync();
+        }
+
+        public async Task<Guid> AddProductToOrder(Order order, Product product)
+        {
+            var item = new OrderProducts { Order = order, Product = product };
+
+            _dbContext.OrderProducts.Add(item);
+            _dbContext.SaveChanges();
+
+            return item.Id;
+
         }
     }
 }

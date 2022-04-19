@@ -16,7 +16,7 @@ namespace Domain.Products
             
         }
 
-        public Equipment()
+        public Equipment() : base()
         {
 
         }

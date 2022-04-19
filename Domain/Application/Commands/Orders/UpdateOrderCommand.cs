@@ -8,11 +8,10 @@ using System.Threading.Tasks;
 
 namespace Application.Commands.Orders
 {
-    public class AddOrderCommand : IRequest<Order>
+    public class UpdateOrderCommand : IRequest<Order>
     {
-        public AddOrderCommand()
-        {
-        }
+        public Guid Id { get; set; }
+
         public double TotalPrice { get; set; }
     }
 }

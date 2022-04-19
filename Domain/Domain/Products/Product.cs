@@ -11,7 +11,6 @@ namespace Domain.Products
     {
         public Product(string name, Category category ,string description, string brand, float price)
         {
-            Id = Guid.NewGuid();
             Name = name;
             Description = description;
             Brand = brand;
@@ -33,9 +32,9 @@ namespace Domain.Products
 
         public Product()
         {
-            Id = Guid.NewGuid();
+
         }
-        public Guid Id { get; set; }
+        public Guid Id { get; set; } = Guid.NewGuid();
 
         public string Name { get; set; }
 
@@ -47,7 +46,7 @@ namespace Domain.Products
 
         public Category Categories { get; set; }
 
-        public ICollection<Order> Orders { get; init; } = null;
+        public ICollection<OrderProducts> Orders { get; set; } = new List<OrderProducts>();
 
         public enum Category
         {

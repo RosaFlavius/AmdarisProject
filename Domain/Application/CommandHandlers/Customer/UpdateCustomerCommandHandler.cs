@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Application.CommandHandlers
 {
-    public class UpdateCustomerCommandHandler : IRequestHandler<UpdateCustomerCommand, bool>
+    public class UpdateCustomerCommandHandler : IRequestHandler<UpdateCustomerCommand, Customer>
     {
         private readonly ICustomerRepository _customerRepo;
 
@@ -20,18 +20,17 @@ namespace Application.CommandHandlers
             _customerRepo = customerRepo;
         }
 
-        public async Task<bool> Handle(UpdateCustomerCommand request, CancellationToken cancellationToken)
+        public async Task<Customer> Handle(UpdateCustomerCommand request, CancellationToken cancellationToken)
         {
-            var customer = new Customer
-            {
-                FirstName = request.FirstName,
-                LastName = request.LastName,
-                Username = request.Username,
-                Password = request.Password,
-                Id = request.Id
-            };
+            var customer = await _customerRepo.GetCustomer(request.Id);
+            customer.Id = request.Id;
+            customer.FirstName = request.FirstName;
+            customer.LastName = request.LastName;
+            customer.Username = request.Username;
+            customer.Password = request.Password;
 
-            bool result = _customerRepo.UpdateCustomer(customer);
+            Customer result = _customerRepo.UpdateCustomer(customer);
+            await _customerRepo.SaveChangesAsync();
             return await Task.FromResult(result);
         }
     }

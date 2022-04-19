@@ -11,9 +11,10 @@ namespace Domain.RepositoryPattern
     {
         public void AddCustomer(Customer customer);
         public bool DeleteCustomer(Guid customerId);
-        public bool UpdateCustomer(Customer customer);
-        public Customer GetCustomer(Guid customerId);
-        public IEnumerable<Customer> GetAllCustomers();
+        public Customer UpdateCustomer(Customer customer);
+        public Task<Customer> GetCustomer(Guid customerId);
+        public Task<IEnumerable<Customer>> GetAllCustomers();
+        public Task<int> SaveChangesAsync();
 
     }
 }

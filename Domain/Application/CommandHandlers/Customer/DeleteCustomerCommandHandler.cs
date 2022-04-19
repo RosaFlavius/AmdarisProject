@@ -22,12 +22,9 @@ namespace Application.CommandHandlers
 
         public async Task<bool> Handle(DeleteCustomerCommand request, CancellationToken cancellationToken)
         {
-            var customer = new Customer
-            {
-                Id = Guid.NewGuid(),
-            };
-
+            var customer = await _customerRepo.GetCustomer(request.Id);
             bool result = _customerRepo.DeleteCustomer(request.Id);
+            await _customerRepo.SaveChangesAsync(); 
             return await Task.FromResult(result);
         }
     }

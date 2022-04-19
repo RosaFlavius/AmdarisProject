@@ -29,7 +29,8 @@ namespace Application.CommandHandlers
                 Id = Guid.NewGuid(),
             };
 
-             _customerRepo.AddCustomer(customer);
+            _customerRepo.AddCustomer(customer);
+            await _customerRepo.SaveChangesAsync();
             return customer;
         }
     }

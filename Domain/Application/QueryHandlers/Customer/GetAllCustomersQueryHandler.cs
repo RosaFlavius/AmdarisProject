@@ -16,15 +16,15 @@ namespace Application.QueryHandlers
 
         private readonly ICustomerRepository _customerRepo;
 
-        public GetAllCustomersQueryHandler(ICustomerRepository customerRepository)
+        public GetAllCustomersQueryHandler(ICustomerRepository customerRepo)
         {
-            _customerRepo = customerRepository;
+            _customerRepo = customerRepo;
         }
 
         public async Task<IEnumerable<Customer>> Handle(GetAllCustomersQuery request, CancellationToken cancellationToken)
         {
 
-            var result = _customerRepo.GetAllCustomers();
+            var result = await _customerRepo.GetAllCustomers();
             return await Task.FromResult(result);
         }
     }

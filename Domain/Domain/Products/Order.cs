@@ -12,14 +12,20 @@ namespace Domain.Products
         public Order()
         {
             Id = Guid.NewGuid();
-            Products = new List<Product>();
+            Products = new List<OrderProducts>();
         }
+
+
 
 
         public Guid Id { get; set; }
         //public List<Product> Products { get; set; }
 
-        public ICollection<Product> Products { get; init; } = null;
+        public ICollection<OrderProducts> Products { get; set; }
+
+        public double TotalPrice { get; set; }
+
+
 
      
     }

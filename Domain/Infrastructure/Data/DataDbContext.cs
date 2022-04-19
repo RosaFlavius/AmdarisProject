@@ -18,6 +18,7 @@ namespace Infrastructure.Data
         public DbSet<Clothes> Clothes { get; set; }
         public DbSet<Equipment> Equipments { get; set; }
         public DbSet<Supplement> Supplements { get; set; }
+        public DbSet<OrderProducts> OrderProducts { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer("Server=DESKTOP-465R8PC\\SQLEXPRESS;Database=DZyzzGainsDatabase;Trusted_Connection=true");
@@ -25,13 +26,13 @@ namespace Infrastructure.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Order>()
+            /*modelBuilder.Entity<Order>()
                 .HasMany(order => order.Products)
                 .WithMany(product => product.Orders)
                 .UsingEntity<OrderProducts>(
                 op=>op.HasOne(x=>x.Product).WithMany().HasForeignKey(x=>x.ProductId),
                 op=>op.HasOne(x=>x.Order).WithMany().HasForeignKey(x=>x.OrderId)
-                );
+                );*/
 
         }
     }

@@ -14,10 +14,6 @@ namespace Domain.Products
             TypeOfSupplement = typeOfSupplement;
         }
 
-        public Supplement()
-        {
-
-        }
         public SupplementType TypeOfSupplement { get; set; }
 
         public enum SupplementType

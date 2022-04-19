@@ -28,7 +28,7 @@ namespace Application.QueryHandlers
                 Id = Guid.NewGuid(),
             };
 
-            var result = _customerRepo.GetCustomer(request.Id);
+            var result = await _customerRepo.GetCustomer(request.Id);
             return await Task.FromResult(result);
         }
     }
