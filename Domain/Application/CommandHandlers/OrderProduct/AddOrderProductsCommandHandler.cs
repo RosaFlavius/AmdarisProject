@@ -1,11 +1,6 @@
-﻿using Application.Commands.OrderProducts;
+﻿using Application.Commands.OrderProduct;
 using Domain.RepositoryPattern;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.CommandHandlers.OrderProducts
 {
@@ -20,9 +15,11 @@ namespace Application.CommandHandlers.OrderProducts
 
         public async Task<Guid> Handle(AddOrderProductsCommand request, CancellationToken cancellationToken)
         {
-            var order =  await _orderRepo.AddProductToOrder(request.Order, request.Product);
+             _orderRepo.AddProductToOrder(request.Order, request.Product, request.ProductId, request.OrderId);
 
-            return request.Product.Id;
+            await _orderRepo.SaveChangesAsync();
+
+            return Guid.NewGuid();
             
         }
     }

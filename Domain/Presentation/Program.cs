@@ -1,5 +1,5 @@
 ﻿using Application.Commands;
-using Application.Commands.OrderProducts;
+using Application.Commands.OrderProduct;
 using Application.Commands.Orders;
 using Application.Queries;
 using Application.Queries.Orders;
@@ -8,6 +8,7 @@ using Domain.Products;
 using Domain.RepositoryPattern;
 using Infrastructure.Data;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 
@@ -23,7 +24,7 @@ namespace MyApp // Note: actual namespace depends on the project name.
             //await TestCustomerRepository();
             //await TestOrderRepository();
             //await TestProductRepository();
-            //await TestOrderProduct();
+            await TestOrderProduct();
         }
 
         private static void ConfigureMediator()
@@ -33,6 +34,7 @@ namespace MyApp // Note: actual namespace depends on the project name.
                 .AddScoped<ICustomerRepository, CustomerRepository>()
                 .AddScoped<IOrderRepository, OrderRepository>()
                 .AddScoped<IProductRepository, ProductRepository>()
+                .AddDbContext<DataDbContext>(options => options.UseSqlServer("Server=DESKTOP-465R8PC\\SQLEXPRESS;Database=DZyzzGainsDatabase;Trusted_Connection=true"))
                 .BuildServiceProvider();
             _mediator = _diContainer.GetRequiredService<IMediator>();
         }
@@ -212,7 +214,7 @@ namespace MyApp // Note: actual namespace depends on the project name.
         }
         public static async Task TestOrderProduct()
         {
-            var product1 = await _mediator.Send(
+            var product = await _mediator.Send(
                new AddProductCommand
                {
                    Name = "product1",
@@ -224,7 +226,10 @@ namespace MyApp // Note: actual namespace depends on the project name.
 
             var order = await _mediator.Send(new AddOrderCommand { TotalPrice = 12000 });
 
-            await _mediator.Send(new AddOrderProductsCommand { Order = order, Product = product1 });
+            await _mediator.Send(new AddOrderProductsCommand { Order = order, Product = product, OrderId = order.Id, ProductId = product.Id });
+
+    
+
 
 
 

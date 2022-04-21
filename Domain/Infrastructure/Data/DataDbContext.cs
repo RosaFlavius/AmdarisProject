@@ -11,6 +11,10 @@ namespace Infrastructure.Data
 {
     public class DataDbContext : DbContext
     {
+        public DataDbContext(DbContextOptions options) : base(options)
+        {
+
+        }
 
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Product> Products { get; set; }
@@ -21,7 +25,7 @@ namespace Infrastructure.Data
         public DbSet<OrderProducts> OrderProducts { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Server=DESKTOP-465R8PC\\SQLEXPRESS;Database=DZyzzGainsDatabase;Trusted_Connection=true");
+            //optionsBuilder.UseSqlServer("Server=DESKTOP-465R8PC\\SQLEXPRESS;Database=DZyzzGainsDatabase;Trusted_Connection=true");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -33,6 +37,10 @@ namespace Infrastructure.Data
                 op=>op.HasOne(x=>x.Product).WithMany().HasForeignKey(x=>x.ProductId),
                 op=>op.HasOne(x=>x.Order).WithMany().HasForeignKey(x=>x.OrderId)
                 );*/
+
+
+            modelBuilder.Entity<OrderProducts>()
+                .HasKey(scp => new { scp.OrderId, scp.ProductId });
 
         }
     }

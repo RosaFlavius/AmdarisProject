@@ -14,9 +14,9 @@ namespace Application.Repositories
     {
         private readonly DataDbContext _dbContext;
 
-        public OrderRepository()
+        public OrderRepository(DataDbContext dbContext)
         {
-            _dbContext = new DataDbContext();
+            _dbContext = dbContext;
         }
 
         public void AddOrder(Order order)
@@ -67,15 +67,10 @@ namespace Application.Repositories
             return await _dbContext.SaveChangesAsync();
         }
 
-        public async Task<Guid> AddProductToOrder(Order order, Product product)
+        public void AddProductToOrder(Order order, Product product , Guid productId, Guid orderId)
         {
-            var item = new OrderProducts { Order = order, Product = product };
-
+            var item = new OrderProducts { Order = order, Product = product, ProductId = productId, OrderId=orderId };
             _dbContext.OrderProducts.Add(item);
-            _dbContext.SaveChanges();
-
-            return item.Id;
-
         }
     }
 }

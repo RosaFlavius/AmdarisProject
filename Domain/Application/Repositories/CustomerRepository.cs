@@ -14,9 +14,9 @@ namespace Application.Repositories
     {
         private readonly DataDbContext _dbContext;
 
-        public CustomerRepository()
+        public CustomerRepository(DataDbContext dbContext)
         {
-            _dbContext = new DataDbContext();
+            _dbContext = dbContext;
         }
 
         public void AddCustomer(Customer customer)
