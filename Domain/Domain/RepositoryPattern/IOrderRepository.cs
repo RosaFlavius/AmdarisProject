@@ -14,7 +14,7 @@ namespace Domain.RepositoryPattern
         public Order UpdateOrder(Order Order);
         public Task<Order> GetOrder(Guid orderId);
         public Task<IEnumerable<Order>> GetAllOrders();
-        public void AddProductToOrder(Order order, Product product, Guid productId, Guid orderId);
+        public void AddProductToOrder(Guid productId, Guid orderId);
         public Task<int> SaveChangesAsync();
     }
 }

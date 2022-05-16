@@ -9,7 +9,12 @@ namespace Domain.Products
 {
     public class Supplement : Product
     {
-        public Supplement(SupplementType typeOfSupplement, string name, string description, string brand, float price) : base(name, Category.Supplements, description, brand, price)
+        public Supplement() : base()
+        {
+            Category = ProductCategory.Supplements;
+        }
+
+        public Supplement(SupplementType typeOfSupplement, string name, string description, string brand, float price, string img) : base(name, ProductCategory.Supplements, description, brand, price, img)
         {
             TypeOfSupplement = typeOfSupplement;
         }

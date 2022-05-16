@@ -9,17 +9,13 @@ namespace Domain.Products
 {
     public class Equipment : Product
     {
-        public Equipment(EquipmentType typeOfEquipment, string name, string description, string brand, float price) : base(name, Category.Equipment, description, brand, price)
+        public Equipment(EquipmentType typeOfEquipment, string name, string description, string brand, float price, string img) : base(name, ProductCategory.Equipment, description, brand, price, img)
         {
 
             TypeOfEquipment = typeOfEquipment;
             
         }
 
-        public Equipment() : base()
-        {
-
-        }
 
         public EquipmentType TypeOfEquipment{ get; set; }
 

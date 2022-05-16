@@ -9,13 +9,14 @@ namespace Domain.Products
 
     public class Product
     {
-        public Product(string name, Category category ,string description, string brand, float price)
+        public Product(string name, ProductCategory category ,string description, string brand, float price, string img)
         {
             Name = name;
             Description = description;
             Brand = brand;
             Price = price;
-            Categories = category;
+            Category = category;
+            Img = img;
 
             if (string.IsNullOrEmpty(description))
                 throw new ArgumentNullException("Null_description");
@@ -43,12 +44,13 @@ namespace Domain.Products
         public string Description { get; set; }
 
         public float Price { get; set; }
+        public string Img { get; set; }
 
-        public Category Categories { get; set; }
+        public ProductCategory Category { get; set; }
 
         public ICollection<OrderProducts> Orders { get; set; } = new List<OrderProducts>();
 
-        public enum Category
+        public enum ProductCategory
         {
             Supplements = 1,
             Equipment = 2,

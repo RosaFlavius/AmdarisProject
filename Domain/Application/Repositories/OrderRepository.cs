@@ -67,9 +67,9 @@ namespace Application.Repositories
             return await _dbContext.SaveChangesAsync();
         }
 
-        public void AddProductToOrder(Order order, Product product , Guid productId, Guid orderId)
+        public void AddProductToOrder(Guid productId, Guid orderId)
         {
-            var item = new OrderProducts { Order = order, Product = product, ProductId = productId, OrderId=orderId };
+            var item = new OrderProducts { ProductId = productId, OrderId=orderId };
             _dbContext.OrderProducts.Add(item);
         }
     }

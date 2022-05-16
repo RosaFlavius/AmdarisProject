@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static Domain.Products.Product;
 
 namespace Application.Commands
 {
@@ -20,15 +21,11 @@ namespace Application.Commands
 
         public float Price { get; set; }
 
-        public Category Categories { get; set; }
+        public ProductCategory Category { get; set; }
 
-        public ICollection<Order> Orders { get; init; }
+        public string Img { get; set; }
 
-        public enum Category
-        {
-            Supplements = 1,
-            Equipment = 2,
-            Clothes = 3,
-        }
+        //public ICollection<Order> Orders { get; init; }
+
     }
 }

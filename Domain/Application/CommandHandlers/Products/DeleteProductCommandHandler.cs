@@ -1,6 +1,5 @@
 ﻿using Application.Commands;
 using Application.Repositories;
-using Domain.Customers;
 using Domain.Products;
 using Domain.RepositoryPattern;
 using MediatR;

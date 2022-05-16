@@ -1,5 +1,5 @@
-﻿using Domain.Customers;
-using Domain.Products;
+﻿using Domain.Products;
+using Domain.Users;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -16,17 +16,17 @@ namespace Infrastructure.Data
 
         }
 
-        public DbSet<Customer> Customers { get; set; }
+        public DbSet<User> Users { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<Clothes> Clothes { get; set; }
         public DbSet<Equipment> Equipments { get; set; }
         public DbSet<Supplement> Supplements { get; set; }
         public DbSet<OrderProducts> OrderProducts { get; set; }
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        /*protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             //optionsBuilder.UseSqlServer("Server=DESKTOP-465R8PC\\SQLEXPRESS;Database=DZyzzGainsDatabase;Trusted_Connection=true");
-        }
+        }*/
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

@@ -1,4 +1,5 @@
 ﻿using Application.Commands;
+using Application.Commands.clothes;
 using Application.Commands.OrderProduct;
 using Application.Commands.Orders;
 using Application.Queries;
@@ -11,6 +12,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using static Domain.Products.Product;
 
 namespace MyApp // Note: actual namespace depends on the project name.
 {
@@ -21,36 +23,36 @@ namespace MyApp // Note: actual namespace depends on the project name.
         private static async Task Main(string[] args)
         {
             ConfigureMediator();
-            //await TestCustomerRepository();
+            //await TestUserRepository();
             //await TestOrderRepository();
             //await TestProductRepository();
-            await TestOrderProduct();
+            //await TestOrderProduct();
         }
 
         private static void ConfigureMediator()
         {
             _diContainer = new ServiceCollection()
-                .AddMediatR(typeof(AddCustomerCommand))
-                .AddScoped<ICustomerRepository, CustomerRepository>()
+                .AddMediatR(typeof(AddUserCommand))
+                .AddScoped<IUserRepository, UserRepository>()
                 .AddScoped<IOrderRepository, OrderRepository>()
                 .AddScoped<IProductRepository, ProductRepository>()
-                .AddDbContext<DataDbContext>(options => options.UseSqlServer("Server=DESKTOP-465R8PC\\SQLEXPRESS;Database=DZyzzGainsDatabase;Trusted_Connection=true"))
+                //.AddDbContext<DataDbContext>(options => options.UseSqlServer("Server=DESKTOP-465R8PC\\SQLEXPRESS;Database=DZyzzGainsDatabase;Trusted_Connection=true"))
                 .BuildServiceProvider();
             _mediator = _diContainer.GetRequiredService<IMediator>();
         }
 
-        private static async Task TestCustomerRepository()
+        private static async Task TestUserRepository()
         {
 
-            var customer = await _mediator.Send(new AddCustomerCommand { FirstName = "Flavius", LastName = "Rosa", Username = "RosaFlavius2000", Password = "parola" });
-            Console.WriteLine(customer.FirstName);
+            var user = await _mediator.Send(new AddUserCommand { FirstName = "Flavius", LastName = "Rosa", Email = "RosaFlavius2000@amdaris.com", Password = "parola", Address = "BanuMaracine", Admin = false, City = "Arad", County = "Romania"});
+            Console.WriteLine(user.FirstName);
 
-            var customer1 = await _mediator.Send(new AddCustomerCommand { FirstName = "Gabriel", LastName = "Rosa", Username = "RosaFlavius2000", Password = "parola" });
-            Console.WriteLine(customer1.FirstName);
+            var user1 = await _mediator.Send(new AddUserCommand { FirstName = "Gabriel", LastName = "Rosa", Email = "RosaFlavius2000@amdaris.com", Password = "parola", Address = "BanuMaracine", Admin = false, City = "Arad", County = "Romania" });
+            Console.WriteLine(user1.FirstName);
             Console.WriteLine();
-            var getCustomers = await _mediator.Send(new GetAllCustomersQuery());
+            var getUsers = await _mediator.Send(new GetAllUsersQuery());
 
-            foreach (var i in getCustomers)
+            foreach (var i in getUsers)
             {
                 Console.WriteLine(i.FirstName);
             }
@@ -60,12 +62,12 @@ namespace MyApp // Note: actual namespace depends on the project name.
 
 
 
-            var delCustomer1 = await _mediator.Send(new DeleteCustomerCommand { Id = customer1.Id });
-            Console.WriteLine(delCustomer1);
+            var delUser1 = await _mediator.Send(new DeleteUserCommand { Id = user1.Id });
+            Console.WriteLine(delUser1);
 
-            var getCustomers1 = await _mediator.Send(new GetAllCustomersQuery());
+            var getUser1 = await _mediator.Send(new GetAllUsersQuery());
 
-            foreach (var i in getCustomers1)
+            foreach (var i in getUser1)
             {
                 Console.WriteLine(i.FirstName);
             }
@@ -73,13 +75,13 @@ namespace MyApp // Note: actual namespace depends on the project name.
             Console.WriteLine();
             Console.WriteLine();
 
-            var updateCustomer = await _mediator.Send(new UpdateCustomerCommand { Id = customer.Id, FirstName = "Norbert", LastName = "Forgacs", Username = "RosaFlavius2000", Password = "parola" });
-            Console.WriteLine(updateCustomer);
+            var updateUser = await _mediator.Send(new UpdateUserCommand { Id = user.Id, FirstName = "Norbert", LastName = "Forgacs", Email = "RosaFlavius2000@amdaris.com", Password = "parola", Address = "BanuMaracine", Admin = false, City = "Arad", County = "Romania" });
+            Console.WriteLine(updateUser);
             Console.WriteLine();
 
-            var getCustomer = await _mediator.Send(new GetCustomerQuery { Id = customer.Id });
+            var getUser = await _mediator.Send(new GetUserQuery { Id = user.Id });
 
-            Console.WriteLine(getCustomer.FirstName);
+            Console.WriteLine(getUser.FirstName);
 
 
 
@@ -88,8 +90,8 @@ namespace MyApp // Note: actual namespace depends on the project name.
         private static async Task TestOrderRepository()
         {
             var listOfProduct = new List<Product>();
-            listOfProduct.Add(new Product() { Name = "product1", Categories = Product.Category.Equipment, Description = "Brand new equipment", Price = 370, Brand = "MyProtein" });
-            listOfProduct.Add(new Product() { Name = "product2", Categories = Product.Category.Clothes, Description = "Brand new clothes", Price = 230, Brand = "MyProtein" });
+            listOfProduct.Add(new Product() { Name = "product1", Category = ProductCategory.Equipment, Description = "Brand new equipment", Price = 370, Brand = "MyProtein" });
+            listOfProduct.Add(new Product() { Name = "product2", Category = ProductCategory.Clothes, Description = "Brand new clothes", Price = 230, Brand = "MyProtein" });
             var order = await _mediator.Send(new AddOrderCommand { TotalPrice = 12000 });
             Console.WriteLine(order.Products);
 
@@ -134,81 +136,105 @@ namespace MyApp // Note: actual namespace depends on the project name.
 
         public static async Task TestProductRepository()
         {
-            var listOfOrder = new List<Order>();
 
-            var product1 = await _mediator.Send(
-                new AddProductCommand
-                {
-                    Name = "product1",
-                    Brand = "MyProtein",
-                    Price = 1400,
-                    Description = "brand new supplement",
-                    Categories = (AddProductCommand.Category)Product.Category.Supplements
-                });
+            var productClothes1 = await _mediator.Send(
+               new AddClothesCommand
+               {
+                   Name = "T-Shirt",
+                   Brand = "MyProtein",
+                   Price = 1400,
+                   Description = "cotton",
+                   Gender = Clothes.ClothesGender.Men,
+                   Size = Clothes.ClothesSize.M,
+               });
 
-            Console.WriteLine(product1.Name + " " + product1.Brand);
+            Console.WriteLine(productClothes1.Name + " " + productClothes1.Brand);
 
-            var product2 = await _mediator.Send(
+            var updateClothes1 = await _mediator.Send(
+               new UpdateClothesCommand
+               {
+                   Name = "Hoodie",
+                   Brand = "GymBeam",
+                   Price = 1400,
+                   Description = "cotton",
+                   Gender = Clothes.ClothesGender.Woman,
+                   Size = Clothes.ClothesSize.S,
+               });
+
+            Console.WriteLine(updateClothes1.Name + " " + updateClothes1.Brand);
+
+            /* var product1 = await _mediator.Send(
                  new AddProductCommand
                  {
-                     Name = "product2",
-                     Brand = "GymBeam",
+                     Name = "product1",
+                     Brand = "MyProtein",
+                     Price = 1400,
+                     Description = "brand new supplement",
+                     Categories =  Category.Supplements
+                 });
+
+             Console.WriteLine(product1.Name + " " + product1.Brand);*/
+
+            /* var product2 = await _mediator.Send(
+                  new AddProductCommand
+                  {
+                      Name = "product2",
+                      Brand = "GymBeam",
+                      Price = 120,
+                      Description = "brand new clothes",
+                      Categories = Category.Clothes
+                  });
+             Console.WriteLine(product2.Name + " " + product2.Brand);
+             Console.WriteLine();
+
+             var getProducts = await _mediator.Send(new GetAllProductsQuery());
+
+             foreach (var i in getProducts)
+             {
+                 Console.WriteLine(i.Name + " " + i.Brand);
+             }
+
+             Console.WriteLine();
+
+             var getProduct1 = await _mediator.Send(new GetProductQuery { Id = product1.Id });
+
+
+             Console.WriteLine(getProduct1.Name + " " + getProduct1.Brand);
+             Console.WriteLine();
+
+             var delProduct1 = await _mediator.Send(new DeleteProductCommand { Id = product1.Id });
+             Console.WriteLine(delProduct1);
+
+             var getProducts1 = await _mediator.Send(new GetAllProductsQuery());
+
+             foreach (var i in getProducts1)
+             {
+                 Console.WriteLine(i.Name + " " + i.Brand);
+             }
+
+
+             Console.WriteLine();
+             Console.WriteLine();
+
+             var updateProduct2 = await _mediator.Send(
+                 new UpdateProductCommand
+                 {
+                     Id = product2.Id,
+                     Name = "product2_V2",
+                     Brand = "MyProtein",
                      Price = 120,
                      Description = "brand new clothes",
-                     Categories = (AddProductCommand.Category)Product.Category.Clothes
+                     Categories = Category.Clothes
                  });
-            Console.WriteLine(product2.Name + " " + product2.Brand);
-            Console.WriteLine();
+             Console.WriteLine(updateProduct2);
+             Console.WriteLine();
 
-            var getProducts = await _mediator.Send(new GetAllProductsQuery());
+             var getProducts2 = await _mediator.Send(new GetAllProductsQuery());
 
-            foreach (var i in getProducts)
-            {
-                Console.WriteLine(i.Name + " " + i.Brand);
-            }
-
-            Console.WriteLine();
-
-            var getProduct1 = await _mediator.Send(new GetProductQuery { Id = product1.Id });
-
-
-            Console.WriteLine(getProduct1.Name + " " + getProduct1.Brand);
-            Console.WriteLine();
-
-            var delProduct1 = await _mediator.Send(new DeleteProductCommand { Id = product1.Id });
-            Console.WriteLine(delProduct1);
-
-            var getProducts1 = await _mediator.Send(new GetAllProductsQuery());
-
-            foreach (var i in getProducts1)
-            {
-                Console.WriteLine(i.Name + " " + i.Brand);
-            }
-
-
-            Console.WriteLine();
-            Console.WriteLine();
-
-            var updateProduct2 = await _mediator.Send(
-                new UpdateProductCommand
-                {
-                    Id = product2.Id,
-                    Name = "product2_V2",
-                    Brand = "MyProtein",
-                    Price = 120,
-                    Description = "brand new clothes",
-                    Orders = listOfOrder,
-                    Categories = (UpdateProductCommand.Category)Product.Category.Clothes
-                });
-            Console.WriteLine(updateProduct2);
-            Console.WriteLine();
-
-            var getProducts2 = await _mediator.Send(new GetAllProductsQuery());
-
-            foreach (var i in getProducts2)
-            {
-                Console.WriteLine(i.Name + " " + i.Brand);
-            }
+             foreach (var i in getProducts2)
+             {
+                 Console.WriteLine(i.Name + " " + i.Brand);
+             }*/
 
 
         }
@@ -217,16 +243,16 @@ namespace MyApp // Note: actual namespace depends on the project name.
             var product = await _mediator.Send(
                new AddProductCommand
                {
-                   Name = "product1",
-                   Brand = "MyProtein",
+                   Name = "PRODUCT",
+                   Brand = "TEST",
                    Price = 1400,
                    Description = "brand new supplement",
-                   Categories = (AddProductCommand.Category)Product.Category.Supplements
+                   Category = ProductCategory.Supplements
                });
 
-            var order = await _mediator.Send(new AddOrderCommand { TotalPrice = 12000 });
+            var order = await _mediator.Send(new AddOrderCommand { TotalPrice = 23000 });
 
-            await _mediator.Send(new AddOrderProductsCommand { Order = order, Product = product, OrderId = order.Id, ProductId = product.Id });
+            await _mediator.Send(new AddOrderProductsCommand {OrderId = order.Id, ProductId = product.Id });
 
     
 

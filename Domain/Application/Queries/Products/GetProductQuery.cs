@@ -1,5 +1,4 @@
-﻿using Domain.Customers;
-using Domain.Products;
+﻿using Domain.Products;
 using MediatR;
 using System;
 using System.Collections.Generic;

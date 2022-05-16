@@ -1,6 +1,5 @@
 ﻿using Application.Commands;
 using Application.Repositories;
-using Domain.Customers;
 using Domain.Products;
 using Domain.RepositoryPattern;
 using MediatR;
@@ -29,7 +28,7 @@ namespace Application.CommandHandlers
             product.Description = request.Description;
             product.Brand = request.Brand;
             product.Price = request.Price;
-            product.Categories = (Product.Category)request.Categories;
+            product.Category = request.Category;
             product.Id = request.Id;
 
             Product result = _productRepo.UpdateProduct(product);
