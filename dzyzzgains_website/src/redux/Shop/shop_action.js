@@ -8,7 +8,11 @@ import {
 } from "./shop_types";
 import axios from "axios";
 
+const BASE_URL = "https://localhost:7177/api/";
 
+export const publicRequest = axios.create({
+  baseURL: BASE_URL,
+});
 
 export const fetchProducts = () => {
   return async (dispatch, getState) => {
@@ -28,15 +32,17 @@ export const fetchProducts = () => {
   };
 };
 
-export const addToCart = (itemId) => {
+
+
+export const addToCart = (item) => {
   return (dispatch, getState) => {
-    dispatch({ type: ADD_TO_CART, itemId });
+    dispatch({ type: ADD_TO_CART, item});
   };
 };
 
-export const removeFromCart = (itemId) => {
+export const removeFromCart = (item) => {
   return (dispatch, getState) => {
-    dispatch({ type: REMOVE_FROM_CART, itemId });
+    dispatch({ type: REMOVE_FROM_CART, item });
   };
 };
 
@@ -46,8 +52,9 @@ export const removeAllFromCart = () => {
   };
 };
 
-export const adjustQty = (itemId, value) => {
+export const adjustQty = (item, value) => {
   return (dispatch, getState) => {
-    dispatch({ type: ADJUST_QTY, itemId, value });
+    dispatch({ type: ADJUST_QTY, item, value });
   };
 };
+

@@ -1,8 +1,10 @@
-import React from 'react'
 import styled from 'styled-components'
 import SearchIcon from '@mui/icons-material/Search';
 import Badge from '@mui/material/Badge';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
+import {Link} from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import { connect } from "react-redux";
 
 const Container = styled.div`
     height: 80px;
@@ -55,10 +57,37 @@ const MenuItem = styled.div`
     cursor: pinter;
     margin-left: 25px;
 `
+const Icon = styled.div`
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.5s ease;
+  &:hover {
+    background-color: #e9f5f5;
+    transform: scale(1.1);
+  }
+`;
 
 
+function Navbar({productsAddedToCart}) {
+    
+    const [totalItems, setTotalItems] = useState(0);
 
-function Navbar() {
+    useEffect(() => {
+        let items = 0;
+        productsAddedToCart.find((item) => {
+          items += item.qty;
+        });
+        setTotalItems(items);
+      }, [
+        productsAddedToCart,
+        totalItems,
+        setTotalItems,
+      ]);
   return (
     <div>
         <Container>
@@ -78,8 +107,12 @@ function Navbar() {
                     <MenuItem>REGISTER</MenuItem>
                     <MenuItem>SIGN IN</MenuItem>
                     <MenuItem>
-                        <Badge badgeContent={4} color="primary">
-                            <ShoppingCartOutlinedIcon/>
+                        <Badge badgeContent={totalItems} color="primary">
+                            <Icon>
+                                <Link to={`/cart`}>
+                                    <ShoppingCartOutlinedIcon />
+                                </Link>     
+                            </Icon>
                         </Badge>
                     </MenuItem>
                 </Right>
@@ -89,4 +122,10 @@ function Navbar() {
   )
 }
 
-export default Navbar
+const mapStateToProps = (state) => {
+    return {
+      productsAddedToCart: state.shopReducer.productsAddedToCart,
+    };
+  };
+
+  export default connect(mapStateToProps)(Navbar); 

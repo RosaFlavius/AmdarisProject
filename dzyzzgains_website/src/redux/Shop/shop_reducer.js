@@ -26,35 +26,29 @@ import {
         };
       }
       case ADD_TO_CART: {
-        const itemId = action.itemId;
-        console.log("Id " + itemId);
-        const product = state.products.find(
-          (x) => x.Id === action.itemId
-        );
+        const item = action.item;
+        console.log("Id " + action.item.id);
         const inCart = state.productsAddedToCart.find((item) =>
-          item.Id === action.itemId ? true : false
-        );
+          item.id === action.item.id) ? true : false;
+        
         return {
           ...state,
           productsAddedToCart: inCart
             ? state.productsAddedToCart.map((item) =>
-                item.Id === action.itemId
+                item.id === action.item.id
                   ? { ...item, qty: item.qty + 1 }
-                  : item
+                  : item  
               )
-            : [
-                ...state.productsAddedToCart,
-                { ...product, qty: 1, isAddedToCart: true },
-              ],
+            : [...state.productsAddedToCart, { ...item, qty: 1, isAddedToCart: true }],
         };
       }
       case REMOVE_FROM_CART: {
         console.log("Remove state");
-        const itemId = action.itemId;
+        const itemId = action.item.id;
         return {
           ...state,
           productsAddedToCart: state.productsAddedToCart.filter(
-            (x) => x.Id !== itemId
+            (x) => x.id !== itemId
           ),
         };
       }
@@ -68,12 +62,13 @@ import {
         return {
           ...state,
           productsAddedToCart: state.productsAddedToCart.map((item) =>
-            item.Id === action.itemId
+            item.id === action.item.id
               ? { ...item, qty: +action.value }
               : item
           ),
         };
       }
+
       case FETCHING_PRODUCTS:
         return {
           ...state,

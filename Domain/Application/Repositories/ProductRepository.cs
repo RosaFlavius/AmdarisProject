@@ -56,7 +56,7 @@ namespace Application.Repositories
 
         public async Task<IEnumerable<Product>> GetAllProducts()
         {
-            return _dbContext.Products;
+            return _dbContext.Products.ToList();
         }
 
         public async Task<int> SaveChangesAsync()
