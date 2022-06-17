@@ -1,23 +1,57 @@
 import "./styles.css";
-import { DataGrid } from '@mui/x-data-grid';
+import Sidebar from "../../../components/Admin/Sidebar/Sidebar";
+import Topbar from "../../../components/Admin/Topbar/Topbar";
+import { DataGrid } from "@mui/x-data-grid";
 import { DeleteOutline } from "@mui/icons-material";
-import { productRows } from "../../../dummyData";
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
 
 export default function ProductList() {
-  const [data, setData] = useState(productRows);
+  const [components, setComponents] = useState([]);
 
-  const handleDelete = (id) => {
-    setData(data.filter((item) => item.id !== id));
+  const fetchProducts = async () => {
+    const prod = await axios
+      .get("https://localhost:7177/api/Product")
+      .catch((e) => console.log(e));
+    const items = [];
+    for (const iterator of prod.data) {
+      const item = {
+        id: iterator.id,
+        name: iterator.name,
+        brand: iterator.brand,
+        description: iterator.description,
+        img: iterator.img,
+        price: iterator.price,
+      };
+      items.push(item);
+    }
+    setComponents(items);
   };
 
+  function refreshPage() {
+    window.location.reload();
+  }
+
+  const handleDelete = async (id) => {
+    const response = await axios
+      .delete("https://localhost:7177/api/Product/" + `${id}`)
+      .catch((e) => console.log(e));
+    if (response) {
+      refreshPage();
+    }
+  };
+
+  useEffect(() => {
+    fetchProducts();
+  }, []);
+
   const columns = [
-    { field: "id", headerName: "ID", width: 90 },
+    { field: "id", headerName: "ProductID", width: 90 },
     {
-      field: "product",
-      headerName: "Product",
-      width: 200,
+      field: "name",
+      headerName: "ProductName",
+      width: 220,
       renderCell: (params) => {
         return (
           <div className="productListItem">
@@ -27,15 +61,15 @@ export default function ProductList() {
         );
       },
     },
-    { field: "stock", headerName: "Stock", width: 200 },
+    { field: "brand", headerName: "ProductBrand", width: 200 },
     {
-      field: "status",
-      headerName: "Status",
-      width: 120,
+      field: "description",
+      headerName: "ProductDescription",
+      width: 200,
     },
     {
       field: "price",
-      headerName: "Price",
+      headerName: "ProductPrice",
       width: 160,
     },
     {
@@ -45,7 +79,7 @@ export default function ProductList() {
       renderCell: (params) => {
         return (
           <>
-            <Link to={"/product/" + params.row.id}>
+            <Link to={"/admin/admin_product/" + params.row.id}>
               <button className="productListEdit">Edit</button>
             </Link>
             <DeleteOutline
@@ -59,15 +93,23 @@ export default function ProductList() {
   ];
 
   return (
-    <div className="productList" >
-      <DataGrid
-        rows={data}
-        disableSelectionOnClick
-        columns={columns}
-        pageSize={8}
-        rowsPerPageOptions={[8]}
-        checkboxSelection
-      />
+    <div>
+      <Topbar />
+      <div className="container">
+        <Sidebar />
+        <div className="productList">
+          <DataGrid
+            rows={components}
+            disableSelectionOnClick
+            columns={columns}
+            pageSize={10}
+            rowsPerPageOptions={[10]}
+            checkboxSelection
+          />
+        </div>
+        <br />
+        <div style={{ display: "flex", justifyContent: "center" }}></div>
+      </div>
     </div>
   );
 }

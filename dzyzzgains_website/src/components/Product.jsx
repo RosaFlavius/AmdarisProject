@@ -1,4 +1,4 @@
-import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
+import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
@@ -28,7 +28,7 @@ const Container = styled.div`
   justify-content: center;
   background-color: #f5fbfd;
   position: relative;
-  &:hover ${Info}{
+  &:hover ${Info} {
     opacity: 1;
   }
 `;
@@ -70,7 +70,7 @@ const Product = ({ item }) => {
       <Info>
         <Icon>
           <Link to={`/product/${item.id}`}>
-          <SearchOutlinedIcon />
+            <SearchOutlinedIcon />
           </Link>
         </Icon>
       </Info>

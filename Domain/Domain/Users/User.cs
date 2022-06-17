@@ -15,14 +15,15 @@ namespace Domain.Users
 
         }
 
-        public User(string firstName, string lastName, string email, string password, string county, string city, string address, bool admin)
+        public User(string firstName, string lastName, string email, string password, string dateOfBirth, string phone, string country, string city, string address, bool admin)
         {
-            Id = Guid.NewGuid();
             FirstName = firstName;
             LastName = lastName;
             Email = email;
             Password = password;
-            County = county;
+            DateOfBirth = dateOfBirth;
+            Phone = phone;
+            Country = country;
             City = city;
             Address = address;
             Admin = admin;
@@ -30,12 +31,14 @@ namespace Domain.Users
 
         
 
-        public Guid Id { get; set; }
+        public Guid Id { get; set; } =  Guid.NewGuid();
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
-        public string County { get; set; }
+        public string DateOfBirth { get; set; }
+        public string Phone { get; set; }
+        public string Country { get; set; }
         public string City { get; set; }
         public string Address { get; set; }
         public bool Admin { get; set; }

@@ -17,6 +17,21 @@ namespace Domain.Products
             Size = size;
             Gender = gender;
 
+            if (string.IsNullOrEmpty(description))
+                throw new ArgumentNullException("Null_description");
+
+            if (string.IsNullOrEmpty(name))
+                throw new ArgumentNullException("Null_name");
+
+            if (string.IsNullOrEmpty(brand))
+                throw new ArgumentNullException("Null_company");
+
+            if (string.IsNullOrEmpty(img))
+                throw new ArgumentNullException("Null_image");
+
+            if (price <= 0)
+                throw new ArgumentOutOfRangeException("Wrong_PriceRange");
+
         }
 
         public Clothes() : base()

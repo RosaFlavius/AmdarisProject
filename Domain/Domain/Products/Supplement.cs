@@ -12,11 +12,25 @@ namespace Domain.Products
         public Supplement() : base()
         {
             Category = ProductCategory.Supplements;
+
         }
 
         public Supplement(SupplementType typeOfSupplement, string name, string description, string brand, float price, string img) : base(name, ProductCategory.Supplements, description, brand, price, img)
         {
             TypeOfSupplement = typeOfSupplement;
+            if (string.IsNullOrEmpty(description))
+                throw new ArgumentNullException("Null_description");
+
+            if (string.IsNullOrEmpty(name))
+                throw new ArgumentNullException("Null_name");
+
+            if (string.IsNullOrEmpty(brand))
+                throw new ArgumentNullException("Null_company");
+            if (string.IsNullOrEmpty(img))
+                throw new ArgumentNullException("Null_image");
+            if (price <= 0)
+                throw new ArgumentOutOfRangeException("Wrong_PriceRange");
+            
         }
 
         public SupplementType TypeOfSupplement { get; set; }

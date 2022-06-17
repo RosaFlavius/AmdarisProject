@@ -18,9 +18,7 @@ namespace Application.Commands
         public string Description { get; set; }
         public float Price { get; set; }
         public SupplementType TypeOfSupplement { get; set; }
-
         public string Img { get; set; }
-
 
     }
 }

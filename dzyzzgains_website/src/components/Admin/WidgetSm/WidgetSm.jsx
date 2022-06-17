@@ -13,7 +13,7 @@ export default function WidgetSm() {
             className="widgetSmImg"
           />
           <div className="widgetSmUser">
-            <span className="widgetSmUsername">Anna Keller</span>
+            <span className="widgetSmUsername">Rosa Gabriel</span>
             <span className="widgetSmUserTitle">Software Engineer</span>
           </div>
           <button className="widgetSmButton">
@@ -28,7 +28,7 @@ export default function WidgetSm() {
             className="widgetSmImg"
           />
           <div className="widgetSmUser">
-            <span className="widgetSmUsername">Anna Keller</span>
+            <span className="widgetSmUsername">Rosa Gabriel</span>
             <span className="widgetSmUserTitle">Software Engineer</span>
           </div>
           <button className="widgetSmButton">
@@ -43,7 +43,7 @@ export default function WidgetSm() {
             className="widgetSmImg"
           />
           <div className="widgetSmUser">
-            <span className="widgetSmUsername">Anna Keller</span>
+            <span className="widgetSmUsername">Rosa Gabriel</span>
             <span className="widgetSmUserTitle">Software Engineer</span>
           </div>
           <button className="widgetSmButton">
@@ -58,7 +58,7 @@ export default function WidgetSm() {
             className="widgetSmImg"
           />
           <div className="widgetSmUser">
-            <span className="widgetSmUsername">Anna Keller</span>
+            <span className="widgetSmUsername">Rosa Gabriel</span>
             <span className="widgetSmUserTitle">Software Engineer</span>
           </div>
           <button className="widgetSmButton">
@@ -73,7 +73,7 @@ export default function WidgetSm() {
             className="widgetSmImg"
           />
           <div className="widgetSmUser">
-            <span className="widgetSmUsername">Anna Keller</span>
+            <span className="widgetSmUsername">Rosa Gabriel</span>
             <span className="widgetSmUserTitle">Software Engineer</span>
           </div>
           <button className="widgetSmButton">

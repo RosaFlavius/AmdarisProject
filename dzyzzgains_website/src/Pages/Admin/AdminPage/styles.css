@@ -1,13 +1,4 @@
-.home{
-    flex: 4;
-}
-
-.homeWidgets{
-    display: flex;
-    margin: 20px;
-}
-
-.container{
-    display: flex;
-    margin-top: 10px;
+.container {
+  display: flex;
+  margin-top: 10px;
 }

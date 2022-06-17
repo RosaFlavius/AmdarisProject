@@ -32,11 +32,9 @@ export const fetchProducts = () => {
   };
 };
 
-
-
 export const addToCart = (item) => {
   return (dispatch, getState) => {
-    dispatch({ type: ADD_TO_CART, item});
+    dispatch({ type: ADD_TO_CART, item });
   };
 };
 
@@ -57,4 +55,3 @@ export const adjustQty = (item, value) => {
     dispatch({ type: ADJUST_QTY, item, value });
   };
 };
-

@@ -1,10 +1,10 @@
-import React from 'react'
-import styled from 'styled-components'
-import ArrowRightOutlinedIcon from '@mui/icons-material/ArrowRightOutlined';
-import ArrowLeftOutlinedIcon from '@mui/icons-material/ArrowLeftOutlined';
+import React from "react";
+import styled from "styled-components";
+import ArrowRightOutlinedIcon from "@mui/icons-material/ArrowRightOutlined";
+import ArrowLeftOutlinedIcon from "@mui/icons-material/ArrowLeftOutlined";
 import { useState } from "react";
 import { sliderItems } from "../data";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 const Container = styled.div`
   width: 100%;
@@ -90,11 +90,11 @@ const Slider = () => {
     }
   };
 
-  let navigate = useNavigate(); 
-  const routeChange = () =>{ 
-    let path = `/products`; 
+  let navigate = useNavigate();
+  const routeChange = () => {
+    let path = `/products`;
     navigate(path);
-  }
+  };
 
   return (
     <Container>
@@ -110,7 +110,7 @@ const Slider = () => {
             <InfoContainer>
               <Title>{item.title}</Title>
               <Desc>{item.desc}</Desc>
-              <Button  onClick={routeChange}>SHOW NOW</Button>
+              <Button onClick={routeChange}>SHOW NOW</Button>
             </InfoContainer>
           </Slide>
         ))}
@@ -122,4 +122,4 @@ const Slider = () => {
   );
 };
 
-export default Slider
+export default Slider;

@@ -26,6 +26,7 @@ namespace Application.CommandHandlers
                 Description = request.Description,
                 Brand = request.Brand,
                 Price = request.Price,
+                Img = request.Img,
                 Category = request.Category,
             };
 

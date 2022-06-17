@@ -1,8 +1,13 @@
 import React from "react";
 import "./styles.css";
-import { NotificationsNone, Language, Settings } from "@mui/icons-material";
+import { Button } from "@mui/material";
+import { teal } from "@mui/material/colors";
+import { Link } from "react-router-dom";
+import { logOut } from "../../../redux/User/user_actions";
+import { connect } from "react-redux";
+import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 
-export default function Topbar() {
+function Topbar({ isLoggedIn, email, logOut }) {
   return (
     <div className="topbar">
       <div className="topbarWrapper">
@@ -10,20 +15,43 @@ export default function Topbar() {
           <span className="logo">DZyzzGains Admin</span>
         </div>
         <div className="topRight">
-          <div className="topbarIconContainer">
-            <NotificationsNone />
-            <span className="topIconBadge">2</span>
-          </div>
-          <div className="topbarIconContainer">
-            <Language />
-            <span className="topIconBadge">2</span>
-          </div>
-          <div className="topbarIconContainer">
-            <Settings />
-          </div>
-          <img src="https://images.pexels.com/photos/1526814/pexels-photo-1526814.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500" alt="" className="topAvatar" />
+          {isLoggedIn ? (
+            <>
+              <div className="emailDiv">Welcome admin, {email}!</div>
+              <div className="Space"> </div>
+              <Link to={"/"} style={{ textDecoration: "none" }}>
+                <LogoutOutlinedIcon
+                  onClick={() => logOut(email)}
+                  size="large"
+                  style={{
+                    color: teal[300],
+                    width: "100%",
+                  }}
+                >
+                  LOG OUT
+                </LogoutOutlinedIcon>
+              </Link>
+            </>
+          ) : (
+            <></>
+          )}
         </div>
       </div>
     </div>
   );
 }
+const mapStateToProps = (state) => {
+  return {
+    isLoggedIn: state.userReducer.isLoggedIn,
+    email: state.userReducer.email,
+  };
+};
+const mapDispatchToProps = (dispatch) => {
+  return {
+    logOut: (email) => {
+      dispatch(logOut(email));
+    },
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Topbar);

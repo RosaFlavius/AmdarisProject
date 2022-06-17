@@ -13,6 +13,7 @@ namespace Domain.RepositoryPattern
         public bool DeleteUser(Guid userId);
         public User UpdateUser(User user);
         public Task<User> GetUser(Guid userId);
+        public Task<User> GetUserByEmail(string userEmail);
         public Task<IEnumerable<User>> GetAllUsers();
         public Task<int> SaveChangesAsync();
 

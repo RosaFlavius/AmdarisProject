@@ -28,7 +28,9 @@ namespace Application.CommandHandlers
             user.LastName = request.LastName;
             user.Email = request.Email;
             user.Password = request.Password;
-            user.County = request.County;
+            user.DateOfBirth = request.DateOfBirth;
+            user.Phone = request.Phone;
+            user.Country = request.Country;
             user.City = request.City;
             user.Address = request.Address;
             user.Admin = user.Admin;

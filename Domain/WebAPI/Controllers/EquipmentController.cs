@@ -45,7 +45,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddEquipment(EquipmentDTO product)
+        public async Task<IActionResult> AddEquipment(NewEquipmentDTO product)
         {
             var commandProduct = new AddEquipmentCommand
             {
@@ -75,7 +75,7 @@ namespace WebAPI.Controllers
             return Ok(equipmentId);
         }
 
-        [HttpPatch("{equipmentId}")]
+        [HttpPut("{equipmentId}")]
         public async Task<IActionResult> UpdateEquipment(EquipmentDTO product, Guid equipmentId)
         {
 

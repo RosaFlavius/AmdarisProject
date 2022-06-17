@@ -45,7 +45,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddSupplement(SupplementDTO product)
+        public async Task<IActionResult> AddSupplement(NewSupplementDTO product)
         {
             var commandProduct = new AddSupplementCommand
             {
@@ -75,7 +75,7 @@ namespace WebAPI.Controllers
             return Ok(supplementId);
         }
 
-        [HttpPatch("{supplementId}")]
+        [HttpPut("{supplementId}")]
         public async Task<IActionResult> UpdateSupplement(SupplementDTO product, Guid supplementId)
         {
 

@@ -1,5 +1,6 @@
 ﻿using Application.Commands;
 using Application.Queries;
+using Application.Queries.Users;
 using AutoMapper;
 using Domain.Users;
 using MediatR;
@@ -33,6 +34,18 @@ namespace WebAPI.Controllers
             var dtoResult = _mapper.Map<UserDTO>(result);
             return Ok(dtoResult);
         }
+        [HttpGet("users/{email}")]
+        public async Task<IActionResult> GetUserByEmail(string email)
+        {
+            var query = new GetUserByEmailQuery
+            {
+               Email = email
+            };
+
+            var result = await _mediator.Send(query);
+            var dtoResult = _mapper.Map<UserDTO>(result);
+            return Ok(dtoResult);
+        }
 
         [HttpGet]
         public async Task<IActionResult> GetAllUsers()
@@ -45,7 +58,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddUser(UserDTO user)
+        public async Task<IActionResult> AddUser(NewUserDTO user)
         {
             var commandUser = new AddUserCommand
             {
@@ -53,7 +66,9 @@ namespace WebAPI.Controllers
                 LastName = user.LastName,
                 Email = user.Email,
                 Password = user.Password,
-                County = user.County,
+                DateOfBirth = user.DateOfBirth,
+                Phone = user.Phone,
+                Country = user.Country,
                 City = user.City,
                 Address = user.Address,
                 Admin = user.Admin,
@@ -78,7 +93,7 @@ namespace WebAPI.Controllers
             return Ok(userId);
         }
 
-        [HttpPatch("{userId}")]
+        [HttpPut("{userId}")]
         public async Task<IActionResult> UpdateUser(UserDTO user, Guid userId)
         {
 
@@ -89,7 +104,9 @@ namespace WebAPI.Controllers
                 LastName = user.LastName,
                 Email = user.Email,
                 Password = user.Password,
-                County = user.County,
+                DateOfBirth = user.DateOfBirth,
+                Phone = user.Phone,
+                Country = user.Country,
                 City = user.City,
                 Address = user.Address,
                 Admin = user.Admin,

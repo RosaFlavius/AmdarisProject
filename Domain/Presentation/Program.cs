@@ -44,10 +44,10 @@ namespace MyApp // Note: actual namespace depends on the project name.
         private static async Task TestUserRepository()
         {
 
-            var user = await _mediator.Send(new AddUserCommand { FirstName = "Flavius", LastName = "Rosa", Email = "RosaFlavius2000@amdaris.com", Password = "parola", Address = "BanuMaracine", Admin = false, City = "Arad", County = "Romania"});
+            var user = await _mediator.Send(new AddUserCommand { FirstName = "Flavius", LastName = "Rosa", Email = "RosaFlavius2000@amdaris.com", Password = "parola", DateOfBirth = "17.07.2000", Phone = "0734892470" ,Address = "BanuMaracine", Admin = false, City = "Arad", Country = "Romania"});
             Console.WriteLine(user.FirstName);
 
-            var user1 = await _mediator.Send(new AddUserCommand { FirstName = "Gabriel", LastName = "Rosa", Email = "RosaFlavius2000@amdaris.com", Password = "parola", Address = "BanuMaracine", Admin = false, City = "Arad", County = "Romania" });
+            var user1 = await _mediator.Send(new AddUserCommand { FirstName = "Gabriel", LastName = "Rosa", Email = "RosaFlavius2000@amdaris.com", Password = "parola", DateOfBirth = "17.07.2000", Phone = "0734892470", Address = "BanuMaracine", Admin = false, City = "Arad", Country = "Romania" });
             Console.WriteLine(user1.FirstName);
             Console.WriteLine();
             var getUsers = await _mediator.Send(new GetAllUsersQuery());
@@ -75,7 +75,7 @@ namespace MyApp // Note: actual namespace depends on the project name.
             Console.WriteLine();
             Console.WriteLine();
 
-            var updateUser = await _mediator.Send(new UpdateUserCommand { Id = user.Id, FirstName = "Norbert", LastName = "Forgacs", Email = "RosaFlavius2000@amdaris.com", Password = "parola", Address = "BanuMaracine", Admin = false, City = "Arad", County = "Romania" });
+            var updateUser = await _mediator.Send(new UpdateUserCommand { Id = user.Id, FirstName = "Norbert", LastName = "Forgacs", Email = "RosaFlavius2000@amdaris.com", Password = "parola", DateOfBirth = "17.07.2000", Phone = "0734892470", Address = "BanuMaracine", Admin = false, City = "Arad", Country = "Romania" });
             Console.WriteLine(updateUser);
             Console.WriteLine();
 

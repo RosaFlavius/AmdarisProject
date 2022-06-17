@@ -70,7 +70,7 @@ namespace WebAPI.Controllers
             return Ok(orderId);
         }
 
-        [HttpPatch("{orderId}")]
+        [HttpPut("{orderId}")]
         public async Task<IActionResult> UpdateOrder(OrderDTO order, Guid orderId)
         {
 

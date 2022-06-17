@@ -1,17 +1,21 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
-import { removeAllFromCart, removeFromCart, adjustQty} from "../redux/Shop/shop_action";
+import {
+  removeAllFromCart,
+  removeFromCart,
+  adjustQty,
+} from "../redux/Shop/shop_action";
 import styled from "styled-components";
 import Announcement from "../components/Annoucement";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
-import AddIcon from '@mui/icons-material/Add';
-import RemoveIcon from '@mui/icons-material/Remove';
+import AddIcon from "@mui/icons-material/Add";
+import RemoveIcon from "@mui/icons-material/Remove";
 import StripeCheckout from "react-stripe-checkout";
 import { useNavigate } from "react-router-dom";
-import LogoIMG from "../images/Logo.png"
+import LogoIMG from "../images/Logo.png";
 import { Button } from "@mui/material";
-import { grey } from '@mui/material/colors';
+import { grey } from "@mui/material/colors";
 
 const KEY = process.env.REACT_APP_STRIPE;
 
@@ -49,9 +53,9 @@ const RemoveButtonContainer = styled.div`
     align-items: center;
     justify-content: center;
     margin: 100px
-`
+`;
 const RemoveButton = styled.button`
-  background-color: teal; 
+  background-color: teal;
   border: none;
   color: white;
   padding: 10px 25px;
@@ -94,7 +98,7 @@ const Details = styled.div`
 
 const ProductName = styled.span``;
 
-const ProductPRICE = styled.span ``;
+const ProductPRICE = styled.span``;
 
 const ProductBrand = styled.span``;
 
@@ -150,18 +154,16 @@ const SummaryItem = styled.div`
 
 const SummaryItemText = styled.span``;
 
-const SmallContainer = styled.div`
-`;
+const SmallContainer = styled.div``;
 
+const SummaryItemPrice = styled.span``;
 
-const SummaryItemPrice = styled.span`
-
-`;
-
-const Cart = ({productsAddedToCart, removeFromCart, removeAllFromCart, adjustQty}) => {
-  
-  
-
+const Cart = ({
+  productsAddedToCart,
+  removeFromCart,
+  removeAllFromCart,
+  adjustQty,
+}) => {
   const [totalPrice, setTotalPrice] = useState(0);
   const [totalItems, setTotalItems] = useState(0);
 
@@ -170,27 +172,21 @@ const Cart = ({productsAddedToCart, removeFromCart, removeAllFromCart, adjustQty
 
   const increaseQty = (productId) => {
     productsAddedToCart.forEach((product) => {
-      if(productId===product.id)
-      {
+      if (productId === product.id) {
         adjustQty(product, product.qty + 1);
       }
-
-    })
-    
+    });
   };
   const decreaseQty = (productId) => {
     productsAddedToCart.forEach((product) => {
-      if(productId===product.id)
-      {
+      if (productId === product.id) {
         if (product.qty === 1) {
           adjustQty(product, product.qty);
         } else {
           adjustQty(product, product.qty - 1);
         }
       }
-      
-    })
-    
+    });
   };
 
   useEffect(() => {
@@ -210,12 +206,11 @@ const Cart = ({productsAddedToCart, removeFromCart, removeAllFromCart, adjustQty
     setTotalItems,
     setTotalPrice,
   ]);
-  let navigate = useNavigate(); 
-  const routeChange = () =>{ 
-    let path = `/products`; 
+  let navigate = useNavigate();
+  const routeChange = () => {
+    let path = `/products`;
     navigate(path);
-  }
-
+  };
 
   return (
     <Container>
@@ -224,45 +219,52 @@ const Cart = ({productsAddedToCart, removeFromCart, removeAllFromCart, adjustQty
       <Wrapper>
         <Title>YOUR BAG</Title>
         <Top>
-          <TopButton  onClick={routeChange} >
-            CONTINUE SHOPPING</TopButton>
-            <TopButton onClick={()=> removeAllFromCart()}>EMPTY CART</TopButton>
+          <TopButton onClick={routeChange}>CONTINUE SHOPPING</TopButton>
+          <TopButton onClick={() => removeAllFromCart()}>EMPTY CART</TopButton>
         </Top>
         <Bottom>
           <Info>
-          {productsAddedToCart &&
-          productsAddedToCart.map((product) => (
-              <Product item={product} key={product.id}>
-                <ProductDetail>
-                  <Image src={product.img} />
-                  <Details>
-                    <ProductName>
-                      <b>Product:</b> {product.name}
-                    </ProductName>
-                    <ProductPRICE>
-                      <b>Price: </b>{product.price}<b>$</b>
-                    </ProductPRICE>
-                    <ProductBrand>
-                      <b>Brand: </b>{product.brand}
-                    </ProductBrand>
-                  </Details>
-                </ProductDetail>
-                <RemoveButtonContainer>
-                <RemoveButton 
-                onClick={() => removeFromCart(product)}>Remove</RemoveButton>
-                </RemoveButtonContainer>
-                <PriceDetail>
-                  <ProductAmountContainer>
-                    <RemoveIcon onClick={()=>decreaseQty(product.id)}/>
-                    <ProductAmount >{product.qty}</ProductAmount>
-                    <AddIcon onClick={()=>increaseQty(product.id)}/>
-                  </ProductAmountContainer>
-                  <ProductPrice>
-                    $ {(Math.round(product.price * 100) / 100* product.qty).toFixed(2)}
-                  </ProductPrice>
-                </PriceDetail>
-              </Product>
-            ))}
+            {productsAddedToCart &&
+              productsAddedToCart.map((product) => (
+                <Product item={product} key={product.id}>
+                  <ProductDetail>
+                    <Image src={product.img} />
+                    <Details>
+                      <ProductName>
+                        <b>Product:</b> {product.name}
+                      </ProductName>
+                      <ProductPRICE>
+                        <b>Price: </b>
+                        {product.price}
+                        <b>$</b>
+                      </ProductPRICE>
+                      <ProductBrand>
+                        <b>Brand: </b>
+                        {product.brand}
+                      </ProductBrand>
+                    </Details>
+                  </ProductDetail>
+                  <RemoveButtonContainer>
+                    <RemoveButton onClick={() => removeFromCart(product)}>
+                      Remove
+                    </RemoveButton>
+                  </RemoveButtonContainer>
+                  <PriceDetail>
+                    <ProductAmountContainer>
+                      <RemoveIcon onClick={() => decreaseQty(product.id)} />
+                      <ProductAmount>{product.qty}</ProductAmount>
+                      <AddIcon onClick={() => increaseQty(product.id)} />
+                    </ProductAmountContainer>
+                    <ProductPrice>
+                      ${" "}
+                      {(
+                        (Math.round(product.price * 100) / 100) *
+                        product.qty
+                      ).toFixed(2)}
+                    </ProductPrice>
+                  </PriceDetail>
+                </Product>
+              ))}
             <Hr />
           </Info>
           <Summary>
@@ -280,23 +282,32 @@ const Cart = ({productsAddedToCart, removeFromCart, removeAllFromCart, adjustQty
               <SummaryItemPrice>$ -5.90</SummaryItemPrice>
             </SummaryItem>
             <SmallContainer>
-            <SummaryItem type="total">
-              <SummaryItemText>Total</SummaryItemText>  
-              <SummaryItemPrice>${totalPrice}</SummaryItemPrice> 
-            </SummaryItem>
-            
-            <StripeCheckout
-              name="DZyzzGains Shop"
-              image={LogoIMG}
-              billingAddress
-              shippingAddress
-              description={`Your total is $${totalPrice}`}
-              amount={totalPrice * 100}
-              // token={onToken}
-              stripeKey={KEY}
-            >
-              <Button size="large" style={{ backgroundColor: grey[900], color:grey[50], width: '100%' }}>CHECKOUT NOW</Button>
-            </StripeCheckout>
+              <SummaryItem type="total">
+                <SummaryItemText>Total</SummaryItemText>
+                <SummaryItemPrice>${totalPrice}</SummaryItemPrice>
+              </SummaryItem>
+
+              <StripeCheckout
+                name="DZyzzGains Shop"
+                image={LogoIMG}
+                billingAddress
+                shippingAddress
+                description={`Your total is $${totalPrice}`}
+                amount={totalPrice * 100}
+                // token={onToken}
+                stripeKey={KEY}
+              >
+                <Button
+                  size="large"
+                  style={{
+                    backgroundColor: grey[900],
+                    color: grey[50],
+                    width: "100%",
+                  }}
+                >
+                  CHECKOUT NOW
+                </Button>
+              </StripeCheckout>
             </SmallContainer>
           </Summary>
         </Bottom>

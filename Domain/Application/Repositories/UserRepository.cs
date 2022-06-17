@@ -57,6 +57,18 @@ namespace Application.Repositories
 
         }
 
+        public async Task<User> GetUserByEmail(string email)
+        {
+            var user = await _dbContext.Users.FirstOrDefaultAsync(item => item.Email == email);
+
+            if (user != null)
+            {
+                return user;
+            }
+            throw new ApplicationException($"User with email: {email} does not exist");
+
+        }
+
         public async Task<IEnumerable<User>> GetAllUsers()
         {
             return _dbContext.Users;

@@ -5,14 +5,8 @@ import {
   TrendingUp,
   PermIdentity,
   Storefront,
-  AttachMoney,
-  BarChart,
-  MailOutline,
-  DynamicFeed,
-  ChatBubbleOutline,
-  WorkOutline,
-  Report,
 } from "@mui/icons-material";
+import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
 import { Link } from "react-router-dom";
 
 export default function Sidebar() {
@@ -23,78 +17,66 @@ export default function Sidebar() {
           <h3 className="sidebarTitle">Dashboard</h3>
           <ul className="sidebarList">
             <Link to="/admin" className="link">
-            <li className="sidebarListItem active">
-              <LineStyle className="sidebarIcon" />
-              Home
-            </li>
+              <li className="sidebarListItem active">
+                <LineStyle className="sidebarIcon" />
+                Home
+              </li>
             </Link>
-            <li className="sidebarListItem">
-              <Timeline className="sidebarIcon" />
-              Analytics
-            </li>
-            <li className="sidebarListItem">
-              <TrendingUp className="sidebarIcon" />
-              Sales
-            </li>
           </ul>
         </div>
         <div className="sidebarMenu">
           <h3 className="sidebarTitle">Quick Menu</h3>
           <ul className="sidebarList">
-            <Link to="/users" className="link">
+            <Link to="/admin/admin_users" className="link">
               <li className="sidebarListItem">
                 <PermIdentity className="sidebarIcon" />
                 Users
               </li>
             </Link>
-            <Link to="/admin/admin_products" className="link">
+            <Link
+              to="/admin/admin_products"
+              className="link"
+              // onClick={fetchProducts}
+            >
               <li className="sidebarListItem">
                 <Storefront className="sidebarIcon" />
                 Products
               </li>
             </Link>
-            <li className="sidebarListItem">
-              <AttachMoney className="sidebarIcon" />
-              Transactions
-            </li>
-            <li className="sidebarListItem">
-              <BarChart className="sidebarIcon" />
-              Reports
-            </li>
           </ul>
         </div>
         <div className="sidebarMenu">
-          <h3 className="sidebarTitle">Notifications</h3>
+          <h3 className="sidebarTitle">Product</h3>
           <ul className="sidebarList">
-            <li className="sidebarListItem">
-              <MailOutline className="sidebarIcon" />
-              Mail
-            </li>
-            <li className="sidebarListItem">
-              <DynamicFeed className="sidebarIcon" />
-              Feedback
-            </li>
-            <li className="sidebarListItem">
-              <ChatBubbleOutline className="sidebarIcon" />
-              Messages
-            </li>
+            <Link to="/admin/admin_newClothes" className="link">
+              <li className="sidebarListItem">
+                <AddCircleOutlineOutlinedIcon className="sidebarIcon" />
+                AddClothesProduct
+              </li>
+            </Link>
+            <Link to="/admin/admin_newEquipment" className="link">
+              <li className="sidebarListItem">
+                <AddCircleOutlineOutlinedIcon className="sidebarIcon" />
+                AddEquipmentProduct
+              </li>
+            </Link>
+            <Link to="/admin/admin_newSupplement" className="link">
+              <li className="sidebarListItem">
+                <AddCircleOutlineOutlinedIcon className="sidebarIcon" />
+                AddSupplementProduct
+              </li>
+            </Link>
           </ul>
         </div>
         <div className="sidebarMenu">
-          <h3 className="sidebarTitle">Staff</h3>
+          <h3 className="sidebarTitle">User</h3>
           <ul className="sidebarList">
-            <li className="sidebarListItem">
-              <WorkOutline className="sidebarIcon" />
-              Manage
-            </li>
-            <li className="sidebarListItem">
-              <Timeline className="sidebarIcon" />
-              Analytics
-            </li>
-            <li className="sidebarListItem">
-              <Report className="sidebarIcon" />
-              Reports
-            </li>
+            <Link to="/admin/admin_newUser" className="link">
+              <li className="sidebarListItem">
+                <AddCircleOutlineOutlinedIcon className="sidebarIcon" />
+                AddUser
+              </li>
+            </Link>
           </ul>
         </div>
       </div>

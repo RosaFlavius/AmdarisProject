@@ -75,7 +75,7 @@ namespace WebAPI.Controllers
             return Ok(productId);
         }
 
-        [HttpPatch("{productId}")]
+        [HttpPut("{productId}")]
         public async Task<IActionResult> UpdateProduct(ProductDTO product, Guid productId)
         {
 

@@ -5,7 +5,7 @@ import Navbar from "../components/Navbar";
 import Newsletter from "../components/Newsletter";
 import { useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { publicRequest} from "../redux/Shop/shop_action"
+import { publicRequest } from "../redux/Shop/shop_action";
 import { addToCart } from "../redux/Shop/shop_action";
 import { useDispatch } from "react-redux";
 import { bindActionCreators } from "redux";
@@ -59,7 +59,6 @@ const AddContainer = styled.div`
   margin: 100px 0px;
 `;
 
-
 const Button = styled.button`
   padding: 15px;
   border: 3px solid teal;
@@ -77,8 +76,6 @@ const Product = () => {
   const [product, setProduct] = useState({});
   const dispatch = useDispatch();
 
-  
-
   useEffect(() => {
     const getProduct = async () => {
       try {
@@ -89,11 +86,8 @@ const Product = () => {
     getProduct();
   }, [id]);
 
-
   const handleClick = () => {
-    dispatch(
-      addToCart({ ...product})
-    );
+    dispatch(addToCart({ ...product }));
   };
   return (
     <Container>
@@ -114,7 +108,7 @@ const Product = () => {
         </InfoContainer>
       </Wrapper>
       <Newsletter />
-      <Footer/>
+      <Footer />
     </Container>
   );
 };
