@@ -1,0 +1,43 @@
+.details-container {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+}
+.description {
+  margin: 20px 0px;
+}
+.icon-container {
+  display: flex;
+}
+.icon-social-media {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 20px;
+}
+.image-container-footer {
+  display: flex;
+  justify-content: center;
+  height: 100%;
+}
+.logo-image {
+  height: 70%;
+}
+.contact-details-container.contact-details-container {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  margin-left: 100px;
+}
+.contact-item.contact-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.payment {
+  width: 50%;
+}
