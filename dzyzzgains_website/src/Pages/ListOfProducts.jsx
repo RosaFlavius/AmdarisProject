@@ -1,5 +1,5 @@
 import React from "react";
-import Annoucement from "../components/Annoucement";
+import Annoucement from "../components/Annoucement/Annoucement";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import Products from "../components/Products/Products";
@@ -7,8 +7,8 @@ import Products from "../components/Products/Products";
 function ListOfProducts() {
   return (
     <div>
-      <Annoucement />
       <Navbar />
+      <Annoucement />
       <Products />
       <Footer />
     </div>

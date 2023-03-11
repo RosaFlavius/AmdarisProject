@@ -1,5 +1,5 @@
 import React from "react";
-import Annoucement from "../components/Annoucement";
+import Annoucement from "../components/Annoucement/Annoucement";
 import Categories from "../components/Categories";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
@@ -9,8 +9,8 @@ import Slider from "../components/Slider";
 function Home() {
   return (
     <div>
-      <Annoucement />
       <Navbar />
+      <Annoucement />
       <Slider />
       <Categories />
       <Newsletter />
