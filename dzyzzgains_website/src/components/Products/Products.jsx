@@ -2,31 +2,10 @@ import React, { useState, useEffect } from "react";
 import { Typography, Grid } from "@mui/material";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import * as shoppingActions from "../redux/Shop/shop_action";
-import styled from "styled-components";
-import Product from "./Product";
-import FilterDropdown from "./FilterDropdown";
-
-const Container = styled.div`
-  display: "flex",
-  flexDirection: "row",
-  alignItems: "center",
-  justifyContent: "center",
-  marginTop: 48,
-`;
-
-const DashboardMenu = styled.div`
-  display: "flex",
-  justifyContent: "start",
-  alignSelf: "flex-start",
-`;
-const ToolBar = styled.div`
-  display: flex;
-  align-items: center;
-  justifycontent: flex-end;
-  padding: 0 8px;
-  min-height: 64px;
-`;
+import * as shoppingActions from "../../redux/Shop/shop_action";
+import Product from "../Product";
+import FilterDropdown from "../FilterDropdown";
+import "./products.styles.css";
 
 const Products = (props) => {
   const { products = [], isLoadingParts = false } = props;
@@ -64,16 +43,16 @@ const Products = (props) => {
   }
 
   return (
-    <main>
-      <ToolBar />
+    <>
+      <div className="toolbar" />
       <Grid container>
         <Grid item lg={2} md={3} sm={4} xs={6}>
-          <DashboardMenu>
+          <div className="dashboard_menu">
             <FilterDropdown selected={selected} setSelected={setSelected} />
-          </DashboardMenu>
+          </div>
         </Grid>
         <Grid item lg={10} md={9} sm={8} xs={6}>
-          <Container>
+          <div clasName="container">
             <Grid
               container
               justifyContent="center"
@@ -92,10 +71,10 @@ const Products = (props) => {
                   </Grid>
                 ))}
             </Grid>
-          </Container>
+          </div>
         </Grid>
       </Grid>
-    </main>
+    </>
   );
 };
 function mapStateToProps(state) {
