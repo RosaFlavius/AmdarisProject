@@ -6,7 +6,7 @@ import {
   adjustQty,
 } from "../redux/Shop/shop_action";
 import styled from "styled-components";
-import Announcement from "../components/Annoucement";
+import Announcement from "../components/Annoucement/Annoucement";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import AddIcon from "@mui/icons-material/Add";
