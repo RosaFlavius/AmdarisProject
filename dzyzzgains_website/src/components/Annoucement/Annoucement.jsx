@@ -3,7 +3,7 @@ import "./annoucement.styles.css";
 
 function Annoucement() {
   return (
-    <div className="container">
+    <div className="container-annoucement">
       Super, Deal! Free shipping on Orders over $50.
     </div>
   );
