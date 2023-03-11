@@ -8,7 +8,7 @@ import {
 import styled from "styled-components";
 import Announcement from "../components/Annoucement/Annoucement";
 import Footer from "../components/Footer/Footer";
-import Navbar from "../components/Navbar";
+import Navbar from "../components/Navbar/Navbar";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import StripeCheckout from "react-stripe-checkout";

@@ -1,0 +1,23 @@
+.container-navbar.container-navbar {
+  margin: 0;
+  height: 100px;
+}
+
+.grid-item.grid-item.grid-item {
+  padding: 0px;
+  margin: 0px;
+}
+.left-container.left-container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.title-text {
+  font-weight: bold;
+  text-align: center;
+}
+.right-container.right-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
