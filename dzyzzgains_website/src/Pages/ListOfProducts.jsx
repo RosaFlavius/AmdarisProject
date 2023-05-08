@@ -8,7 +8,7 @@ function ListOfProducts() {
   return (
     <div>
       <Navbar />
-      <Annoucement />
+      {/* <Annoucement /> */}
       <Products />
       <Footer />
     </div>

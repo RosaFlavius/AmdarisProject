@@ -1,5 +1,8 @@
 .container-navbar.container-navbar {
   margin: 0;
+  background-color: white;
+  box-shadow: 0px -3px 4px 0px rgba(107, 126, 190, 4%),
+    0px 8px 16px 0px rgba(107, 126, 190, 16%);
 }
 
 .grid-item.grid-item.grid-item {
