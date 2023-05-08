@@ -2,7 +2,7 @@ import styled from "styled-components";
 import Announcement from "../components/Annoucement/Annoucement";
 import Footer from "../components/Footer/Footer";
 import Navbar from "../components/Navbar/Navbar";
-import Newsletter from "../components/Newsletter";
+import Newsletter from "../components/Newsletter/Newsletter";
 import { useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { publicRequest } from "../redux/Shop/shop_action";

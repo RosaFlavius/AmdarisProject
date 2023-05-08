@@ -1,7 +1,15 @@
-.details-container {
+.container-footer.container-footer.container-footer {
+  background-color: #d7f5e9;
+}
+.grid-item.grid-item.grid-item {
+  padding: 0px;
+  margin: 0px;
+}
+.details-container.details-container {
   display: flex;
   flex-direction: column;
-  padding: 20px;
+  justify-content: center;
+  align-items: center;
 }
 .description {
   margin: 20px 0px;
@@ -22,16 +30,22 @@
 .image-container-footer {
   display: flex;
   justify-content: center;
+  align-items: center;
   height: 100%;
 }
 .logo-image {
   height: 70%;
 }
+.grid-contact-details.grid-contact-details.grid-contact-details {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .contact-details-container.contact-details-container {
   display: flex;
   flex-direction: column;
-  padding: 20px;
-  margin-left: 100px;
+  justify-content: center;
+  align-items: center;
 }
 .contact-item.contact-item {
   display: flex;
