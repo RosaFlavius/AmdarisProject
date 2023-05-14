@@ -1,6 +1,5 @@
 import React from "react";
 import "./styles.css";
-import { Button } from "@mui/material";
 import { teal } from "@mui/material/colors";
 import { Link } from "react-router-dom";
 import { logOut } from "../../../redux/User/user_actions";

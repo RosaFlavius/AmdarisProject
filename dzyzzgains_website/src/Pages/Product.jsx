@@ -78,10 +78,8 @@ const Product = () => {
 
   useEffect(() => {
     const getProduct = async () => {
-      try {
-        const res = await publicRequest.get("/product/" + id);
-        setProduct(res.data);
-      } catch {}
+      const res = await publicRequest.get("/product/" + id);
+      setProduct(res.data);
     };
     getProduct();
   }, [id]);

@@ -7,7 +7,6 @@ import "./styles.css";
 function AdminPage() {
   return (
     <div>
-      <Topbar />
       <div className="container">
         <Sidebar />
         <HomeAdminPage />

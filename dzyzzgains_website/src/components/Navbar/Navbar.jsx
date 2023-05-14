@@ -56,11 +56,11 @@ function Navbar({ productsAddedToCart, isLoggedIn, logOut, email, admin }) {
     setTotalItems(items);
   }, [productsAddedToCart, totalItems]);
   return (
-    <Grid container spacing={3} className="container-navbar ">
+    <Grid container spacing={3} className="container-navbar">
       <Grid item xs={4} className="left-container grid-item">
         <EmailDiv>{email}</EmailDiv>
         <ButtonContainer>
-          <Link to={"/"} style={{ textDecoration: "none" }}>
+          {/* <Link to={"/"} style={{ textDecoration: "none" }}>
             <Button
               size="large"
               style={{
@@ -70,10 +70,10 @@ function Navbar({ productsAddedToCart, isLoggedIn, logOut, email, admin }) {
             >
               HOME
             </Button>
-          </Link>
+          </Link> */}
         </ButtonContainer>
         <ButtonContainer>
-          <Link to={"/products"} style={{ textDecoration: "none" }}>
+          {/* <Link to={"/products"} style={{ textDecoration: "none" }}>
             <Button
               size="large"
               style={{
@@ -83,13 +83,13 @@ function Navbar({ productsAddedToCart, isLoggedIn, logOut, email, admin }) {
             >
               PRODUCTS
             </Button>
-          </Link>
+          </Link> */}
         </ButtonContainer>
       </Grid>
       <Grid item xs={4} className="grid-item">
         <h1 className="title-text">DZyzzGains</h1>
       </Grid>
-      <Grid item xs={4} className="right-container grid-item">
+      {/* <Grid item xs={4} className="right-container grid-item">
         {!isLoggedIn ? (
           <>
             <MenuItem>
@@ -144,7 +144,7 @@ function Navbar({ productsAddedToCart, isLoggedIn, logOut, email, admin }) {
             </Icon>
           </Badge>
         </MenuItem>
-      </Grid>
+      </Grid> */}
     </Grid>
   );
 }

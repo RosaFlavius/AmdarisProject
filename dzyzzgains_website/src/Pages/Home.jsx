@@ -9,12 +9,10 @@ import Slider from "../components/Slider";
 function Home() {
   return (
     <div>
-      <Navbar />
       {/* <Annoucement /> */}
       <Slider />
       <Categories />
-      <Newsletter />
-      <Footer />
+      {/* <Newsletter /> */}
     </div>
   );
 }
