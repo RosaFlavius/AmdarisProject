@@ -19,7 +19,6 @@ namespace Application.Commands.clothes
         public float Price { get; set; }
         public ClothesSize Size { get; set; }
         public ClothesGender Gender { get; set; }
-
         public string Img { get; set; }
     }
 }

@@ -56,7 +56,7 @@ namespace Application.Repositories
 
         public async Task<IEnumerable<Equipment>> GetAllEquipment()
         {
-            return _dbContext.Equipments;
+            return await _dbContext.Equipments.ToListAsync();
         }
 
         public async Task<int> SaveChangesAsync()

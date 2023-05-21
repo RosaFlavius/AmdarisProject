@@ -71,7 +71,7 @@ namespace Application.Repositories
 
         public async Task<IEnumerable<User>> GetAllUsers()
         {
-            return _dbContext.Users;
+            return await _dbContext.Users.ToListAsync();
         }
 
         public async Task<int> SaveChangesAsync()

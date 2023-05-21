@@ -58,26 +58,12 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddUser(NewUserDTO user)
+        public async Task<IActionResult> AddUser([FromBody] AddUserCommand command)
         {
-            var commandUser = new AddUserCommand
-            {
-                FirstName = user.FirstName,
-                LastName = user.LastName,
-                Email = user.Email,
-                Password = user.Password,
-                DateOfBirth = user.DateOfBirth,
-                Phone = user.Phone,
-                Country = user.Country,
-                City = user.City,
-                Address = user.Address,
-                Admin = user.Admin,
 
-            };
+            var res = await _mediator.Send(command);
 
-            await _mediator.Send(commandUser);
-
-            return Ok(user);
+            return Ok(res);
         }
 
         [HttpDelete("{userId}")]
@@ -94,26 +80,12 @@ namespace WebAPI.Controllers
         }
 
         [HttpPut("{userId}")]
-        public async Task<IActionResult> UpdateUser(UserDTO user, Guid userId)
+        public async Task<IActionResult> UpdateUser([FromBody] UpdateUserCommand command)
         {
 
-            var command = new UpdateUserCommand
-            {
-                Id = userId,
-                FirstName = user.FirstName,
-                LastName = user.LastName,
-                Email = user.Email,
-                Password = user.Password,
-                DateOfBirth = user.DateOfBirth,
-                Phone = user.Phone,
-                Country = user.Country,
-                City = user.City,
-                Address = user.Address,
-                Admin = user.Admin,
-            };
-            await _mediator.Send(command);
+            var res = await _mediator.Send(command);
 
-            return Ok(userId);
+            return Ok(res);
         }
 
     }

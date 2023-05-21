@@ -57,7 +57,7 @@ namespace Application.Repositories
 
         public async Task<IEnumerable<Supplement>> GetAllSupplements()
         {
-            return _dbContext.Supplements;
+            return await _dbContext.Supplements.ToListAsync();
         }
 
         public async Task<int> SaveChangesAsync()

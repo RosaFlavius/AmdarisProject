@@ -10,12 +10,12 @@ function HomeAdminPage() {
   return (
     <div className="home">
       <FeaturedInfo />
-      <Chart
+      {/* <Chart
         data={userData}
         title="User Analytics"
         grid
         dataKey="Active User"
-      />
+      /> */}
       <div className="homeWidgets">
         <WidgetSm />
         <WidgetLg />

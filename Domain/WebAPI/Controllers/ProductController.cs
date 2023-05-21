@@ -44,22 +44,12 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddProduct(ProductDTO product)
+        public async Task<IActionResult> AddProduct([FromBody] AddProductCommand command)
         {
-            var commandProduct = new AddProductCommand
-            {
-                Name = product.Name,
-                Description = product.Description,
-                Brand = product.Brand,
-                Category = product.Categories,
-                Price = product.Price,
-                Img = product.Img,
 
-            };
+            var res = await _mediator.Send(command);
 
-            await _mediator.Send(commandProduct);
-
-            return Ok(product);
+            return Ok(res);
         }
 
         [HttpDelete("{productId}")]
@@ -76,23 +66,11 @@ namespace WebAPI.Controllers
         }
 
         [HttpPut("{productId}")]
-        public async Task<IActionResult> UpdateProduct(ProductDTO product, Guid productId)
+        public async Task<IActionResult> UpdateProduct([FromBody] UpdateProductCommand command)
         {
+            var res = await _mediator.Send(command);
 
-            var command = new UpdateProductCommand
-            {
-                Id = productId,
-                Name = product.Name,
-                Description = product.Description,
-                Brand = product.Brand,
-                Category = product.Categories,
-                Price = product.Price,
-                Img = product.Img,
-
-            };
-            await _mediator.Send(command);
-
-            return Ok(productId);
+            return Ok(res);
         }
     }
 }
