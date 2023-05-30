@@ -3,7 +3,8 @@ import React from "react";
 import Home from "./Pages/Home";
 import ListOfProducts from "./Pages/ListOfProducts";
 import Product from "./Pages/Product";
-import Cart from "./Pages/Cart";
+// import Cart from "./Pages/Cart";
+import Cart from "./Pages/Cart/Cart";
 import AdminPage from "./Pages/Admin/AdminPage/AdminPage";
 import NewClothes from "./Pages/Admin/NewProduct/NewClothes";
 import NewEquipment from "./Pages/Admin/NewProduct/NewEquipment";
@@ -24,47 +25,59 @@ function App({ admin }) {
   return (
     <>
       <Router>
-        <Navbar />
-        <Routes>
-          <Route exact path="/" element={<Home />} />
-          <Route exact path="/products" element={<ListOfProducts />} />
-          <Route
-            exact
-            path="/products/:categories"
-            element={<ListOfProducts />}
-          />
-          <Route exact path="/product/:id" element={<Product />} />
-          <Route exact path="/cart" element={<Cart />} />
-          <Route exact path="/admin" element={<AdminPage />} />
-          <Route exact path="/admin/admin_products" element={<ProductList />} />
-          <Route
-            exact
-            path="/admin/admin_newClothes"
-            element={<NewClothes />}
-          />
-          <Route
-            exact
-            path="/admin/admin_newSupplement"
-            element={<NewSupplement />}
-          />
-          <Route
-            exact
-            path="/admin/admin_newEquipment"
-            element={<NewEquipment />}
-          />
-          <Route
-            exact
-            path="/admin/admin_product/:id"
-            element={<ProductAdmin />}
-          />
-          <Route exact path="/admin/admin_users" element={<UserList />} />
-          <Route exact path="/admin/admin_newUser" element={<NewUser />} />
-          <Route exact path="/admin/admin_user/:id" element={<UserAdmin />} />
-          <Route exact path="/register" element={<Register />} />
-          <Route exact path="/login" element={<Login />} />
-        </Routes>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            minHeight: "100vh",
+          }}
+        >
+          <Navbar />
+          <Routes>
+            <Route exact path="/" element={<Home />} />
+            <Route exact path="/products" element={<ListOfProducts />} />
+            <Route
+              exact
+              path="/products/:categories"
+              element={<ListOfProducts />}
+            />
+            <Route exact path="/product/:id" element={<Product />} />
+            <Route exact path="/cart" element={<Cart />} />
+            <Route exact path="/admin" element={<AdminPage />} />
+            <Route
+              exact
+              path="/admin/admin_products"
+              element={<ProductList />}
+            />
+            <Route
+              exact
+              path="/admin/admin_newClothes"
+              element={<NewClothes />}
+            />
+            <Route
+              exact
+              path="/admin/admin_newSupplement"
+              element={<NewSupplement />}
+            />
+            <Route
+              exact
+              path="/admin/admin_newEquipment"
+              element={<NewEquipment />}
+            />
+            <Route
+              exact
+              path="/admin/admin_product/:id"
+              element={<ProductAdmin />}
+            />
+            <Route exact path="/admin/admin_users" element={<UserList />} />
+            <Route exact path="/admin/admin_newUser" element={<NewUser />} />
+            <Route exact path="/admin/admin_user/:id" element={<UserAdmin />} />
+            <Route exact path="/register" element={<Register />} />
+            <Route exact path="/login" element={<Login />} />
+          </Routes>
+          {!admin ? <Footer /> : null}
+        </div>
       </Router>
-      {!admin ? <Footer /> : null}
     </>
   );
 }

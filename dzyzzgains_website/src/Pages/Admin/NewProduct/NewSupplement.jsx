@@ -1,155 +1,228 @@
 import "./styles.css";
 import Sidebar from "../../../components/Admin/Sidebar/Sidebar";
-import Topbar from "../../../components/Admin/Topbar/Topbar";
 import axios from "axios";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useState } from "react";
+import { Button, Grid, MenuItem, TextField } from "@mui/material";
+import { useFormik } from "formik";
+import { newSupplementSchema } from "../../../validations/newSupplementSchema.tsx";
 
 toast.configure();
 
 export default function NewSupplement() {
-  const [inputs, setInputs] = useState({});
+  const typeOfSupplement = [
+    {
+      value: 1,
+      label: "Creatine",
+    },
+    {
+      value: 2,
+      label: "Proteines",
+    },
+    {
+      value: 3,
+      label: "Weight Gainers",
+    },
+    {
+      value: 4,
+      label: "Vitamins",
+    },
+    {
+      value: 5,
+      label: "Food and snacks",
+    },
+  ];
 
-  const product = { ...inputs };
-
-  const handleChange = (e) => {
-    setInputs((prev) => {
-      return { ...prev, [e.target.name]: e.target.value };
-    });
-  };
+  const formikSupplement = useFormik({
+    initialValues: {
+      img: "",
+      name: "",
+      brand: "",
+      price: "",
+      description: "",
+      typeOfSupplement: 1,
+    },
+    validationSchema: newSupplementSchema,
+    onSubmit: (values) => {
+      onSubmit(values);
+    },
+  });
 
   const notify = (response) => {
     if (!response) {
       toast.error("Something went wrong.", {
         position: toast.POSITION.TOP_CENTER,
-        autoClose: false,
+        autoClose: 2000,
       });
-    } else if (response.status === 201) {
+    } else {
       toast.success(
-        `Product ${response.product.Name} was created with ID: ${response.product.Id}`,
+        `Product ${response.data.name} was created with ID: ${response.data.id}`,
         {
           position: toast.POSITION.TOP_CENTER,
-          autoClose: false,
+          autoClose: 2000,
         }
       );
     }
   };
 
-  const verifications = () => {
-    let sw = false;
-    if (product.name === null) sw = true;
-    if (product.brand === null) sw = true;
-    if (product.description === null) sw = true;
-    if (product.price <= 0) sw = true;
-    if (product.img === null) sw = true;
-    if (product.typeOfSupplement < 1 || product.typeOfSupplement > 5) sw = true;
-    return sw;
-  };
-
-  const onSubmit = async () => {
-    console.log(product);
-    let sw = false;
-    const verif = await verifications();
-    if (verif) {
-      sw = true;
-    } else sw = false;
-    if (!sw) {
-      const response = await axios
-        .post("https://localhost:7177/api/Supplement", {
-          name: product.name,
-          brand: product.brand,
-          description: product.description,
-          price: product.price,
-          img: product.img,
-          typeOfSupplement: parseInt(product.typeOfSupplement),
-          category: 1,
-        })
-        .catch((e) => console.log(e));
-      console.log(response);
-      notify(response);
+  const onSubmit = async (product) => {
+    const response = await axios
+      .post("https://localhost:7177/api/Supplement", {
+        name: product.name,
+        brand: product.brand,
+        description: product.description,
+        price: product.price,
+        img: product.img,
+        typeOfSupplement: parseInt(product.typeOfSupplement),
+        category: 3,
+      })
+      .catch((e) => console.log(e));
+    if (response) {
+      notify(true);
+    } else {
+      notify(false);
     }
   };
 
   return (
-    <div>
-      <Topbar />
-      <div className="container">
+    <Grid container spacing={3} className="products-layout">
+      <Grid item xs={12} sm={5} lg={3}>
         <Sidebar />
-        <div className="newProduct">
-          <h1 className="addProductTitle">New Supplement Product</h1>
-          <form className="addProductForm">
-            <div className="addProductItem">
-              <label>Image</label>
-              <input
-                name="img"
-                type="text"
-                placeholder="Product image"
-                onChange={handleChange}
-              />
-            </div>
-            <div className="addProductItem">
-              <label>Name</label>
-              <input
-                name="name"
-                type="text"
-                placeholder="Product name"
-                onChange={handleChange}
-              />
-            </div>
-            <div className="addProductItem">
-              <label>Brand</label>
-              <input
-                name="brand"
-                type="text"
-                placeholder="Product brand"
-                onChange={handleChange}
-              />
-            </div>
-            <div className="addProductItem">
-              <label>Price</label>
-              <input
-                min="1"
-                step="0.01"
-                name="price"
-                type="number"
-                placeholder="Product price"
-                onChange={handleChange}
-              />
-            </div>
-            <div className="addProductItem">
-              <label>Description</label>
-              <input
-                name="description"
-                type="text"
-                placeholder="Product description"
-                onChange={handleChange}
-              />
-            </div>
-            <div className="addProductItem">
-              <label>Type of Supplement</label>
-              <input
-                min="1"
-                max="5"
-                name="typeOfSupplement"
-                type="number"
-                placeholder="Product type of supplement"
-                onChange={handleChange}
-              />
-            </div>
-            {/* <div className="addProductItem">
-          <label>Active</label>
-          <select name="active" id="active">
-            <option value="yes">Yes</option>
-            <option value="no">No</option>
-          </select>
-        </div> */}
-            <button onClick={onSubmit} className="addProductButton">
-              Create
-            </button>
-          </form>
-        </div>
-      </div>
-    </div>
+      </Grid>
+      <Grid item xs={12} sm={7} lg={9}>
+        <Grid container className="container-product">
+          <Grid item xs={12}>
+            <h1>New Supplement Product</h1>
+          </Grid>
+          <Grid item xs={12}>
+            <form
+              className="product-form"
+              onSubmit={formikSupplement.handleSubmit}
+            >
+              <Grid container spacing={3}>
+                <Grid item xs={12} sm={11} md={10} lg={8}>
+                  <TextField
+                    className="text-field-form"
+                    InputProps={{ className: "input-text-field" }}
+                    name="img"
+                    type="text"
+                    placeholder="Product image"
+                    value={formikSupplement.values.img}
+                    onChange={formikSupplement.handleChange}
+                    onBlur={formikSupplement.handleBlur}
+                    error={
+                      !!formikSupplement.errors.img &&
+                      formikSupplement.touched.img
+                    }
+                    helperText={formikSupplement.errors.img}
+                  />
+                </Grid>
+                <Grid item xs={12} sm={11} md={10} lg={8}>
+                  <TextField
+                    className="text-field-form"
+                    InputProps={{ className: "input-text-field" }}
+                    name="name"
+                    type="text"
+                    placeholder="Product name"
+                    value={formikSupplement.values.name}
+                    onChange={formikSupplement.handleChange}
+                    onBlur={formikSupplement.handleBlur}
+                    error={
+                      !!formikSupplement.errors.name &&
+                      formikSupplement.touched.name
+                    }
+                    helperText={formikSupplement.errors.name}
+                  />
+                </Grid>
+                <Grid item xs={12} sm={11} md={10} lg={8}>
+                  <TextField
+                    className="text-field-form"
+                    InputProps={{ className: "input-text-field" }}
+                    name="brand"
+                    type="text"
+                    placeholder="Product brand"
+                    value={formikSupplement.values.brand}
+                    onChange={formikSupplement.handleChange}
+                    onBlur={formikSupplement.handleBlur}
+                    error={
+                      !!formikSupplement.errors.brand &&
+                      formikSupplement.touched.brand
+                    }
+                    helperText={formikSupplement.errors.brand}
+                  />
+                </Grid>
+                <Grid item xs={12} sm={11} md={10} lg={8}>
+                  <TextField
+                    className="text-field-form"
+                    InputProps={{ className: "input-text-field" }}
+                    name="price"
+                    type="text"
+                    placeholder="Product price"
+                    value={formikSupplement.values.price}
+                    onChange={formikSupplement.handleChange}
+                    onBlur={formikSupplement.handleBlur}
+                    error={
+                      !!formikSupplement.errors.price &&
+                      formikSupplement.touched.price
+                    }
+                    helperText={formikSupplement.errors.price}
+                  />
+                </Grid>
+                <Grid item xs={12} sm={11} md={10} lg={8}>
+                  <TextField
+                    className="text-field-form"
+                    InputProps={{ className: "input-text-field" }}
+                    name="description"
+                    type="text"
+                    multiline
+                    placeholder="Product description"
+                    value={formikSupplement.values.description}
+                    onChange={formikSupplement.handleChange}
+                    onBlur={formikSupplement.handleBlur}
+                    error={
+                      !!formikSupplement.errors.description &&
+                      formikSupplement.touched.description
+                    }
+                    helperText={formikSupplement.errors.description}
+                  />
+                </Grid>
+                <Grid item xs={12} sm={11} md={10} lg={8}>
+                  <TextField
+                    className="text-field-form"
+                    InputProps={{ className: "input-text-field" }}
+                    name="typeOfSupplement"
+                    placeholder="Supplement type"
+                    select
+                    value={formikSupplement.values.typeOfSupplement}
+                    onChange={formikSupplement.handleChange}
+                    onBlur={formikSupplement.handleBlur}
+                    error={
+                      !!formikSupplement.errors.typeOfSupplement &&
+                      formikSupplement.touched.typeOfSupplement
+                    }
+                    helperText={formikSupplement.errors.typeOfSupplement}
+                  >
+                    {typeOfSupplement.map((option) => (
+                      <MenuItem key={option.value} value={option.value}>
+                        {option.label}
+                      </MenuItem>
+                    ))}
+                  </TextField>
+                </Grid>
+                <Grid item xs={12} sm={11} md={10} lg={8}>
+                  <Button
+                    variant="contained"
+                    type="submit"
+                    className="form-button"
+                  >
+                    Create
+                  </Button>
+                </Grid>
+              </Grid>
+            </form>
+          </Grid>
+        </Grid>
+      </Grid>
+    </Grid>
   );
 }

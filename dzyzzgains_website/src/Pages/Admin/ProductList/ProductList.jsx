@@ -1,11 +1,11 @@
 import "./styles.css";
 import Sidebar from "../../../components/Admin/Sidebar/Sidebar";
-import Topbar from "../../../components/Admin/Topbar/Topbar";
 import { DataGrid } from "@mui/x-data-grid";
 import { DeleteOutline } from "@mui/icons-material";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { Grid } from "@mui/material";
 
 export default function ProductList() {
   const [components, setComponents] = useState([]);
@@ -14,19 +14,7 @@ export default function ProductList() {
     const prod = await axios
       .get("https://localhost:7177/api/Product")
       .catch((e) => console.log(e));
-    const items = [];
-    for (const iterator of prod.data) {
-      const item = {
-        id: iterator.id,
-        name: iterator.name,
-        brand: iterator.brand,
-        description: iterator.description,
-        img: iterator.img,
-        price: iterator.price,
-      };
-      items.push(item);
-    }
-    setComponents(items);
+    setComponents(prod.data);
   };
 
   function refreshPage() {
@@ -35,7 +23,7 @@ export default function ProductList() {
 
   const handleDelete = async (id) => {
     const response = await axios
-      .delete("https://localhost:7177/api/Product/" + `${id}`)
+      .delete(`https://localhost:7177/api/Product/${id}`)
       .catch((e) => console.log(e));
     if (response) {
       refreshPage();
@@ -47,11 +35,10 @@ export default function ProductList() {
   }, []);
 
   const columns = [
-    { field: "id", headerName: "ProductID", width: 90 },
     {
       field: "name",
       headerName: "ProductName",
-      width: 220,
+      flex: 2,
       renderCell: (params) => {
         return (
           <div className="productListItem">
@@ -61,21 +48,21 @@ export default function ProductList() {
         );
       },
     },
-    { field: "brand", headerName: "ProductBrand", width: 200 },
+    { field: "brand", headerName: "ProductBrand", flex: 1 },
     {
       field: "description",
       headerName: "ProductDescription",
-      width: 200,
+      flex: 2,
     },
     {
       field: "price",
       headerName: "ProductPrice",
-      width: 160,
+      flex: 1,
     },
     {
       field: "action",
       headerName: "Action",
-      width: 150,
+      flex: 1,
       renderCell: (params) => {
         return (
           <>
@@ -93,23 +80,20 @@ export default function ProductList() {
   ];
 
   return (
-    <div>
-      <Topbar />
-      <div className="container">
+    <Grid container spacing={3} className="products-layout-data-grid">
+      <Grid item xs={12} sm={5} lg={3}>
         <Sidebar />
-        <div className="productList">
-          <DataGrid
-            rows={components}
-            disableSelectionOnClick
-            columns={columns}
-            pageSize={10}
-            rowsPerPageOptions={[10]}
-            checkboxSelection
-          />
-        </div>
-        <br />
-        <div style={{ display: "flex", justifyContent: "center" }}></div>
-      </div>
-    </div>
+      </Grid>
+      <Grid item xs={12} sm={7} lg={8}>
+        <DataGrid
+          rows={components}
+          disableSelectionOnClick
+          columns={columns}
+          pageSize={10}
+          rowsPerPageOptions={[10]}
+          className="data-grid-products"
+        />
+      </Grid>
+    </Grid>
   );
 }

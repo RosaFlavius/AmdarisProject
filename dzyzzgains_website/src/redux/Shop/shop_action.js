@@ -15,8 +15,9 @@ export const publicRequest = axios.create({
 });
 
 export const fetchProducts = () => {
-  return async (dispatch, getState) => {
+  return async (dispatch) => {
     dispatch({ type: FETCHING_PRODUCTS });
+
     var result = await axios.get("https://localhost:7177/api/Clothes");
     const clothes = result.data;
 
@@ -33,25 +34,25 @@ export const fetchProducts = () => {
 };
 
 export const addToCart = (item) => {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     dispatch({ type: ADD_TO_CART, item });
   };
 };
 
 export const removeFromCart = (item) => {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     dispatch({ type: REMOVE_FROM_CART, item });
   };
 };
 
 export const removeAllFromCart = () => {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     dispatch({ type: REMOVE_ALL_FROM_CART });
   };
 };
 
 export const adjustQty = (item, value) => {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     dispatch({ type: ADJUST_QTY, item, value });
   };
 };

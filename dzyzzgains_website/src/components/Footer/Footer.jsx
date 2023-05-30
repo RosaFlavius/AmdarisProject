@@ -36,7 +36,9 @@ const Footer = () => {
         </div>
       </Grid>
       <Grid item md={4} xs={12} className="image-container-footer">
-        <img src={LogoIMG} className="logo-image" />
+        <div style={{ height: "300px" }}>
+          <img src={LogoIMG} className="logo-image" />
+        </div>
       </Grid>
       <Grid item md={4} xs={12} className="grid-contact-details">
         <Grid container className="contact-details-container">

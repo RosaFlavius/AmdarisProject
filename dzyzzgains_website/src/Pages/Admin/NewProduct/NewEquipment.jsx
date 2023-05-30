@@ -1,155 +1,236 @@
 import "./styles.css";
 import Sidebar from "../../../components/Admin/Sidebar/Sidebar";
-import Topbar from "../../../components/Admin/Topbar/Topbar";
 import axios from "axios";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useState } from "react";
+import { Button, Grid, MenuItem, TextField } from "@mui/material";
+import { useFormik } from "formik";
+import { newEquipmentSchema } from "../../../validations/newEquipmentSchema.tsx";
 
 toast.configure();
 
 export default function NewEquipment() {
-  const [inputs, setInputs] = useState({});
+  const typeOfEquipment = [
+    {
+      value: 1,
+      label: "Dumbbells",
+    },
+    {
+      value: 2,
+      label: "Kettlebells",
+    },
+    {
+      value: 3,
+      label: "Gym Benches",
+    },
+    {
+      value: 4,
+      label: "Weight Racks",
+    },
+    {
+      value: 5,
+      label: "Pull Up and Push Up Bars",
+    },
+    {
+      value: 6,
+      label: "Weight Lifting Belts and Gym Gloves",
+    },
+    {
+      value: 7,
+      label: "Weight Plates and Bars",
+    },
+  ];
 
-  const product = { ...inputs };
-
-  const handleChange = (e) => {
-    setInputs((prev) => {
-      return { ...prev, [e.target.name]: e.target.value };
-    });
-  };
+  const formikEquipment = useFormik({
+    initialValues: {
+      img: "",
+      name: "",
+      brand: "",
+      price: "",
+      description: "",
+      typeOfEquipment: 1,
+    },
+    validationSchema: newEquipmentSchema,
+    onSubmit: (values) => {
+      onSubmit(values);
+    },
+  });
 
   const notify = (response) => {
     if (!response) {
       toast.error("Something went wrong.", {
         position: toast.POSITION.TOP_CENTER,
-        autoClose: false,
+        autoClose: 2000,
       });
-    } else if (response.status === 201) {
+    } else {
       toast.success(
-        `Product ${response.product.Name} was created with ID: ${response.product.Id}`,
+        `Product ${response.data.name} was created with ID: ${response.data.id}`,
         {
           position: toast.POSITION.TOP_CENTER,
-          autoClose: false,
+          autoClose: 2000,
         }
       );
     }
   };
 
-  const verifications = () => {
-    let sw = false;
-    if (product.name === null) sw = true;
-    if (product.brand === null) sw = true;
-    if (product.description === null) sw = true;
-    if (product.price <= 0) sw = true;
-    if (product.img === null) sw = true;
-    if (product.typeOfEquipment < 1 || product.typeOfEquipment > 7) sw = true;
-    return sw;
-  };
-
-  const onSubmit = async () => {
-    console.log(product);
-    let sw = false;
-    const verif = await verifications();
-    if (verif) {
-      sw = true;
-    } else sw = false;
-    if (!sw) {
-      const response = await axios
-        .post("https://localhost:7177/api/Equipment", {
-          name: product.name,
-          brand: product.brand,
-          description: product.description,
-          price: product.price,
-          img: product.img,
-          typeOfEquipment: parseInt(product.typeOfEquipment),
-          category: 1,
-        })
-        .catch((e) => console.log(e));
-      console.log(response);
-      notify(response);
+  const onSubmit = async (product) => {
+    const response = await axios
+      .post("https://localhost:7177/api/Equipment", {
+        name: product.name,
+        brand: product.brand,
+        description: product.description,
+        price: product.price,
+        img: product.img,
+        typeOfEquipment: parseInt(product.typeOfEquipment),
+        category: 2,
+      })
+      .catch((e) => console.log(e));
+    if (response) {
+      notify(true);
+    } else {
+      notify(false);
     }
   };
 
   return (
-    <div>
-      <Topbar />
-      <div className="container">
+    <Grid container spacing={3} className="products-layout">
+      <Grid item xs={12} sm={5} lg={3}>
         <Sidebar />
-        <div className="newProduct">
-          <h1 className="addProductTitle">New Equipment Product</h1>
-          <form className="addProductForm">
-            <div className="addProductItem">
-              <label>Image</label>
-              <input
-                name="img"
-                type="text"
-                placeholder="Product image"
-                onChange={handleChange}
-              />
-            </div>
-            <div className="addProductItem">
-              <label>Name</label>
-              <input
-                name="name"
-                type="text"
-                placeholder="Product name"
-                onChange={handleChange}
-              />
-            </div>
-            <div className="addProductItem">
-              <label>Brand</label>
-              <input
-                name="brand"
-                type="text"
-                placeholder="Product brand"
-                onChange={handleChange}
-              />
-            </div>
-            <div className="addProductItem">
-              <label>Price</label>
-              <input
-                step="0.01"
-                min="1"
-                name="price"
-                type="number"
-                placeholder="Product price"
-                onChange={handleChange}
-              />
-            </div>
-            <div className="addProductItem">
-              <label>Description</label>
-              <input
-                name="description"
-                type="text"
-                placeholder="Product description"
-                onChange={handleChange}
-              />
-            </div>
-            <div className="addProductItem">
-              <label>Type Of Equipment</label>
-              <input
-                min="1"
-                max="7"
-                name="typeOfEquipment"
-                type="number"
-                placeholder="Type Of Equipment"
-                onChange={handleChange}
-              />
-            </div>
-            {/* <div className="addProductItem">
-          <label>Active</label>
-          <select name="active" id="active">
-            <option value="yes">Yes</option>
-            <option value="no">No</option>
-          </select>
-        </div> */}
-            <button onClick={onSubmit} className="addProductButton">
-              Create
-            </button>
-          </form>
-        </div>
-      </div>
-    </div>
+      </Grid>
+      <Grid item xs={12} sm={7} lg={9}>
+        <Grid container className="container-product">
+          <Grid item xs={12}>
+            <h1>New Equipment Product</h1>
+          </Grid>
+          <Grid item xs={12}>
+            <form
+              className="product-form"
+              onSubmit={formikEquipment.handleSubmit}
+            >
+              <Grid container spacing={3}>
+                <Grid item xs={12} sm={11} md={10} lg={8}>
+                  <TextField
+                    className="text-field-form"
+                    InputProps={{ className: "input-text-field" }}
+                    name="img"
+                    type="text"
+                    placeholder="Product image"
+                    value={formikEquipment.values.img}
+                    onChange={formikEquipment.handleChange}
+                    onBlur={formikEquipment.handleBlur}
+                    error={
+                      !!formikEquipment.errors.img &&
+                      formikEquipment.touched.img
+                    }
+                    helperText={formikEquipment.errors.img}
+                  />
+                </Grid>
+                <Grid item xs={12} sm={11} md={10} lg={8}>
+                  <TextField
+                    className="text-field-form"
+                    InputProps={{ className: "input-text-field" }}
+                    name="name"
+                    type="text"
+                    placeholder="Product name"
+                    value={formikEquipment.values.name}
+                    onChange={formikEquipment.handleChange}
+                    onBlur={formikEquipment.handleBlur}
+                    error={
+                      !!formikEquipment.errors.name &&
+                      formikEquipment.touched.name
+                    }
+                    helperText={formikEquipment.errors.name}
+                  />
+                </Grid>
+                <Grid item xs={12} sm={11} md={10} lg={8}>
+                  <TextField
+                    className="text-field-form"
+                    InputProps={{ className: "input-text-field" }}
+                    name="brand"
+                    type="text"
+                    placeholder="Product brand"
+                    value={formikEquipment.values.brand}
+                    onChange={formikEquipment.handleChange}
+                    onBlur={formikEquipment.handleBlur}
+                    error={
+                      !!formikEquipment.errors.brand &&
+                      formikEquipment.touched.brand
+                    }
+                    helperText={formikEquipment.errors.brand}
+                  />
+                </Grid>
+                <Grid item xs={12} sm={11} md={10} lg={8}>
+                  <TextField
+                    className="text-field-form"
+                    InputProps={{ className: "input-text-field" }}
+                    name="price"
+                    type="text"
+                    placeholder="Product price"
+                    value={formikEquipment.values.price}
+                    onChange={formikEquipment.handleChange}
+                    onBlur={formikEquipment.handleBlur}
+                    error={
+                      !!formikEquipment.errors.price &&
+                      formikEquipment.touched.price
+                    }
+                    helperText={formikEquipment.errors.price}
+                  />
+                </Grid>
+                <Grid item xs={12} sm={11} md={10} lg={8}>
+                  <TextField
+                    className="text-field-form"
+                    InputProps={{ className: "input-text-field" }}
+                    name="description"
+                    type="text"
+                    multiline
+                    placeholder="Product description"
+                    value={formikEquipment.values.description}
+                    onChange={formikEquipment.handleChange}
+                    onBlur={formikEquipment.handleBlur}
+                    error={
+                      !!formikEquipment.errors.description &&
+                      formikEquipment.touched.description
+                    }
+                    helperText={formikEquipment.errors.description}
+                  />
+                </Grid>
+                <Grid item xs={12} sm={11} md={10} lg={8}>
+                  <TextField
+                    className="text-field-form"
+                    InputProps={{ className: "input-text-field" }}
+                    name="typeOfEquipment"
+                    placeholder="Equipment type"
+                    select
+                    value={formikEquipment.values.typeOfEquipment}
+                    onChange={formikEquipment.handleChange}
+                    onBlur={formikEquipment.handleBlur}
+                    error={
+                      !!formikEquipment.errors.typeOfEquipment &&
+                      formikEquipment.touched.typeOfEquipment
+                    }
+                    helperText={formikEquipment.errors.typeOfEquipment}
+                  >
+                    {typeOfEquipment.map((option) => (
+                      <MenuItem key={option.value} value={option.value}>
+                        {option.label}
+                      </MenuItem>
+                    ))}
+                  </TextField>
+                </Grid>
+                <Grid item xs={12} sm={11} md={10} lg={8}>
+                  <Button
+                    variant="contained"
+                    type="submit"
+                    className="form-button"
+                  >
+                    Create
+                  </Button>
+                </Grid>
+              </Grid>
+            </form>
+          </Grid>
+        </Grid>
+      </Grid>
+    </Grid>
   );
 }

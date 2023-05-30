@@ -9,15 +9,15 @@ import CardActions from "@mui/material/CardActions";
 import Collapse from "@mui/material/Collapse";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
+import AddIcon from "@mui/icons-material/Add";
+import RemoveIcon from "@mui/icons-material/Remove";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import "./product.styles.css";
-import { addToCart } from "../../redux/Shop/shop_action";
+import "./card-cart.styles.css";
 import { useDispatch } from "react-redux";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import * as shoppingActions from "../../redux/Shop/shop_action";
+import { Button, Grid } from "@mui/material";
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -30,7 +30,7 @@ const ExpandMore = styled((props) => {
   }),
 }));
 
-function Product({ item }) {
+function CardCart({ item, removeFromCart, increaseQty, decreaseQty }) {
   const [expanded, setExpanded] = useState(false);
   const dispatch = useDispatch();
 
@@ -38,8 +38,8 @@ function Product({ item }) {
     setExpanded(!expanded);
   }
 
-  const handleClick = () => {
-    dispatch(addToCart({ ...item }));
+  const handleRemoveFromCart = () => {
+    dispatch(removeFromCart({ ...item }));
   };
 
   return (
@@ -60,7 +60,9 @@ function Product({ item }) {
           subheader={item.brand}
         />
         <div className="container-price">
-          <span className="text-price">{item.price.toFixed(2)}$</span>
+          <span className="text-price">
+            {((Math.round(item.price * 100) / 100) * item.qty).toFixed(2)}$
+          </span>
         </div>
       </div>
       <CardMedia
@@ -70,21 +72,61 @@ function Product({ item }) {
         alt={item.name}
         style={{ objectFit: "contain" }}
       />
-      <CardActions disableSpacing>
-        <IconButton>
-          <FavoriteIcon />
-        </IconButton>
-        <IconButton onClick={handleClick}>
-          <ShoppingCartOutlinedIcon />
-        </IconButton>
-        <ExpandMore
-          expand={expanded}
-          onClick={handleExpandClick}
-          aria-expanded={expanded}
-          aria-label="show more"
-        >
-          <ExpandMoreIcon />
-        </ExpandMore>
+      <CardActions disableSpacing className="cart-card-actions">
+        <Grid container>
+          <Grid
+            item
+            xs={2}
+            sm={4}
+            md={4}
+            lg={4}
+            className="grid-item-action-cart"
+          >
+            <ExpandMore
+              expand={expanded}
+              onClick={handleExpandClick}
+              aria-expanded={expanded}
+              aria-label="show more"
+            >
+              <ExpandMoreIcon style={{ color: "black" }} />
+            </ExpandMore>
+          </Grid>
+          <Grid
+            item
+            xs={6}
+            sm={4}
+            md={4}
+            lg={4}
+            className="add-remove-container grid-item-action-cart"
+          >
+            <IconButton
+              className="cart-icon-button"
+              onClick={() => increaseQty(item.id)}
+            >
+              <AddIcon style={{ color: "black" }} />
+            </IconButton>
+            <span className="quantity-text">{item.qty}</span>
+            <IconButton
+              className="cart-icon-button"
+              onClick={() => decreaseQty(item.id)}
+            >
+              <RemoveIcon style={{ color: "black" }} />
+            </IconButton>
+          </Grid>
+          <Grid
+            item
+            xs={4}
+            className="remove-button-container grid-item-action-cart"
+          >
+            <Button
+              className="remove-button-cart"
+              variant="outlined"
+              onClick={() => handleRemoveFromCart()}
+            >
+              Remove
+            </Button>
+          </Grid>
+        </Grid>
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
@@ -102,4 +144,4 @@ function mapDispatchToProps(dispatch) {
   return { ...bindActionCreators(shoppingActions, dispatch) };
 }
 
-export default connect(mapDispatchToProps)(Product);
+export default connect(null, mapDispatchToProps)(CardCart);
