@@ -1,6 +1,11 @@
-import styled from "styled-components";
+import HomeIcon from "@mui/icons-material/Home";
 import Badge from "@mui/material/Badge";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
+import FitnessCenterIcon from "@mui/icons-material/FitnessCenter";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import LoginIcon from "@mui/icons-material/Login";
+import LogoutIcon from "@mui/icons-material/Logout";
+import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
 import { Link } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
@@ -9,18 +14,9 @@ import { teal } from "@mui/material/colors";
 import { logOut } from "../../redux/User/user_actions";
 import "./navbar.styles.css";
 
-const MenuItem = styled.div`
-  font-size: 14px;
-  cursor: pinter;
-  margin-left: 25px;
-`;
-
-const ButtonContainer = styled.div`
-  width: 100px;
-`;
-
 function Navbar({
   productsAddedToCart,
+  productsAddedToFavourite,
   isLoggedIn,
   logOut,
   firstName,
@@ -28,100 +24,116 @@ function Navbar({
   email,
   admin,
 }) {
-  const [totalItems, setTotalItems] = useState(0);
+  const [totalItemsCart, setTotalItemsCart] = useState(0);
+  const [totalItemsFavourites, setTotalItemsFavouritest] = useState(0);
   useEffect(() => {
     let items = 0;
     productsAddedToCart.find((item) => {
       items += item.qty;
     });
-    setTotalItems(items);
-  }, [productsAddedToCart, totalItems]);
+    setTotalItemsCart(items);
+    setTotalItemsFavouritest(productsAddedToFavourite?.length);
+  }, [
+    productsAddedToCart,
+    productsAddedToFavourite,
+    totalItemsCart,
+    totalItemsFavourites,
+  ]);
   return (
     <Grid container spacing={3} className="container-navbar">
       <Grid item sm={4} xs={12} className="left-container grid-item">
-        <Link to={"/"} style={{ textDecoration: "none" }}>
-          <Button
-            size="large"
-            style={{
-              color: teal[300],
-              width: "100%",
-            }}
-          >
-            HOME
-          </Button>
-        </Link>
-        <ButtonContainer>
-          <Link to={"/products"} style={{ textDecoration: "none" }}>
+        {admin ? (
+          <Link to={"/admin"} style={{ textDecoration: "none" }}>
             <Button
               size="large"
+              variant="contained"
               style={{
-                color: teal[300],
+                background: teal[300],
                 width: "100%",
               }}
             >
-              PRODUCTS
+              <AdminPanelSettingsIcon /> ADMIN
             </Button>
           </Link>
-        </ButtonContainer>
+        ) : null}
+        <Link to={"/"} style={{ textDecoration: "none" }}>
+          <Button
+            size="large"
+            variant="contained"
+            style={{
+              background: teal[300],
+              width: "100%",
+            }}
+          >
+            <HomeIcon /> HOME
+          </Button>
+        </Link>
+
+        <Link to={"/products"} style={{ textDecoration: "none" }}>
+          <Button
+            size="large"
+            variant="contained"
+            style={{
+              background: teal[300],
+              width: "100%",
+            }}
+          >
+            <FitnessCenterIcon />
+            PRODUCTS
+          </Button>
+        </Link>
       </Grid>
       <Grid item sm={4} xs={12} className="grid-item">
         <h1 className="title-text">DZyzzGains</h1>
       </Grid>
       <Grid item sm={4} xs={12} className="right-container grid-item">
         <span className="user_text">
-          {firstName} {lastName[0]}.
+          {firstName} {lastName[0]}
         </span>
         {!isLoggedIn ? (
-          <>
-            <Link to={"/register"} style={{ textDecoration: "none" }}>
-              <Button
-                size="large"
-                style={{
-                  color: teal[300],
-                  width: "100%",
-                }}
-              >
-                REGISTER
-              </Button>
-            </Link>
-
-            <Link to={"/login"} style={{ textDecoration: "none" }}>
-              <Button
-                size="large"
-                style={{
-                  color: teal[300],
-                  width: "100%",
-                }}
-              >
-                LOG IN
-              </Button>
-            </Link>
-          </>
+          <Link to={"/login"} style={{ textDecoration: "none" }}>
+            <Button
+              size="large"
+              variant="contained"
+              style={{
+                background: teal[300],
+                width: "100%",
+              }}
+            >
+              <LoginIcon /> LOG IN
+            </Button>
+          </Link>
         ) : (
-          <>
-            <Link to={"/"} style={{ textDecoration: "none" }}>
-              <Button
-                onClick={() => logOut(email)}
-                size="large"
-                style={{
-                  color: teal[300],
-                  width: "100%",
-                }}
-              >
-                LOG OUT
-              </Button>
-            </Link>
-          </>
+          <Link to={"/"} style={{ textDecoration: "none" }}>
+            <Button
+              onClick={() => logOut(email)}
+              size="large"
+              variant="contained"
+              style={{
+                background: teal[300],
+                width: "100%",
+              }}
+            >
+              <LogoutIcon /> LOG OUT
+            </Button>
+          </Link>
         )}
-        <>
-          <Badge badgeContent={totalItems} color="primary">
+        <div>
+          <Badge badgeContent={totalItemsFavourites} color="primary">
+            <div className="cart-icon">
+              <Link to={`/favorite`}>
+                <FavoriteIcon />
+              </Link>
+            </div>
+          </Badge>
+          <Badge badgeContent={totalItemsCart} color="primary">
             <div className="cart-icon">
               <Link to={`/cart`}>
                 <ShoppingCartOutlinedIcon />
               </Link>
             </div>
           </Badge>
-        </>
+        </div>
       </Grid>
     </Grid>
   );
@@ -130,6 +142,7 @@ function Navbar({
 const mapStateToProps = (state) => {
   return {
     productsAddedToCart: state.shopReducer.productsAddedToCart,
+    productsAddedToFavourite: state.shopReducer.productsAddedToFavourite,
     isLoggedIn: state.userReducer.isLoggedIn,
     email: state.userReducer.email,
     firstName: state.userReducer.firstName,

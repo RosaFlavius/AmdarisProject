@@ -106,7 +106,7 @@ export default function NewSupplement() {
                     InputProps={{ className: "input-text-field" }}
                     name="img"
                     type="text"
-                    placeholder="Product image"
+                    label="Product image"
                     value={formikSupplement.values.img}
                     onChange={formikSupplement.handleChange}
                     onBlur={formikSupplement.handleBlur}
@@ -123,7 +123,7 @@ export default function NewSupplement() {
                     InputProps={{ className: "input-text-field" }}
                     name="name"
                     type="text"
-                    placeholder="Product name"
+                    label="Product name"
                     value={formikSupplement.values.name}
                     onChange={formikSupplement.handleChange}
                     onBlur={formikSupplement.handleBlur}
@@ -140,7 +140,7 @@ export default function NewSupplement() {
                     InputProps={{ className: "input-text-field" }}
                     name="brand"
                     type="text"
-                    placeholder="Product brand"
+                    label="Product brand"
                     value={formikSupplement.values.brand}
                     onChange={formikSupplement.handleChange}
                     onBlur={formikSupplement.handleBlur}
@@ -157,7 +157,7 @@ export default function NewSupplement() {
                     InputProps={{ className: "input-text-field" }}
                     name="price"
                     type="text"
-                    placeholder="Product price"
+                    label="Product price"
                     value={formikSupplement.values.price}
                     onChange={formikSupplement.handleChange}
                     onBlur={formikSupplement.handleBlur}
@@ -175,7 +175,7 @@ export default function NewSupplement() {
                     name="description"
                     type="text"
                     multiline
-                    placeholder="Product description"
+                    label="Product description"
                     value={formikSupplement.values.description}
                     onChange={formikSupplement.handleChange}
                     onBlur={formikSupplement.handleBlur}

@@ -2,8 +2,6 @@ import "./App.css";
 import React from "react";
 import Home from "./Pages/Home";
 import ListOfProducts from "./Pages/ListOfProducts";
-import Product from "./Pages/Product";
-// import Cart from "./Pages/Cart";
 import Cart from "./Pages/Cart/Cart";
 import AdminPage from "./Pages/Admin/AdminPage/AdminPage";
 import NewClothes from "./Pages/Admin/NewProduct/NewClothes";
@@ -20,6 +18,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Navbar from "./components/Navbar/Navbar";
 import Footer from "./components/Footer/Footer";
 import { connect } from "react-redux";
+import Favorite from "./Pages/Favorite/Favorite";
 
 function App({ admin }) {
   return (
@@ -41,8 +40,8 @@ function App({ admin }) {
               path="/products/:categories"
               element={<ListOfProducts />}
             />
-            <Route exact path="/product/:id" element={<Product />} />
             <Route exact path="/cart" element={<Cart />} />
+            <Route exact path="/favorite" element={<Favorite />} />
             <Route exact path="/admin" element={<AdminPage />} />
             <Route
               exact
@@ -75,7 +74,7 @@ function App({ admin }) {
             <Route exact path="/register" element={<Register />} />
             <Route exact path="/login" element={<Login />} />
           </Routes>
-          {!admin ? <Footer /> : null}
+          <Footer />
         </div>
       </Router>
     </>

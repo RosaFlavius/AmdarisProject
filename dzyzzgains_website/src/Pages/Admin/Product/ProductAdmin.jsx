@@ -1,48 +1,28 @@
-import "./styles.css";
-import { productData } from "../../../dummyData";
-import Chart from "../../../components/Admin/Chart/Chart";
+import "./product-admin.styles.css";
 import Sidebar from "../../../components/Admin/Sidebar/Sidebar";
-import Topbar from "../../../components/Admin/Topbar/Topbar";
-import { Publish } from "@mui/icons-material";
 import { useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { publicRequest } from "../../../redux/Shop/shop_action";
 import axios from "axios";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useFormik } from "formik";
+import { Button, Grid, TextField } from "@mui/material";
+import { editProductSchema } from "../../../validations/editProductSchema.tsx";
+
+toast.configure();
 
 export default function ProductAdmin() {
   const location = useLocation();
   const id = location.pathname.split("/")[3];
   const [product, setProduct] = useState({});
-  const [inputs, setInputs] = useState({});
-  const prod = { ...inputs };
 
-  const handleChange = (e) => {
-    setInputs((prev) => {
-      return { ...prev, [e.target.name]: e.target.value };
-    });
+  const getProduct = async () => {
+    const res = await publicRequest.get("/product/" + id);
+    setProduct(res.data);
   };
 
-  const notify = (response) => {
-    if (!response) {
-      toast.error("Something went wrong.", {
-        position: toast.POSITION.TOP_CENTER,
-        autoClose: false,
-      });
-    } else if (response.status === 201) {
-      toast.success(
-        `Product ${response.product.Name} was created with ID: ${response.product.Id}`,
-        {
-          position: toast.POSITION.TOP_CENTER,
-          autoClose: false,
-        }
-      );
-    }
-  };
-
-  const onSubmitUpdate = async () => {
-    console.log(prod);
+  const onSubmitUpdate = async (prod) => {
     const response = await axios
       .put("https://localhost:7177/api/Product/" + `${id}`, {
         id: id,
@@ -51,115 +31,204 @@ export default function ProductAdmin() {
         description: prod.description,
         price: prod.price,
         img: prod.img,
-        category: 1,
       })
       .catch((e) => console.log(e));
-    console.log(response);
+    setProduct(response.data);
     notify(response);
   };
 
+  const formikEditProduct = useFormik({
+    initialValues: {
+      img: "",
+      name: "",
+      brand: "",
+      price: "",
+      description: "",
+    },
+    validationSchema: editProductSchema,
+    onSubmit: (values) => {
+      onSubmitUpdate(values);
+    },
+  });
+
+  const notify = (response) => {
+    if (!response) {
+      toast.error("Something went wrong.", {
+        position: toast.POSITION.TOP_CENTER,
+        autoClose: 2000,
+      });
+    } else {
+      toast.success(`Product ${response.data.name} was updated successfully!`, {
+        position: toast.POSITION.TOP_CENTER,
+        autoClose: 2000,
+      });
+    }
+  };
+
   useEffect(() => {
-    const getProduct = async () => {
-      try {
-        const res = await publicRequest.get("/product/" + id);
-        setProduct(res.data);
-      } catch {}
-    };
     getProduct();
-  }, [id]);
+  }, [id, product]);
   return (
-    <div>
-      <Topbar />
-      <div className="container">
+    <Grid container spacing={6} className="products-layout">
+      <Grid item xs={12} sm={5} lg={3}>
         <Sidebar />
-        <div className="product">
-          <div className="productTitleContainer">
+      </Grid>
+      <Grid item xs={12} sm={7} lg={9}>
+        <Grid container spacing={3}>
+          <Grid item xs={12}>
             <h1 className="productTitle">Product</h1>
-          </div>
-          <div className="productTop">
-            <div className="productTopRight">
-              <div className="productInfoTop">
-                <img src={product.img} alt="" className="productInfoImg" />
-                <span className="productName">{product.name}</span>
-              </div>
-              <div className="productInfoBottom">
-                <div className="productInfoItemId ">
-                  <span className="productInfoKey">Id:</span>
-                  <span className="productInfoValue">{product.id}</span>
-                </div>
-                <div className="productInfoItem">
-                  <span className="productInfoKey">Brand:</span>
-                  <span className="productInfoValue">{product.brand}</span>
-                </div>
-                <div className="productInfoItemDescription">
-                  <span className="productInfoKey">Description:</span>
-                  <span className="productInfoValue">
-                    {product.description}
-                  </span>
-                </div>
-                <div className="productInfoItem">
-                  <span className="productInfoKey">Price:</span>
-                  <span className="productInfoValue">{product.price}$</span>
-                </div>
-                <div className="productInfoItem ">
-                  <span className="productInfoKey">ImageLink:</span>
-                  <span className="productInfoValue">{product.img}</span>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="productBottom">
-            <form className="productForm">
-              <div className="productFormLeft">
-                <label>Product Name</label>
-                <input
-                  name="name"
-                  type="text"
-                  placeholder="Product Name"
-                  onChange={handleChange}
+          </Grid>
+          <Grid item xs={11} className="container-info-prod">
+            <Grid container spacing={1}>
+              <Grid
+                item
+                xs={12}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                }}
+              >
+                <img
+                  src={product.img}
+                  alt=""
+                  style={{
+                    width: "70px",
+                    heigth: "70px",
+                    objectFit: "contain",
+                  }}
                 />
-                <label>Product Brand</label>
-                <input
-                  name="brand"
-                  type="text"
-                  placeholder="Product Brand"
-                  onChange={handleChange}
-                />
-                <label>Product Description</label>
-                <input
-                  name="description"
-                  type="text"
-                  placeholder="Product Description"
-                  onChange={handleChange}
-                />
-                <label>Product Price</label>
-                <input
-                  name="price"
-                  type="text"
-                  placeholder="Product Price"
-                  min="1"
-                  onChange={handleChange}
-                />
-                <label>Product Image</label>
-                <input
-                  name="img"
-                  type="text"
-                  placeholder="Product Image"
-                  onChange={handleChange}
-                />
-              </div>
-              <div className="productFormRight">
-                <div className="productUpload">
-                  <img src={product.img} alt="" className="productUploadImg" />
-                </div>
-                <button className="productButton" onClick={onSubmitUpdate}>
-                  Update
-                </button>
-              </div>
+                <div className="product-info"> {product.name}</div>
+              </Grid>
+              <Grid item xs={12}>
+                <span className="product-info">Id: </span>
+                <span className="product-info-value">{product.id}</span>
+              </Grid>
+              <Grid item xs={12}>
+                <span className="product-info">Brand: </span>
+                <span className="product-info-value">{product.brand}</span>
+              </Grid>
+              <Grid item xs={12}>
+                <span className="product-info">Description: </span>
+                <span className="product-info-value">
+                  {product.description}
+                </span>
+              </Grid>
+              <Grid item xs={12}>
+                <span className="product-info">Price: </span>
+                <span className="product-info-value">{product.price}$</span>
+              </Grid>
+              <Grid item xs={12}>
+                <span className="product-info">ImageLink: </span>
+                <span className="product-info-value">{product.img}</span>
+              </Grid>
+            </Grid>
+          </Grid>
+          <Grid item xs={12}>
+            <form
+              className="product-form"
+              onSubmit={formikEditProduct.handleSubmit}
+            >
+              <Grid container spacing={3}>
+                <Grid item xs={12} sm={11} md={10} lg={8}>
+                  <TextField
+                    className="text-field-form"
+                    InputProps={{ className: "input-text-field" }}
+                    name="img"
+                    type="text"
+                    label="Product image"
+                    value={formikEditProduct.values.img}
+                    onChange={formikEditProduct.handleChange}
+                    onBlur={formikEditProduct.handleBlur}
+                    error={
+                      !!formikEditProduct.errors.img &&
+                      formikEditProduct.touched.img
+                    }
+                    helperText={formikEditProduct.errors.img}
+                  />
+                </Grid>
+                <Grid item xs={12} sm={11} md={10} lg={8}>
+                  <TextField
+                    className="text-field-form"
+                    InputProps={{ className: "input-text-field" }}
+                    name="name"
+                    type="text"
+                    label="Product name"
+                    value={formikEditProduct.values.name}
+                    onChange={formikEditProduct.handleChange}
+                    onBlur={formikEditProduct.handleBlur}
+                    error={
+                      !!formikEditProduct.errors.name &&
+                      formikEditProduct.touched.name
+                    }
+                    helperText={formikEditProduct.errors.name}
+                  />
+                </Grid>
+                <Grid item xs={12} sm={11} md={10} lg={8}>
+                  <TextField
+                    className="text-field-form"
+                    InputProps={{ className: "input-text-field" }}
+                    name="brand"
+                    type="text"
+                    label="Product brand"
+                    value={formikEditProduct.values.brand}
+                    onChange={formikEditProduct.handleChange}
+                    onBlur={formikEditProduct.handleBlur}
+                    error={
+                      !!formikEditProduct.errors.brand &&
+                      formikEditProduct.touched.brand
+                    }
+                    helperText={formikEditProduct.errors.brand}
+                  />
+                </Grid>
+                <Grid item xs={12} sm={11} md={10} lg={8}>
+                  <TextField
+                    className="text-field-form"
+                    InputProps={{ className: "input-text-field" }}
+                    name="price"
+                    type="text"
+                    label="Product price"
+                    value={formikEditProduct.values.price}
+                    onChange={formikEditProduct.handleChange}
+                    onBlur={formikEditProduct.handleBlur}
+                    error={
+                      !!formikEditProduct.errors.price &&
+                      formikEditProduct.touched.price
+                    }
+                    helperText={formikEditProduct.errors.price}
+                  />
+                </Grid>
+                <Grid item xs={12} sm={11} md={10} lg={8}>
+                  <TextField
+                    className="text-field-form"
+                    InputProps={{ className: "input-text-field" }}
+                    name="description"
+                    type="text"
+                    multiline
+                    label="Product description"
+                    value={formikEditProduct.values.description}
+                    onChange={formikEditProduct.handleChange}
+                    onBlur={formikEditProduct.handleBlur}
+                    error={
+                      !!formikEditProduct.errors.description &&
+                      formikEditProduct.touched.description
+                    }
+                    helperText={formikEditProduct.errors.description}
+                  />
+                </Grid>
+                <Grid item xs={12} sm={11} md={10} lg={8}>
+                  <Button
+                    variant="contained"
+                    type="submit"
+                    className="form-button"
+                  >
+                    Update Product
+                  </Button>
+                </Grid>
+              </Grid>
             </form>
-          </div>
-        </div>
-      </div>
-    </div>
+          </Grid>
+        </Grid>
+      </Grid>
+    </Grid>
   );
 }

@@ -114,7 +114,7 @@ export default function NewEquipment() {
                     InputProps={{ className: "input-text-field" }}
                     name="img"
                     type="text"
-                    placeholder="Product image"
+                    label="Product image"
                     value={formikEquipment.values.img}
                     onChange={formikEquipment.handleChange}
                     onBlur={formikEquipment.handleBlur}
@@ -131,7 +131,7 @@ export default function NewEquipment() {
                     InputProps={{ className: "input-text-field" }}
                     name="name"
                     type="text"
-                    placeholder="Product name"
+                    label="Product name"
                     value={formikEquipment.values.name}
                     onChange={formikEquipment.handleChange}
                     onBlur={formikEquipment.handleBlur}
@@ -148,7 +148,7 @@ export default function NewEquipment() {
                     InputProps={{ className: "input-text-field" }}
                     name="brand"
                     type="text"
-                    placeholder="Product brand"
+                    label="Product brand"
                     value={formikEquipment.values.brand}
                     onChange={formikEquipment.handleChange}
                     onBlur={formikEquipment.handleBlur}
@@ -165,7 +165,7 @@ export default function NewEquipment() {
                     InputProps={{ className: "input-text-field" }}
                     name="price"
                     type="text"
-                    placeholder="Product price"
+                    label="Product price"
                     value={formikEquipment.values.price}
                     onChange={formikEquipment.handleChange}
                     onBlur={formikEquipment.handleBlur}
@@ -183,7 +183,7 @@ export default function NewEquipment() {
                     name="description"
                     type="text"
                     multiline
-                    placeholder="Product description"
+                    label="Product description"
                     value={formikEquipment.values.description}
                     onChange={formikEquipment.handleChange}
                     onBlur={formikEquipment.handleBlur}

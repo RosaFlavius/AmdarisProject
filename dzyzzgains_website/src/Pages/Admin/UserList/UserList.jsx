@@ -34,22 +34,15 @@ export default function UserList() {
     setComponents(users);
   };
 
-  function refreshPage() {
-    window.location.reload();
-  }
-
   const handleDelete = async (id) => {
     const response = await axios
       .delete(`https://localhost:7177/api/User/${id}`)
       .catch((e) => console.log(e));
-    if (response) {
-      refreshPage();
-    }
   };
 
   useEffect(() => {
     fetchUsers();
-  }, []);
+  }, [components]);
 
   const columns = [
     { field: "email", headerName: "Email", width: 200 },

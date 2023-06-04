@@ -5,6 +5,8 @@ import {
   REMOVE_FROM_CART,
   REMOVE_ALL_FROM_CART,
   ADJUST_QTY,
+  ADD_REMOVE_FAVOURITES,
+  REMOVE_FROM_FAVOURITES,
 } from "./shop_types";
 import axios from "axios";
 
@@ -36,6 +38,18 @@ export const fetchProducts = () => {
 export const addToCart = (item) => {
   return (dispatch) => {
     dispatch({ type: ADD_TO_CART, item });
+  };
+};
+
+export const addRemoveFavourite = (item) => {
+  return (dispatch) => {
+    dispatch({ type: ADD_REMOVE_FAVOURITES, item });
+  };
+};
+
+export const removeFromFavourites = (item) => {
+  return (dispatch) => {
+    dispatch({ type: REMOVE_FROM_FAVOURITES, item });
   };
 };
 

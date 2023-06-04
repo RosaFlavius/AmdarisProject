@@ -7,8 +7,14 @@ import LocationOnIcon from "@mui/icons-material/LocationOn";
 import LogoIMG from "../../images/Logo.png";
 import "./footer.styles.css";
 import { Grid } from "@mui/material";
+import { useLocation } from "react-router-dom";
 
 const Footer = () => {
+  const location = useLocation();
+  const verifyAdminPath = location?.pathname.includes("admin");
+  if (verifyAdminPath) {
+    return null;
+  }
   return (
     <Grid container className="container-footer">
       <Grid item md={4} xs={12} className="details-container">

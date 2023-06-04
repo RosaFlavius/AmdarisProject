@@ -1,0 +1,33 @@
+.container-favourites-card.container-favourites-card {
+  display: flex;
+  background-color: white;
+  justify-content: space-between;
+  border-radius: 10px;
+  box-shadow: 0px -3px 4px 0px rgba(107, 126, 190, 4%),
+    0px 8px 16px 0px rgba(107, 126, 190, 16%);
+}
+.fav-name-text {
+  font-size: 25px;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+  font-weight: 600;
+}
+.center-item-fav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.delete-container-fav.delete-container-fav {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-top: -24px;
+}
+.icon-fav.icon-fav {
+  height: 30px;
+  width: 30px;
+}
+.text-fav {
+  word-wrap: break-word;
+}
