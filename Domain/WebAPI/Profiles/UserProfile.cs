@@ -9,7 +9,9 @@ namespace WebAPI.Profiles
         public UserProfile()
         {
             CreateMap<User, UserDTO>()
+                .ForMember(u=>u.Id, opt=>opt.MapFrom(u1=>u1.UserId))
                 .ReverseMap();
+
         }
     }
 }

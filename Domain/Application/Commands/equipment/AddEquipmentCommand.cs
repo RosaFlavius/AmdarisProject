@@ -17,8 +17,8 @@ namespace Application.Commands
         public string Description { get; set; }
         public float Price { get; set; }
         public EquipmentType TypeOfEquipment { get; set; }
-
         public string Img { get; set; }
+        public bool InStock { get; set; }
 
     }
 }

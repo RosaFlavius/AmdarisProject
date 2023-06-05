@@ -25,6 +25,8 @@ namespace Application.Commands
 
         public string Img { get; set; }
 
+        public bool InStock { get; set; }
+
         //public ICollection<Order> Orders { get; init; }
 
     }

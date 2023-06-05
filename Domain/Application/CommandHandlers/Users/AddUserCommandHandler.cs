@@ -32,7 +32,7 @@ namespace Application.CommandHandlers
                 City = request.City,
                 Address = request.Address,
                 Admin = request.Admin,
-                Id = Guid.NewGuid(),
+                UserId = Guid.NewGuid(),
             };
 
             _userRepo.AddUser(user);

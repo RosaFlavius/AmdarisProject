@@ -30,6 +30,7 @@ namespace Application.CommandHandlers.clothes
                 Gender = request.Gender,
                 Size = request.Size,
                 Img = request.Img,
+                InStock = request.InStock,
             };
 
             _clothesRepo.AddClothes(product);

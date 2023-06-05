@@ -9,7 +9,7 @@ namespace Domain.Products
 
     public class Product
     {
-        public Product(string name, ProductCategory category ,string description, string brand, float price, string img)
+        public Product(string name, ProductCategory category ,string description, string brand, float price, string img, bool inStock)
         {
             Name = name;
             Description = description;
@@ -17,6 +17,7 @@ namespace Domain.Products
             Price = price;
             Category = category;
             Img = img;
+            InStock = inStock;
 
             if (string.IsNullOrEmpty(description))
                 throw new ArgumentNullException("Null_description");
@@ -56,6 +57,8 @@ namespace Domain.Products
             Equipment = 2,
             Clothes = 3,
         }
+
+        public bool InStock { get; set; }
 
 
     }

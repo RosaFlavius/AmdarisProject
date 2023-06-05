@@ -20,5 +20,6 @@ namespace Application.Commands.clothes
         public ClothesSize Size { get; set; }
         public ClothesGender Gender { get; set; }
         public string Img { get; set; }
+        public bool InStock { get; set; }
     }
 }

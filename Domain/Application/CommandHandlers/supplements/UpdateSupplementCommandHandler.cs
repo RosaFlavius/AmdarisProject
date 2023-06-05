@@ -31,7 +31,7 @@ namespace Application.CommandHandlers.supplements
             product.Price = request.Price;
             product.TypeOfSupplement = request.TypeOfSupplement;
             product.Img = request.Img;
-
+            product.InStock = request.InStock;
 
             var result = _supplementRepo.UpdateSupplement(product);
             await _supplementRepo.SaveChangesAsync();
