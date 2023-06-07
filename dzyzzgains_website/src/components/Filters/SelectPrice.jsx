@@ -4,35 +4,33 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-import { ClothesGender } from "../../Enums/ClothesGender.ts";
 import "./filters.styles.css";
 
-export default function SelectGender({ setSelectedGender }) {
-  const [gender, setGender] = React.useState("");
+export default function SelectPrice({ setSelectedPrice }) {
+  const [price, setPrice] = React.useState("");
 
   const handleChange = (event) => {
-    setGender(event.target.value);
-    setSelectedGender(ClothesGender[event.target.value]);
+    setPrice(event.target.value);
+    setSelectedPrice(event.target.value);
   };
 
   return (
     <Box sx={{ minWidth: 120 }}>
       <FormControl fullWidth>
-        <InputLabel id="demo-simple-select-label">Gender</InputLabel>
+        <InputLabel id="demo-simple-select-label">Price</InputLabel>
         <Select
           labelId="demo-simple-select-label"
           id="demo-simple-select"
-          value={gender}
-          label="Gender"
+          value={price}
+          label="Price"
           onChange={handleChange}
           className="select-filter-style"
         >
           <MenuItem value="">
             <em>None</em>
           </MenuItem>
-          <MenuItem value={ClothesGender.Men}>Men</MenuItem>
-          <MenuItem value={ClothesGender.Woman}>Woman</MenuItem>
-          <MenuItem value={ClothesGender.Kids}>Kids</MenuItem>
+          <MenuItem value="Ascending">Price ascending</MenuItem>
+          <MenuItem value="Descending">Price descending</MenuItem>
         </Select>
       </FormControl>
     </Box>

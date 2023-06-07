@@ -5,6 +5,7 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { ClothesSize } from "../../Enums/ClothesSize.ts";
+import "./filters.styles.css";
 
 export default function SelectSize({ setSelectedSize }) {
   const [size, setSize] = React.useState("");
@@ -24,6 +25,7 @@ export default function SelectSize({ setSelectedSize }) {
           value={size}
           label="Size"
           onChange={handleChange}
+          className="select-filter-style"
         >
           <MenuItem value="">
             <em>None</em>
@@ -33,7 +35,7 @@ export default function SelectSize({ setSelectedSize }) {
           <MenuItem value={ClothesSize.M}>M</MenuItem>
           <MenuItem value={ClothesSize.L}>L</MenuItem>
           <MenuItem value={ClothesSize.XL}>XL</MenuItem>
-          <MenuItem value={ClothesSize.XLL}>XLL</MenuItem>
+          <MenuItem value={ClothesSize.XXL}>XXL</MenuItem>
         </Select>
       </FormControl>
     </Box>

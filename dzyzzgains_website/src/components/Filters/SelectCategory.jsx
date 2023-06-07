@@ -5,6 +5,7 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { Category } from "../../Enums/Category.ts";
+import "./filters.styles.css";
 
 export default function SelectCategory({ setSelectedCategory }) {
   const [category, setCategory] = React.useState("");
@@ -24,6 +25,7 @@ export default function SelectCategory({ setSelectedCategory }) {
           value={category}
           label="Category"
           onChange={handleChange}
+          className="select-filter-style"
         >
           <MenuItem value="">
             <em>None</em>

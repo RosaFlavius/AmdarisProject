@@ -5,6 +5,7 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { SupplementsType } from "../../Enums/SupplementsType.ts";
+import "./filters.styles.css";
 
 export default function SelectSupplementsType({ setSelectedSupplementsType }) {
   const [supplementType, setSupplementType] = React.useState("");
@@ -24,6 +25,7 @@ export default function SelectSupplementsType({ setSelectedSupplementsType }) {
           value={supplementType}
           label="Supplement Type"
           onChange={handleChange}
+          className="select-filter-style"
         >
           <MenuItem value="">
             <em>None</em>
