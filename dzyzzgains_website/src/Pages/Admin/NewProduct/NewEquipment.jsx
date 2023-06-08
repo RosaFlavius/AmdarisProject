@@ -81,6 +81,7 @@ export default function NewEquipment() {
         description: product.description,
         price: product.price,
         img: product.img,
+        inStock: true,
         typeOfEquipment: parseInt(product.typeOfEquipment),
         category: 2,
       })

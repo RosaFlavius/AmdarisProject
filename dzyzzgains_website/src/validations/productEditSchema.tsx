@@ -21,4 +21,5 @@ export const productEditSchema = yup.object().shape({
     .required("Description is required")
     .min(15, "Description must have at least 15 characters")
     .max(200, "Description can't have more than 200 characters"),
+  inStock: yup.boolean().required(),
 });

@@ -89,6 +89,7 @@ export default function NewClothes() {
         description: product.description,
         price: product.price,
         img: product.img,
+        inStock: true,
         size: parseInt(product.size),
         gender: parseInt(product.gender),
         category: 1,

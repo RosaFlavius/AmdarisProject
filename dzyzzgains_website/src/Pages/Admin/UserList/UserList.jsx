@@ -112,7 +112,7 @@ export default function UserList() {
       <Grid item xs={12} sm={5} lg={3}>
         <Sidebar />
       </Grid>
-      <Grid item xs={12} sm={7} lg={8}>
+      <Grid item xs={12} sm={7} lg={9}>
         <DataGrid
           rows={components}
           disableSelectionOnClick

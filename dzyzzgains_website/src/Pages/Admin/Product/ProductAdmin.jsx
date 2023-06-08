@@ -7,7 +7,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useFormik } from "formik";
-import { Button, Grid, TextField } from "@mui/material";
+import { Button, Grid, MenuItem, TextField } from "@mui/material";
 import { editProductSchema } from "../../../validations/editProductSchema.tsx";
 
 toast.configure();
@@ -31,6 +31,7 @@ export default function ProductAdmin() {
         description: prod.description,
         price: prod.price,
         img: prod.img,
+        inStock: prod.inStock,
       })
       .catch((e) => console.log(e));
     setProduct(response.data);
@@ -44,6 +45,7 @@ export default function ProductAdmin() {
       brand: "",
       price: "",
       description: "",
+      inStock: true,
     },
     validationSchema: editProductSchema,
     onSubmit: (values) => {
@@ -67,7 +69,7 @@ export default function ProductAdmin() {
 
   useEffect(() => {
     getProduct();
-  }, [id, product]);
+  }, [id]);
   return (
     <Grid container spacing={6} className="products-layout">
       <Grid item xs={12} sm={5} lg={3}>
@@ -120,6 +122,12 @@ export default function ProductAdmin() {
               <Grid item xs={12}>
                 <span className="product-info">ImageLink: </span>
                 <span className="product-info-value">{product.img}</span>
+              </Grid>
+              <Grid item xs={12}>
+                <span className="product-info">InStock: </span>
+                <span className="product-info-value">
+                  {product.inStock ? "Yes " : "No"}
+                </span>
               </Grid>
             </Grid>
           </Grid>
@@ -214,6 +222,26 @@ export default function ProductAdmin() {
                     }
                     helperText={formikEditProduct.errors.description}
                   />
+                </Grid>
+                <Grid item xs={12} sm={11} md={10} lg={8}>
+                  <TextField
+                    className="text-field-form"
+                    InputProps={{ className: "input-text-field" }}
+                    name="inStock"
+                    placeholder="In stock"
+                    select
+                    value={formikEditProduct.values.inStock}
+                    onChange={formikEditProduct.handleChange}
+                    onBlur={formikEditProduct.handleBlur}
+                    error={
+                      !!formikEditProduct.errors.inStock &&
+                      formikEditProduct.touched.inStock
+                    }
+                    helperText={formikEditProduct.errors.inStock}
+                  >
+                    <MenuItem value={true}>In stock</MenuItem>
+                    <MenuItem value={false}>Out of stock</MenuItem>
+                  </TextField>
                 </Grid>
                 <Grid item xs={12} sm={11} md={10} lg={8}>
                   <Button

@@ -73,6 +73,7 @@ export default function NewSupplement() {
         description: product.description,
         price: product.price,
         img: product.img,
+        inStock: true,
         typeOfSupplement: parseInt(product.typeOfSupplement),
         category: 3,
       })
