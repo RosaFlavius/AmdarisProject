@@ -43,3 +43,29 @@
   background-color: #e9f5f5;
   transform: scale(1.1);
 }
+
+.menu-paper {
+  overflow: visible;
+  filter: drop-shadow(0px 2px 8px rgba(0, 0, 0, 0.32));
+  margin-top: 0.5rem;
+}
+
+.menu-paper .MuiAvatar-root {
+  width: 32px;
+  height: 32px;
+  margin-left: -0.5rem;
+  margin-right: 1rem;
+}
+
+.menu-paper:before {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 0;
+  right: 14px;
+  width: 10px;
+  height: 10px;
+  background-color: white;
+  transform: translateY(-50%) rotate(45deg);
+  z-index: 0;
+}

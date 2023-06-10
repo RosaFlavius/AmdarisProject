@@ -6,10 +6,26 @@ import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { Button, Chip, Grid, IconButton } from "@mui/material";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { useDispatch } from "react-redux";
+import * as shoppingActions from "../../../redux/Shop/shop_action";
+import {
+  addRemoveFavourite,
+  addRemoveWishlist,
+  removeFromCart,
+} from "../../../redux/Shop/shop_action";
 
-export default function ProductList() {
+const ProductList = ({
+  productsAddedToCart,
+  productsAddedToFavourite,
+  productsAddedToWishList,
+  userId,
+  userEmail,
+}) => {
   const [components, setComponents] = useState([]);
   const [isUpdated, setIsUpdated] = useState(false);
+  const dispatch = useDispatch();
 
   const fetchProducts = async () => {
     const prod = await axios
@@ -26,18 +42,50 @@ export default function ProductList() {
     setIsUpdated(false);
   };
 
-  const handleInStock = async (id) => {
+  const handleInStock = async (item) => {
     setIsUpdated(true);
     await axios
-      .patch("https://localhost:7177/api/Product/inStock/" + `${id}`)
+      .patch("https://localhost:7177/api/Product/inStock/" + `${item.id}`)
       .catch((e) => console.log(e));
+
+    let verifyInWishlist = productsAddedToWishList.find(
+      (prod) => prod.id === item.id
+    );
+    let verifyInFavorites = productsAddedToFavourite.find(
+      (prod) => prod.id === item.id
+    );
+
+    if (verifyInWishlist) {
+      dispatch(addRemoveWishlist({ ...item }));
+      if (!verifyInFavorites) {
+        dispatch(addRemoveFavourite({ ...item }));
+      }
+    }
     setIsUpdated(false);
   };
-  const handleOutOfStock = async (id) => {
+  const handleOutOfStock = async (item) => {
     setIsUpdated(true);
     await axios
-      .patch("https://localhost:7177/api/Product/outOfStock/" + `${id}`)
+      .patch("https://localhost:7177/api/Product/outOfStock/" + `${item.id}`)
       .catch((e) => console.log(e));
+
+    let verifyInCart = productsAddedToCart.find((prod) => prod.id === item.id);
+    if (verifyInCart) {
+      dispatch(removeFromCart({ ...item }));
+    }
+    let verifyInWishlist = productsAddedToWishList.find(
+      (prod) => prod.id === item.id
+    );
+    if (!verifyInWishlist && verifyInCart) {
+      dispatch(addRemoveWishlist({ ...item }));
+      await axios
+        .post(`https://localhost:7177/api/Notification/${userEmail}`, {
+          productId: item.id,
+          userId: userId,
+        })
+        .catch((e) => console.log(e));
+    }
+
     setIsUpdated(false);
   };
 
@@ -98,17 +146,14 @@ export default function ProductList() {
                 Edit
               </Button>
             </Link>
-            <IconButton>
-              <DeleteOutline
-                className="productListDelete"
-                onClick={() => handleDelete(params.row.id)}
-              />
+            <IconButton onClick={() => handleDelete(params.row.id)}>
+              <DeleteOutline className="productListDelete" />
             </IconButton>
             <Button
               onClick={
                 !params.row.inStock
-                  ? () => handleInStock(params.row.id)
-                  : () => handleOutOfStock(params.row.id)
+                  ? () => handleInStock(params.row)
+                  : () => handleOutOfStock(params.row)
               }
               varaint="contained"
               className={
@@ -142,4 +187,19 @@ export default function ProductList() {
       </Grid>
     </Grid>
   );
+};
+
+const mapStateToProps = (state) => {
+  return {
+    productsAddedToCart: state.shopReducer.productsAddedToCart,
+    productsAddedToFavourite: state.shopReducer.productsAddedToFavourite,
+    productsAddedToWishList: state.shopReducer.productsAddedToWishList,
+    userId: state.userReducer.userId,
+    userEmail: state.userReducer.email,
+  };
+};
+function mapDispatchToProps(dispatch) {
+  return { ...bindActionCreators(shoppingActions, dispatch) };
 }
+
+export default connect(mapStateToProps, mapDispatchToProps)(ProductList);

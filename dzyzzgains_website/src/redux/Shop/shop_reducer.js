@@ -7,6 +7,7 @@ import {
   ADJUST_QTY,
   ADD_REMOVE_FAVOURITES,
   REMOVE_FROM_FAVOURITES,
+  ADD_REMOVE_WISHLIST,
 } from "./shop_types";
 import { REHYDRATE } from "redux-persist";
 
@@ -15,8 +16,10 @@ const INITIAL_STATE = {
   isLoadingProducts: false,
   productsAddedToCart: [],
   productsAddedToFavourite: [],
+  productsAddedToWishList: [],
   isAddedToFavourite: false,
   isAddedToCart: false,
+  isAddedToWishlist: false,
 };
 
 const shopReducer = (state = INITIAL_STATE, action) => {
@@ -29,6 +32,9 @@ const shopReducer = (state = INITIAL_STATE, action) => {
           : [],
         productsAddedToFavourite: action.payload
           ? action.payload.shopReducer.productsAddedToFavourite
+          : [],
+        productsAddedToWishList: action.payload
+          ? action.payload.shopReducer.productsAddedToWishList
           : [],
       };
     }
@@ -93,6 +99,28 @@ const shopReducer = (state = INITIAL_STATE, action) => {
           : [
               ...state.productsAddedToFavourite,
               { ...item, isAddedToFavourite: true },
+            ],
+      };
+    }
+
+    case ADD_REMOVE_WISHLIST: {
+      const item = action.item;
+
+      const inWishList = state.productsAddedToWishList.find(
+        (item) => item.id === action.item.id
+      )
+        ? true
+        : false;
+
+      return {
+        ...state,
+        productsAddedToWishList: inWishList
+          ? state.productsAddedToWishList.filter(
+              (removedItem) => removedItem.id !== item.id
+            )
+          : [
+              ...state.productsAddedToWishList,
+              { ...item, isAddedToWishlist: true },
             ],
       };
     }

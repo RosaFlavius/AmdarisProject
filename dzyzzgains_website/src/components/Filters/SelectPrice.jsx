@@ -25,6 +25,7 @@ export default function SelectPrice({ setSelectedPrice }) {
           label="Price"
           onChange={handleChange}
           className="select-filter-style"
+          style={{ background: "white" }}
         >
           <MenuItem value="">
             <em>None</em>

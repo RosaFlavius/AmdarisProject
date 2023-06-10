@@ -17,7 +17,6 @@ toast.configure();
 
 const Login = ({ logIn }) => {
   const [existantEmail, setExistantEmail] = useState(true);
-  const [checkedPassword, setCheckedPassword] = useState(false);
 
   const formikLogin = useFormik({
     initialValues: {
@@ -125,10 +124,6 @@ const Login = ({ logIn }) => {
       setExistantEmail(false);
       return;
     }
-    if (!passwordChecked) {
-      setCheckedPassword(false);
-      return;
-    }
     const response = await axios
       .get("https://localhost:7177/api/User/users/" + `${data.email}`)
       .catch((e) => {
@@ -137,7 +132,9 @@ const Login = ({ logIn }) => {
           autoClose: 1000,
         });
       });
+    console.log(response);
     logIn(
+      response.data.id,
       response.data.firstName,
       response.data.lastName,
       response.data.email,

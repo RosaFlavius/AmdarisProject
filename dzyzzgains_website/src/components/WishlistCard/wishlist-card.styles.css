@@ -1,0 +1,33 @@
+.container-wish-card.container-wish-card {
+  display: flex;
+  background-color: white;
+  justify-content: space-between;
+  border-radius: 10px;
+  box-shadow: 0px -3px 4px 0px rgba(107, 126, 190, 4%),
+    0px 8px 16px 0px rgba(107, 126, 190, 16%);
+}
+.wish-name-text {
+  font-size: 25px;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+  font-weight: 600;
+}
+.center-item-wish {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.delete-container-wish.delete-container-wish {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-top: -24px;
+}
+.icon-wish.icon-wish {
+  height: 30px;
+  width: 30px;
+}
+.text-wish {
+  word-wrap: break-word;
+}

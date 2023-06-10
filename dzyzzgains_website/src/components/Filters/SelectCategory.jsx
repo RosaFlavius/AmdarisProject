@@ -26,6 +26,7 @@ export default function SelectCategory({ setSelectedCategory }) {
           label="Category"
           onChange={handleChange}
           className="select-filter-style"
+          style={{ background: "white" }}
         >
           <MenuItem value="">
             <em>None</em>

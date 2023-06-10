@@ -26,6 +26,7 @@ export default function SelectSupplementsType({ setSelectedSupplementsType }) {
           label="Supplement Type"
           onChange={handleChange}
           className="select-filter-style"
+          style={{ background: "white" }}
         >
           <MenuItem value="">
             <em>None</em>

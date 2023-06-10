@@ -3,6 +3,7 @@ using Domain.Products;
 using Domain.RepositoryPattern;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration.UserSecrets;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,10 +33,6 @@ namespace Application.Repositories
             return await _dbContext.Notifications.Where(active => active.IsUserNotified == false && active.ProductId == productId).ToListAsync();
         }
 
-        public async Task<NotificationRequest> GetNotification(Guid notificationId)
-        {
-            return await _dbContext.Notifications.FirstOrDefaultAsync(not => not.NotificationId == notificationId);
-        }
 
         public async Task<NotificationRequest> UpdateActiveNotification(Guid notificationId)
         {
@@ -50,6 +47,24 @@ namespace Application.Repositories
             await _dbContext.SaveChangesAsync();
             return notification;
         }
+
+        public async Task<bool> DeleteNotification(Guid userId, Guid productId)
+        {
+            var notification = await _dbContext.Notifications.SingleOrDefaultAsync(item => item.UserId == userId && item.ProductId == productId);
+            if (notification != null)
+            {
+                _dbContext.Remove(notification);
+                await _dbContext.SaveChangesAsync();
+                return true;
+            }
+            return false;
+        }
+
+        public async Task<NotificationRequest> GetNotification(Guid notificationId)
+        {
+            return await _dbContext.Notifications.FirstOrDefaultAsync(not => not.NotificationId == notificationId);
+        }
+
 
 
     }

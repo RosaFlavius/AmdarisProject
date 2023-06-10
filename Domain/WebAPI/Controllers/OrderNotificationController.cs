@@ -3,6 +3,7 @@ using Application.Queries.Email;
 using Application.Queries.Orders;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using WebAPI.DTOs;
 
 namespace WebAPI.Controllers
 {
@@ -17,21 +18,21 @@ namespace WebAPI.Controllers
             _mediator = mediator;
         }
 
-        [HttpPost("orderNotification/{userEmail}")]
-        public async Task<IActionResult> CreateOrderNotification(Guid orderId, string userEmail, Guid userId)
+        [HttpPost("{userEmail}")]
+        public async Task<IActionResult> CreateOrderNotification(string userEmail, [FromBody] CreateOrderNotificationDTO dto)
         {
             var command = new CreateOrderNotificationCommand
             {
-                OrderId = orderId,
+                OrderId = dto.OrderId,
                 UserEmail = userEmail,
-                UserId = userId,
+                UserId = dto.UserId,
             };
             var res = await _mediator.Send(command);
 
             return Ok(res);
         }
 
-        [HttpGet("orderNotification/{orderId}")]
+        [HttpGet("{orderId}")]
         public async Task<IActionResult> GetAllProductsByOrderId(Guid orderId)
         {
             var query = new GetAllProductsByOrderIdQuery { OrderId = orderId };
@@ -40,7 +41,7 @@ namespace WebAPI.Controllers
             return Ok(result);
         }
 
-        [HttpPost("orderNotification/send/{orderId}")]
+        [HttpPost("send/{orderId}")]
         public async Task<IActionResult> SendOrderEmailNotification(Guid orderId)
         {
             var command = new SendOrderNotificationEmailCommand
