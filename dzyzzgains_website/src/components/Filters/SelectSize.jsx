@@ -26,6 +26,7 @@ export default function SelectSize({ setSelectedSize }) {
           label="Size"
           onChange={handleChange}
           className="select-filter-style"
+          style={{ background: "white" }}
         >
           <MenuItem value="">
             <em>None</em>

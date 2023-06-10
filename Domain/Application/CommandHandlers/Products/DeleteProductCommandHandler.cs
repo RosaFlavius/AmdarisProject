@@ -22,8 +22,6 @@ namespace Application.CommandHandlers
 
         public async Task<bool> Handle(DeleteProductCommand request, CancellationToken cancellationToken)
         {
-            var product = await _productRepo.GetProduct(request.Id);
-
             bool result = _productRepo.DeleteProduct(request.Id);
             await _productRepo.SaveChangesAsync();
             return result;

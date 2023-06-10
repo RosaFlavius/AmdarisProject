@@ -5,16 +5,12 @@ import {
   removeFromCart,
   adjustQty,
 } from "../../redux/Shop/shop_action";
-import styled from "styled-components";
-import StripeCheckout from "react-stripe-checkout";
 import { useNavigate } from "react-router-dom";
 import LogoIMG from "../../images/Logo.png";
 import { Button, Grid } from "@mui/material";
-import { grey } from "@mui/material/colors";
 import "./cart.styles.css";
 import CardCart from "../../components/CardCart/CardCart";
-
-const KEY = process.env.REACT_APP_STRIPE;
+import DialogPayment from "../../components/DialogPayment/DialogPayment";
 
 const Cart = ({
   productsAddedToCart,
@@ -138,27 +134,17 @@ const Cart = ({
                 <span className="text-total">Total {totalPrice}$</span>
               </Grid>
               <Grid item xs={12} sm={6} md={9} lg={12}>
-                <StripeCheckout
-                  name="DZyzzGains Shop"
-                  image={LogoIMG}
-                  billingAddress
-                  shippingAddress
-                  description={`Your total is $${totalPrice}`}
-                  amount={totalPrice * 100}
-                  // token={onToken}
-                  stripeKey={KEY}
+                <DialogPayment totalPrice={totalPrice} />
+                {/* <Button
+                  size="large"
+                  style={{
+                    backgroundColor: grey[900],
+                    color: grey[50],
+                    width: "100%",
+                  }}
                 >
-                  <Button
-                    size="large"
-                    style={{
-                      backgroundColor: grey[900],
-                      color: grey[50],
-                      width: "100%",
-                    }}
-                  >
-                    CHECKOUT NOW
-                  </Button>
-                </StripeCheckout>
+                  CHECKOUT NOW
+                </Button> */}
               </Grid>
             </Grid>
           </Grid>

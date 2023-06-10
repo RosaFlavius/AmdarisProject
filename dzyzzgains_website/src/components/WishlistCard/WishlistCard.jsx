@@ -1,20 +1,20 @@
-import { Button, Grid, IconButton } from "@mui/material";
+import { Grid, IconButton } from "@mui/material";
 import React from "react";
 import { Category } from "../../Enums/Category.ts";
 import { ClothesGender } from "../../Enums/ClothesGender.ts";
 import { ClothesSize } from "../../Enums/ClothesSize.ts";
 import { EquipmentType } from "../../Enums/EquipmentType.ts";
 import { SupplementsType } from "../../Enums/SupplementsType.ts";
-import StarIcon from "@mui/icons-material/Star";
-import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
-import { addToCart, addRemoveFavourite } from "../../redux/Shop/shop_action";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import { addRemoveWishlist } from "../../redux/Shop/shop_action";
 import { connect } from "react-redux";
-import "./favourites-card.styles.css";
+import "./wishlist-card.styles.css";
 import { bindActionCreators } from "redux";
 import { useDispatch } from "react-redux";
 import * as shoppingActions from "../../redux/Shop/shop_action";
+import axios from "axios";
 
-function FavouritesCard({ item, productsAddedToWishlist }) {
+function WishlistCard({ item, userId }) {
   const dispatch = useDispatch();
 
   const verifyCategory = () => {
@@ -39,28 +39,23 @@ function FavouritesCard({ item, productsAddedToWishlist }) {
     }
   };
 
-  const isAddedToWishList = () => {
-    return productsAddedToWishlist.find((prod) => prod.id === item.id);
-  };
-
-  const handleAddToCart = () => {
-    dispatch(addToCart({ ...item }));
-  };
-
-  const handleRemoveFromFavourite = () => {
-    dispatch(addRemoveFavourite({ ...item }));
+  const handleRemoveFromWishlist = async () => {
+    dispatch(addRemoveWishlist({ ...item }));
+    await axios
+      .delete(`https://localhost:7177/api/Notification/${userId}/${item.id}`)
+      .catch((e) => console.log(e));
   };
 
   return (
-    <Grid container spacing={3} className="container-favourites-card">
+    <Grid container spacing={3} className="container-wish-card">
       <Grid item xs={10}>
         <Grid container spacing={3}>
           <Grid item md={5} lg={5}>
-            <Grid container spacing={3} className="center-item-fav">
-              <Grid item xs={12} className="center-item-fav">
-                <span className="fav-name-text">{item.name}</span>
+            <Grid container spacing={3} className="center-item-wish">
+              <Grid item xs={12} className="center-item-wish">
+                <span className="wish-name-text">{item.name}</span>
               </Grid>
-              <Grid item xs={12} className="center-item-fav">
+              <Grid item xs={12} className="center-item-wish">
                 <img
                   src={item.img}
                   style={{
@@ -76,29 +71,29 @@ function FavouritesCard({ item, productsAddedToWishlist }) {
             <Grid
               container
               spacing={3}
-              className="center-item-fav"
+              className="center-item-wish"
               style={{ padding: "20px" }}
             >
               <Grid item xs={8}>
-                <span className="text-fav">
+                <span className="text-wish">
                   <b>Brand: </b>
                   {item.brand}
                 </span>
               </Grid>
               <Grid item xs={8}>
-                <span className="text-fav">
+                <span className="text-wish">
                   <b>Price: </b>
                   {item.price}$
                 </span>
               </Grid>
               <Grid item xs={8}>
-                <span className="text-fav">
+                <span className="text-wish">
                   <b>Description: </b>
                   {item.description}
                 </span>
               </Grid>
               <Grid item xs={8}>
-                <span className="text-fav">
+                <span className="text-wish">
                   <b>Category: </b>
                   {Category[item.category]}
                 </span>
@@ -110,26 +105,17 @@ function FavouritesCard({ item, productsAddedToWishlist }) {
           </Grid>
         </Grid>
       </Grid>
-      <Grid item xs={1} className="delete-container-fav">
-        <IconButton onClick={handleRemoveFromFavourite}>
-          <StarIcon
-            className="icon-fav"
-            style={{ color: "rgb(215, 215, 85)" }}
-          />
+      <Grid item xs={1} className="delete-container-wish">
+        <IconButton onClick={handleRemoveFromWishlist}>
+          <FavoriteIcon className="icon-wish" style={{ color: "#FC6569" }} />
         </IconButton>
-        {!isAddedToWishList() ? (
-          <IconButton onClick={handleAddToCart}>
-            <AddShoppingCartIcon className="icon-fav" color="secondary" />
-          </IconButton>
-        ) : null}
       </Grid>
     </Grid>
   );
 }
-
 const mapStateToProps = (state) => {
   return {
-    productsAddedToWishlist: state.shopReducer.productsAddedToWishList,
+    userId: state.userReducer.userId,
   };
 };
 
@@ -137,4 +123,4 @@ function mapDispatchToProps(dispatch) {
   return { ...bindActionCreators(shoppingActions, dispatch) };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(FavouritesCard);
+export default connect(mapStateToProps, mapDispatchToProps)(WishlistCard);

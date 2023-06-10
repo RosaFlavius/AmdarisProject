@@ -67,5 +67,8 @@
   color: white;
 }
 .favourite-icon-added {
+  color: rgb(215, 215, 85);
+}
+.wishlist-icon-added {
   color: red;
 }

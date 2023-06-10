@@ -35,8 +35,6 @@ const Products = (props) => {
     setAux(JSON.parse(JSON.stringify(filteredProducts)));
   }, [selected, size, gender, equipmentType, supplementType, search]);
 
-  console.log(search);
-
   if (isLoadingParts)
     return (
       <Grid align="center">
@@ -217,7 +215,7 @@ const Products = (props) => {
               variant="outlined"
               value={search}
               className="select-filter-style"
-              style={{ width: "100%" }}
+              style={{ width: "100%", background: "white" }}
               onChange={(event) => setSearch(event.target.value)}
             />
           </Grid>
@@ -231,6 +229,8 @@ const Products = (props) => {
               addToCart={props.addToCart}
               addToFavourite={props.addToFavourite}
               isAddedToFavourite={props.isAddedToFavourite}
+              addToWishlist={props.addToWishlist}
+              isAddedToWislist={props.isAddedToWislist}
             />
           </Grid>
         ))}

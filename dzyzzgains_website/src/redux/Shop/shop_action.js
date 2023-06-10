@@ -1,5 +1,6 @@
 import {
   ADD_TO_CART,
+  ADD_REMOVE_WISHLIST,
   FETCHING_PRODUCTS,
   FETCHING_PRODUCTS_SUCCESS,
   REMOVE_FROM_CART,
@@ -7,6 +8,7 @@ import {
   ADJUST_QTY,
   ADD_REMOVE_FAVOURITES,
   REMOVE_FROM_FAVOURITES,
+  REMOVE_FROM_WISHLIST,
 } from "./shop_types";
 import axios from "axios";
 
@@ -38,6 +40,18 @@ export const fetchProducts = () => {
 export const addToCart = (item) => {
   return (dispatch) => {
     dispatch({ type: ADD_TO_CART, item });
+  };
+};
+
+export const addRemoveWishlist = (item) => {
+  return (dispatch) => {
+    dispatch({ type: ADD_REMOVE_WISHLIST, item });
+  };
+};
+
+export const removeFromWishlist = (item) => {
+  return (dispatch) => {
+    dispatch({ type: REMOVE_FROM_WISHLIST, item });
   };
 };
 

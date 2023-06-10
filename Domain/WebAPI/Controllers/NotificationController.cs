@@ -20,14 +20,14 @@ namespace WebAPI.Controllers
             _mediator = mediator;
         }
 
-        [HttpPost("notification/{userEmail}")]
-        public async Task<IActionResult> CreateNotification( Guid productId, string userEmail, Guid userId)
+        [HttpPost("{userEmail}")]
+        public async Task<IActionResult> CreateNotification(string userEmail, [FromBody] CreateNotificationDTO dto)
         {
             var command = new CreateNotificationCommand
             {
-                ProductId = productId,
+                ProductId = dto.ProductId,
                 UserEmail = userEmail,
-                UserId = userId,
+                UserId = dto.UserId,
             };
             var res = await _mediator.Send(command);
 
@@ -48,6 +48,19 @@ namespace WebAPI.Controllers
         {
             var command = new SentNotificationEmailCommand
             {
+                ProductId = productId,
+            };
+            var res = await _mediator.Send(command);
+
+            return Ok(res);
+        }
+
+        [HttpDelete("{userId}/{productId}")]
+        public async Task<IActionResult> DeleteNotification(Guid userId, Guid productId)
+        {
+            var command = new DeleteNotificationCommand
+            {
+                UserId = userId,
                 ProductId = productId,
             };
             var res = await _mediator.Send(command);

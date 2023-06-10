@@ -26,6 +26,7 @@ export default function SelectEquipmentType({ setSelectedEquipmentType }) {
           label="Equipment Type"
           onChange={handleChange}
           className="select-filter-style"
+          style={{ background: "white" }}
         >
           <MenuItem value="">
             <em>None</em>
