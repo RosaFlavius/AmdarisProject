@@ -25,6 +25,8 @@ namespace Infrastructure.Data
         public DbSet<Supplement> Supplements { get; set; }
         public DbSet<OrderProducts> OrderProducts { get; set; }
         public DbSet<NotificationRequest> Notifications { get; set; }
+        
+        public DbSet<NotificationOrder> OrdersNotifications { get; set; }
         /*protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer("Server=DESKTOP-465R8PC\\SQLEXPRESS;Database=DZyzzDatabaseLicenta;Trusted_Connection=true");
@@ -44,6 +46,7 @@ namespace Infrastructure.Data
             modelBuilder.Entity<OrderProducts>()
                 .HasKey(scp => new { scp.OrderId, scp.ProductId });
             modelBuilder.Entity<NotificationRequest>().HasKey(x => x.NotificationId);
+            modelBuilder.Entity<NotificationOrder>().HasKey(x => x.NotificationId);
             /*modelBuilder.Entity<NotificationRequest>().Property(x => x.NotificationId).ValueGeneratedOnAdd();*/
 
         }

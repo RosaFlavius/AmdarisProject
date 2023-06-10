@@ -1,4 +1,6 @@
-﻿using Domain.Products;
+﻿using Application.DTOs;
+using Domain.DTOs;
+using Domain.Products;
 using Domain.RepositoryPattern;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
@@ -61,16 +63,53 @@ namespace Application.Repositories
             return await _dbContext.Orders.ToListAsync();
         }
 
+        public void AddProductToOrder(Guid productId, Guid orderId, int quantity)
+        {
+            var item = new OrderProducts { ProductId = productId, OrderId = orderId, Quantity = quantity };
+            _dbContext.OrderProducts.Add(item);
+        }
+
+        public async Task<GetAllProductsByOrderIdDTO> GetAllProductsByOrderId(Guid orderId)
+        {
+            var order = await _dbContext.Orders.FindAsync(orderId);
+
+            if (order == null)
+            {
+                // Handle the case where the order does not exist
+                // You can throw an exception or return null/empty result based on your requirements
+                return null;
+            }
+
+
+            var products = await (from orderProduct in _dbContext.OrderProducts
+                                  join product in _dbContext.Products on orderProduct.ProductId equals product.Id
+                                  where orderProduct.OrderId == orderId
+                                  select new ProductWithQuantityDTO
+                                  {
+                                      Name = product.Name,
+                                      Brand = product.Brand, 
+                                      Price = product.Price,
+                                      Quantity = orderProduct.Quantity
+                                  })
+                                  .ToListAsync();
+
+            var dto = new GetAllProductsByOrderIdDTO
+            {
+                Order = order,
+                Products = products
+            };
+
+            return dto;
+
+
+        }
+
         public async Task<int> SaveChangesAsync()
         {
 
             return await _dbContext.SaveChangesAsync();
         }
 
-        public void AddProductToOrder(Guid productId, Guid orderId)
-        {
-            var item = new OrderProducts { ProductId = productId, OrderId=orderId };
-            _dbContext.OrderProducts.Add(item);
-        }
+        
     }
 }

@@ -23,11 +23,6 @@ namespace Application.QueryHandlers.Orders
 
         public async Task<Order> Handle(GetOrderQuery request, CancellationToken cancellationToken)
         {
-            var customer = new Order
-            {
-                Id = Guid.NewGuid(),
-            };
-
             var result = await _orderRepo.GetOrder(request.Id);
             return await Task.FromResult(result);
         }

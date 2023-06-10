@@ -36,10 +36,18 @@ namespace Application.Services
             throw new Exception(await response.Content.ReadAsStringAsync());
         }
 
-        public Task<BrevoEmailResponseDTO> SendOrderConfirmation(EmailDTO emailToSent)
+        public async Task<BrevoEmailResponseDTO> SendOrderConfirmation(EmailOrderDTO emailToSent)
         {
             SetClientConfigs();
-            throw new NotImplementedException();
+            var body = JsonConvert.SerializeObject(emailToSent);
+            var content = new StringContent(body, Encoding.UTF8, "application/json");
+            var response = await _httpClient.PostAsync("smtp/email", content);
+            if (response.IsSuccessStatusCode)
+            {
+                var res = JsonConvert.DeserializeObject<BrevoEmailResponseDTO>(await response.Content.ReadAsStringAsync());
+                return res;
+            }
+            throw new Exception(await response.Content.ReadAsStringAsync());
         }
 
         private void SetClientConfigs()

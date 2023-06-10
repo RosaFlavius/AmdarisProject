@@ -10,6 +10,6 @@ namespace Application.Abstract
     public interface IEmailService
     {
         public Task<BrevoEmailResponseDTO> SendInStockNotification(EmailDTO emailToSent);
-        public Task<BrevoEmailResponseDTO> SendOrderConfirmation(EmailDTO emailToSent);
+        public Task<BrevoEmailResponseDTO> SendOrderConfirmation(EmailOrderDTO emailToSent);
     }
 }
