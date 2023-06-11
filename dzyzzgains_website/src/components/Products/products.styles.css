@@ -1,0 +1,18 @@
+.dashboard_menu {
+  display: flex;
+  justify-content: start;
+  align-self: flex-start;
+}
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 48px;
+}
+.toolBar {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0 8px;
+  min-height: 64px;
+}
