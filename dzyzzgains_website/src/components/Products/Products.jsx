@@ -38,12 +38,7 @@ const Products = (props) => {
   }
 
   return (
-    <Grid
-      container
-      justifyContent="center"
-      spacing={3}
-      className="container-products"
-    >
+    <Grid container spacing={3} className="container-products">
       <Grid item lg={12} md={9} sm={8} xs={6}>
         {/* <Grid item lg={2} md={3} sm={4} xs={6}>
           <div className="dashboard_menu">

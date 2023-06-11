@@ -1,0 +1,35 @@
+.container-cart {
+  padding: 20px;
+}
+.text-header {
+  font-weight: 400;
+}
+.buttons-header.buttons-header {
+  color: black;
+  border-color: black;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-weight: bold;
+  border-width: 2px;
+  height: 50px;
+}
+.container-buttons-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.container-summary {
+  border-radius: 10px;
+  padding: 20px;
+  background-color: white;
+  box-shadow: 0px -3px 4px 0px rgba(107, 126, 190, 4%),
+    0px 8px 16px 0px rgba(107, 126, 190, 16%);
+}
+.container-text-total.container-text-total {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+.text-total {
+  font-weight: 400;
+  font-size: 20px;
+}

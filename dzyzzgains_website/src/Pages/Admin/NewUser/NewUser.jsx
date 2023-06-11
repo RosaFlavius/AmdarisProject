@@ -1,22 +1,44 @@
 import "./styles.css";
 import Sidebar from "../../../components/Admin/Sidebar/Sidebar";
-import Topbar from "../../../components/Admin/Topbar/Topbar";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { useFormik } from "formik";
 import "react-toastify/dist/ReactToastify.css";
-import { useState } from "react";
+import { newUserSchema } from "../../../validations/newUserSchema.tsx";
+import { Button, Grid, TextField, MenuItem } from "@mui/material";
+
+toast.configure();
 
 export default function NewUser() {
-  const [inputs, setInputs] = useState({});
+  const admin = [
+    {
+      value: false,
+      label: "Client account",
+    },
+    {
+      value: true,
+      label: "Admin account",
+    },
+  ];
 
-  const user = { ...inputs };
-  var adminBool;
-
-  const handleChange = (e) => {
-    setInputs((prev) => {
-      return { ...prev, [e.target.name]: e.target.value };
-    });
-  };
+  const formikUser = useFormik({
+    initialValues: {
+      email: "",
+      password: "",
+      firstName: "",
+      lastName: "",
+      dateOfBirth: "",
+      phone: "",
+      country: "",
+      city: "",
+      address: "",
+      admin: false,
+    },
+    validationSchema: newUserSchema,
+    onSubmit: (values) => {
+      onSubmit(values);
+    },
+  });
 
   const notify = (response) => {
     if (!response) {
@@ -35,12 +57,7 @@ export default function NewUser() {
     }
   };
 
-  const onSubmit = async () => {
-    console.log(user);
-    if (user.admin === "true") adminBool = new Boolean(true);
-    else {
-      adminBool = new Boolean(false);
-    }
+  const onSubmit = async (user) => {
     const response = await axios
       .post("https://localhost:7177/api/User", {
         firstName: user.firstName,
@@ -52,129 +69,213 @@ export default function NewUser() {
         country: user.country,
         city: user.city,
         address: user.address,
-        admin: adminBool,
+        admin: user.admin,
       })
       .catch((e) => console.log(e));
-    console.log(response);
     notify(response);
   };
 
   return (
-    <div>
-      <Topbar />
-      <div className="container">
+    <Grid container spacing={3} className="users-layout">
+      <Grid item xs={12} sm={5} lg={3}>
         <Sidebar />
-        <div className="newUser">
-          <h1 className="newUserTitle">New User</h1>
-          <form className="newUserForm">
-            <div className="newUserItem">
-              <label>Email</label>
-              <input
-                name="email"
-                type="email"
-                placeholder="User Email"
-                onChange={handleChange}
-              />
-            </div>
-            <div className="newUserItem">
-              <label>Password</label>
-              <input
-                name="password"
-                type="password"
-                placeholder="User Password"
-                onChange={handleChange}
-              />
-            </div>
-            <div className="newUserItem">
-              <label>First Name</label>
-              <input
-                name="firstName"
-                type="text"
-                placeholder="First Name User"
-                onChange={handleChange}
-              />
-            </div>
-            <div className="newUserItem">
-              <label>Last Name</label>
-              <input
-                name="lastName"
-                type="text"
-                placeholder="Last Name User"
-                onChange={handleChange}
-              />
-            </div>
-            <div className="newUserItem">
-              <label>DateOfBirth</label>
-              <input
-                name="dateOfBirth"
-                type="text"
-                placeholder="DateOfBirth"
-                onChange={handleChange}
-              />
-            </div>
-            <div className="newUserItem">
-              <label>Phone</label>
-              <input
-                name="phone"
-                type="text"
-                placeholder="Phone"
-                onChange={handleChange}
-              />
-            </div>
-            <div className="newUserItem">
-              <label>Country</label>
-              <input
-                name="country"
-                type="text"
-                placeholder="Country User"
-                onChange={handleChange}
-              />
-            </div>
-            <div className="newUserItem">
-              <label>City</label>
-              <input
-                name="city"
-                type="text"
-                placeholder="City User"
-                onChange={handleChange}
-              />
-            </div>
-            <div className="newUserItem">
-              <label>Address</label>
-              <input
-                name="address"
-                type="text"
-                placeholder="Address User"
-                onChange={handleChange}
-              />
-            </div>
-            <div className="newUserItem">
-              <label>Admin</label>
-              <div className="newUserGender">
-                <input
-                  type="radio"
-                  name="admin"
-                  id="yes"
-                  value={true}
-                  onChange={handleChange}
-                />
-                <label htmlFor="yes">Yes</label>
-                <input
-                  type="radio"
-                  name="admin"
-                  id="no"
-                  value={false}
-                  onChange={handleChange}
-                />
-                <label htmlFor="no">No</label>
-              </div>
-            </div>
-            <button onClick={onSubmit} className="newUserButton">
-              Create
-            </button>
-          </form>
-        </div>
-      </div>
-    </div>
+      </Grid>
+      <Grid item xs={12} sm={7} lg={9}>
+        <Grid container className="container-user">
+          <Grid item xs={12}>
+            <h1>New User</h1>
+          </Grid>
+          <Grid item xs={12}>
+            <form className="user-form" onSubmit={formikUser.handleSubmit}>
+              <Grid container spacing={3}>
+                <Grid item xs={12} sm={11} md={10} lg={5}>
+                  <TextField
+                    className="text-field-form"
+                    InputProps={{ className: "input-text-field" }}
+                    name="firstName"
+                    type="text"
+                    placeholder="First Name"
+                    value={formikUser.values.firstName}
+                    onChange={formikUser.handleChange}
+                    onBlur={formikUser.handleBlur}
+                    error={
+                      !!formikUser.errors.firstName &&
+                      formikUser.touched.firstName
+                    }
+                    helperText={formikUser.errors.firstName}
+                  />
+                </Grid>
+                <Grid item xs={12} sm={11} md={10} lg={5}>
+                  <TextField
+                    className="text-field-form"
+                    InputProps={{ className: "input-text-field" }}
+                    name="lastName"
+                    type="text"
+                    placeholder="Last name"
+                    value={formikUser.values.lastName}
+                    onChange={formikUser.handleChange}
+                    onBlur={formikUser.handleBlur}
+                    error={
+                      !!formikUser.errors.lastName &&
+                      formikUser.touched.lastName
+                    }
+                    helperText={formikUser.errors.lastName}
+                  />
+                </Grid>
+                <Grid item xs={12} sm={11} md={10} lg={5}>
+                  <TextField
+                    className="text-field-form"
+                    InputProps={{ className: "input-text-field" }}
+                    name="email"
+                    type="text"
+                    placeholder="Email"
+                    value={formikUser.values.email}
+                    onChange={formikUser.handleChange}
+                    onBlur={formikUser.handleBlur}
+                    error={
+                      !!formikUser.errors.email && formikUser.touched.email
+                    }
+                    helperText={formikUser.errors.email}
+                  />
+                </Grid>
+                <Grid item xs={12} sm={11} md={10} lg={5}>
+                  <TextField
+                    className="text-field-form"
+                    InputProps={{ className: "input-text-field" }}
+                    name="password"
+                    type="password"
+                    placeholder="Password"
+                    value={formikUser.values.password}
+                    onChange={formikUser.handleChange}
+                    onBlur={formikUser.handleBlur}
+                    error={
+                      !!formikUser.errors.password &&
+                      formikUser.touched.password
+                    }
+                    helperText={formikUser.errors.password}
+                  />
+                </Grid>
+                <Grid item xs={12} sm={11} md={10} lg={5}>
+                  <TextField
+                    className="text-field-form"
+                    InputProps={{ className: "input-text-field" }}
+                    name="dateOfBirth"
+                    type="text"
+                    multiline
+                    placeholder="Date of birth"
+                    value={formikUser.values.dateOfBirth}
+                    onChange={formikUser.handleChange}
+                    onBlur={formikUser.handleBlur}
+                    error={
+                      !!formikUser.errors.dateOfBirth &&
+                      formikUser.touched.dateOfBirth
+                    }
+                    helperText={formikUser.errors.dateOfBirth}
+                  />
+                </Grid>
+                <Grid item xs={12} sm={11} md={10} lg={5}>
+                  <TextField
+                    className="text-field-form"
+                    InputProps={{ className: "input-text-field" }}
+                    name="phone"
+                    type="text"
+                    multiline
+                    placeholder="Phone"
+                    value={formikUser.values.phone}
+                    onChange={formikUser.handleChange}
+                    onBlur={formikUser.handleBlur}
+                    error={
+                      !!formikUser.errors.phone && formikUser.touched.phone
+                    }
+                    helperText={formikUser.errors.phone}
+                  />
+                </Grid>
+                <Grid item xs={12} sm={11} md={10} lg={5}>
+                  <TextField
+                    className="text-field-form"
+                    InputProps={{ className: "input-text-field" }}
+                    name="country"
+                    type="text"
+                    multiline
+                    placeholder="Country"
+                    value={formikUser.values.country}
+                    onChange={formikUser.handleChange}
+                    onBlur={formikUser.handleBlur}
+                    error={
+                      !!formikUser.errors.country && formikUser.touched.country
+                    }
+                    helperText={formikUser.errors.country}
+                  />
+                </Grid>
+                <Grid item xs={12} sm={11} md={10} lg={5}>
+                  <TextField
+                    className="text-field-form"
+                    InputProps={{ className: "input-text-field" }}
+                    name="city"
+                    type="text"
+                    multiline
+                    placeholder="City"
+                    value={formikUser.values.city}
+                    onChange={formikUser.handleChange}
+                    onBlur={formikUser.handleBlur}
+                    error={!!formikUser.errors.city && formikUser.touched.city}
+                    helperText={formikUser.errors.city}
+                  />
+                </Grid>
+                <Grid item xs={12} sm={11} md={10} lg={5}>
+                  <TextField
+                    className="text-field-form"
+                    InputProps={{ className: "input-text-field" }}
+                    name="address"
+                    type="text"
+                    multiline
+                    placeholder="Address"
+                    value={formikUser.values.address}
+                    onChange={formikUser.handleChange}
+                    onBlur={formikUser.handleBlur}
+                    error={
+                      !!formikUser.errors.address && formikUser.touched.address
+                    }
+                    helperText={formikUser.errors.address}
+                  />
+                </Grid>
+                <Grid item xs={12} sm={11} md={10} lg={5}>
+                  <TextField
+                    className="text-field-form"
+                    InputProps={{ className: "input-text-field" }}
+                    InputLabelProps={{ className: "label-text-field" }}
+                    name="admin"
+                    select
+                    placeholder="Admin"
+                    value={formikUser.values.admin}
+                    onChange={formikUser.handleChange}
+                    onBlur={formikUser.handleBlur}
+                    error={
+                      !!formikUser.errors.admin && formikUser.touched.admin
+                    }
+                    helperText={formikUser.errors.admin}
+                  >
+                    {admin.map((option) => (
+                      <MenuItem key={option.value} value={option.value}>
+                        {option.label}
+                      </MenuItem>
+                    ))}
+                  </TextField>
+                </Grid>
+                <Grid item xs={12} sm={11} md={10} lg={5}>
+                  <Button
+                    variant="contained"
+                    type="submit"
+                    className="form-button"
+                  >
+                    Create
+                  </Button>
+                </Grid>
+              </Grid>
+            </form>
+          </Grid>
+        </Grid>
+      </Grid>
+    </Grid>
   );
 }

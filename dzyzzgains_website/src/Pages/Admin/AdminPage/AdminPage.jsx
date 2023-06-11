@@ -1,17 +1,18 @@
 import React from "react";
 import Sidebar from "../../../components/Admin/Sidebar/Sidebar";
-import Topbar from "../../../components/Admin/Topbar/Topbar";
-import HomeAdminPage from "../HomeAdminPage/HomeAdminPage";
 import "./styles.css";
+import { Grid } from "@mui/material";
 
 function AdminPage() {
   return (
-    <div>
-      <div className="container">
+    <Grid container spacing={3} className="container-home-layout">
+      <Grid item xs={12} sm={5} lg={3}>
         <Sidebar />
-        <HomeAdminPage />
-      </div>
-    </div>
+      </Grid>
+      <Grid item xs={12} sm={7} lg={9}>
+        <div />
+      </Grid>
+    </Grid>
   );
 }
 

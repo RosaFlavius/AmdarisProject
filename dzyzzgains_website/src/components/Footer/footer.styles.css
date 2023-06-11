@@ -1,5 +1,6 @@
 .container-footer.container-footer.container-footer {
   background-color: #d7f5e9;
+  margin-top: auto;
 }
 .details-container.details-container {
   display: flex;
@@ -29,7 +30,7 @@
   align-items: center;
 }
 .logo-image {
-  height: 60%;
+  height: 100%;
 }
 .grid-contact-details.grid-contact-details {
   display: flex;

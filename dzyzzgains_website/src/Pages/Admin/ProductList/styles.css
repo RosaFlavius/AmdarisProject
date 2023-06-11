@@ -1,13 +1,3 @@
-.productList {
-  flex: 4;
-  height: 530px;
-}
-
-.productListItem {
-  display: flex;
-  align-items: center;
-}
-
 .productListImg {
   width: 32px;
   height: 32px;
@@ -30,7 +20,15 @@
   color: red;
   cursor: pointer;
 }
-.container {
-  display: flex;
-  margin-top: 10px;
+.data-grid-products {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  padding: 10px;
+  background-color: white;
+  max-height: 80%;
+  box-shadow: 0px -3px 4px 0px rgba(107, 126, 190, 4%),
+    0px 8px 16px 0px rgba(107, 126, 190, 16%);
+}
+.products-layout-data-grid {
+  padding: 5px;
+  height: 89vh;
 }

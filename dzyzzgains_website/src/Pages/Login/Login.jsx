@@ -149,13 +149,13 @@ const Login = ({ logIn }) => {
       response.data.admin
     );
     notify(true, "login");
-    // setTimeout(() => {
-    //   if (response.data.admin) {
-    //     navigate("/admin");
-    //   } else {
-    //     navigate("/");
-    //   }
-    // }, 1000);
+    setTimeout(() => {
+      if (response.data.admin) {
+        navigate("/admin");
+      } else {
+        navigate("/");
+      }
+    }, 1000);
   };
 
   const handleSubmitSignUp = async (data) => {

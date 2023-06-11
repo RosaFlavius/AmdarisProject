@@ -1,11 +1,11 @@
 import "./styles.css";
 import Sidebar from "../../../components/Admin/Sidebar/Sidebar";
-import Topbar from "../../../components/Admin/Topbar/Topbar";
 import { DataGrid } from "@mui/x-data-grid";
 import { DeleteOutline } from "@mui/icons-material";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { Grid } from "@mui/material";
 
 export default function UserList() {
   const [components, setComponents] = useState([]);
@@ -40,7 +40,7 @@ export default function UserList() {
 
   const handleDelete = async (id) => {
     const response = await axios
-      .delete("https://localhost:7177/api/User/" + `${id}`)
+      .delete(`https://localhost:7177/api/User/${id}`)
       .catch((e) => console.log(e));
     if (response) {
       refreshPage();
@@ -52,7 +52,6 @@ export default function UserList() {
   }, []);
 
   const columns = [
-    { field: "id", headerName: "ID", width: 90 },
     { field: "email", headerName: "Email", width: 200 },
     {
       field: "firstName",
@@ -116,20 +115,20 @@ export default function UserList() {
   ];
 
   return (
-    <div>
-      <div className="container">
+    <Grid container spacing={3} className="users-layout-data-grid">
+      <Grid item xs={12} sm={5} lg={3}>
         <Sidebar />
-        <div className="userList">
-          <DataGrid
-            rows={components}
-            disableSelectionOnClick
-            columns={columns}
-            pageSize={10}
-            rowsPerPageOptions={[10]}
-            checkboxSelection
-          />
-        </div>
-      </div>
-    </div>
+      </Grid>
+      <Grid item xs={12} sm={7} lg={8}>
+        <DataGrid
+          rows={components}
+          disableSelectionOnClick
+          columns={columns}
+          pageSize={9}
+          rowsPerPageOptions={[10]}
+          className="data-grid-users"
+        />
+      </Grid>
+    </Grid>
   );
 }
