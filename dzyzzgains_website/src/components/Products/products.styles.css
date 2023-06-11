@@ -1,6 +1,6 @@
 .dashboard_menu {
   display: flex;
-  justify-content: start;
+  justify-content: flex-start;
   align-self: flex-start;
 }
 .container-products.container-products {
