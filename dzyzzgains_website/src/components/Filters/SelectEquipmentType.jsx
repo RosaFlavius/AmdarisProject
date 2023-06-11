@@ -5,6 +5,7 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { EquipmentType } from "../../Enums/EquipmentType.ts";
+import "./filters.styles.css";
 
 export default function SelectEquipmentType({ setSelectedEquipmentType }) {
   const [equipmentType, setEquipmentType] = React.useState("");
@@ -24,6 +25,7 @@ export default function SelectEquipmentType({ setSelectedEquipmentType }) {
           value={equipmentType}
           label="Equipment Type"
           onChange={handleChange}
+          className="select-filter-style"
         >
           <MenuItem value="">
             <em>None</em>
