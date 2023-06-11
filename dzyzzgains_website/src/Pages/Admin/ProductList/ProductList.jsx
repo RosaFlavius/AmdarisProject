@@ -17,22 +17,17 @@ export default function ProductList() {
     setComponents(prod.data);
   };
 
-  function refreshPage() {
-    window.location.reload();
-  }
-
   const handleDelete = async (id) => {
     const response = await axios
       .delete(`https://localhost:7177/api/Product/${id}`)
       .catch((e) => console.log(e));
     if (response) {
-      refreshPage();
     }
   };
 
   useEffect(() => {
     fetchProducts();
-  }, []);
+  }, [components]);
 
   const columns = [
     {
@@ -58,6 +53,9 @@ export default function ProductList() {
       field: "price",
       headerName: "ProductPrice",
       flex: 1,
+      renderCell: (params) => {
+        return <span>{params.row.price}$</span>;
+      },
     },
     {
       field: "action",

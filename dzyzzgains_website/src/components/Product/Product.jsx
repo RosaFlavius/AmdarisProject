@@ -13,7 +13,7 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import "./product.styles.css";
-import { addToCart } from "../../redux/Shop/shop_action";
+import { addToCart, addRemoveFavourite } from "../../redux/Shop/shop_action";
 import { useDispatch } from "react-redux";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
@@ -30,16 +30,25 @@ const ExpandMore = styled((props) => {
   }),
 }));
 
-function Product({ item }) {
+function Product({ item, productsAddedToFavourite }) {
   const [expanded, setExpanded] = useState(false);
+
   const dispatch = useDispatch();
 
   function handleExpandClick() {
     setExpanded(!expanded);
   }
 
-  const handleClick = () => {
+  const handleAddToCart = () => {
     dispatch(addToCart({ ...item }));
+  };
+
+  const handleAddRemoveFromFavourite = () => {
+    dispatch(addRemoveFavourite({ ...item }));
+  };
+
+  const isAddedToFavourites = () => {
+    return productsAddedToFavourite.find((x) => x.id === item.id);
   };
 
   return (
@@ -71,10 +80,12 @@ function Product({ item }) {
         style={{ objectFit: "contain" }}
       />
       <CardActions disableSpacing>
-        <IconButton>
-          <FavoriteIcon />
+        <IconButton onClick={handleAddRemoveFromFavourite}>
+          <FavoriteIcon
+            className={isAddedToFavourites() ? "favourite-icon-added" : null}
+          />
         </IconButton>
-        <IconButton onClick={handleClick}>
+        <IconButton onClick={handleAddToCart}>
           <ShoppingCartOutlinedIcon />
         </IconButton>
         <ExpandMore
@@ -98,8 +109,17 @@ function Product({ item }) {
   );
 }
 
+function mapStateToProps(state) {
+  const {
+    shopReducer: { productsAddedToFavourite },
+  } = state;
+  return {
+    productsAddedToFavourite: productsAddedToFavourite,
+  };
+}
+
 function mapDispatchToProps(dispatch) {
   return { ...bindActionCreators(shoppingActions, dispatch) };
 }
 
-export default connect(mapDispatchToProps)(Product);
+export default connect(mapStateToProps, mapDispatchToProps)(Product);

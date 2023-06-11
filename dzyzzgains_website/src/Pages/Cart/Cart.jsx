@@ -73,22 +73,71 @@ const Cart = ({
   return (
     <Grid container spacing={3} style={{ padding: "20px" }}>
       <Grid item xs={12}>
-        <Grid container spacing={3}>
-          <Grid item xs={12} sm={4} md={6} lg={4}>
-            <h1 className="text-header">YOUR BAG</h1>
+        <Grid container spacing={6} style={{ padding: "20px" }}>
+          <Grid item xs={12} sm={12} md={6} lg={4}>
+            <Grid container spacing={3} className="title-button-container">
+              <Grid
+                item
+                xs={12}
+                sm={6}
+                md={6}
+                lg={6}
+                style={{ display: "flex", justifyContent: "center" }}
+              >
+                <h1 className="text-header">YOUR BAG</h1>
+              </Grid>
+              <Grid
+                item
+                xs={12}
+                sm={6}
+                md={6}
+                lg={6}
+                style={{ display: "flex", justifyContent: "center" }}
+              >
+                <Button
+                  variant="outlined"
+                  onClick={routeChange}
+                  className="buttons-header"
+                >
+                  CONTINUE SHOPPING
+                </Button>
+              </Grid>
+            </Grid>
           </Grid>
-
-          <Grid item xs={12} sm={12} md={4} lg={4}>
-            <Grid container className="container-summary">
-              <Grid item lg={8}>
+          <Grid item xs={12} sm={12} md={6} lg={8}>
+            <Grid container spacing={3} className="container-summary">
+              <Grid item xs={12} sm={6} md={3} lg={3}>
+                <Button
+                  variant="outlined"
+                  onClick={() => removeAllFromCart()}
+                  className="empty-cart-button"
+                >
+                  EMPTY CART
+                </Button>
+              </Grid>
+              <Grid
+                item
+                xs={12}
+                sm={6}
+                md={9}
+                lg={7}
+                style={{ display: "flex", justifyContent: "center" }}
+              >
                 <h2 style={{ fontWeight: 400 }}>
                   ORDER SUMMARY ({totalItems} items)
                 </h2>
               </Grid>
-              <Grid item lg={4} className="container-text-total">
+              <Grid
+                item
+                xs={12}
+                sm={6}
+                md={3}
+                lg={2}
+                className="container-text-total"
+              >
                 <span className="text-total">Total {totalPrice}$</span>
               </Grid>
-              <Grid item xs={12}>
+              <Grid item xs={12} sm={6} md={9} lg={12}>
                 <StripeCheckout
                   name="DZyzzGains Shop"
                   image={LogoIMG}
@@ -112,29 +161,6 @@ const Cart = ({
                 </StripeCheckout>
               </Grid>
             </Grid>
-          </Grid>
-          <Grid
-            item
-            xs={12}
-            sm={8}
-            md={6}
-            lg={4}
-            className="container-buttons-header"
-          >
-            <Button
-              variant="outlined"
-              onClick={routeChange}
-              className="buttons-header"
-            >
-              CONTINUE SHOPPING
-            </Button>
-            <Button
-              variant="outlined"
-              onClick={() => removeAllFromCart()}
-              className="buttons-header"
-            >
-              EMPTY CART
-            </Button>
           </Grid>
         </Grid>
       </Grid>

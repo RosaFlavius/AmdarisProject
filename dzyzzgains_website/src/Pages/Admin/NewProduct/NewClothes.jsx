@@ -74,13 +74,10 @@ export default function NewClothes() {
         autoClose: 2000,
       });
     } else {
-      toast.success(
-        `Product ${response.data.name} was created with ID: ${response.data.id}`,
-        {
-          position: toast.POSITION.TOP_CENTER,
-          autoClose: 2000,
-        }
-      );
+      toast.success(`Product ${response.data.name} was created successfully!`, {
+        position: toast.POSITION.TOP_CENTER,
+        autoClose: 2000,
+      });
     }
   };
 
@@ -97,11 +94,7 @@ export default function NewClothes() {
         category: 1,
       })
       .catch((e) => console.log(e));
-    if (response) {
-      notify(true);
-    } else {
-      notify(false);
-    }
+    notify(response);
   };
 
   return (
@@ -126,7 +119,7 @@ export default function NewClothes() {
                     InputProps={{ className: "input-text-field" }}
                     name="img"
                     type="text"
-                    placeholder="Product image"
+                    label="Product image"
                     value={formikClothes.values.img}
                     onChange={formikClothes.handleChange}
                     onBlur={formikClothes.handleBlur}
@@ -142,7 +135,7 @@ export default function NewClothes() {
                     InputProps={{ className: "input-text-field" }}
                     name="name"
                     type="text"
-                    placeholder="Product name"
+                    label="Product name"
                     value={formikClothes.values.name}
                     onChange={formikClothes.handleChange}
                     onBlur={formikClothes.handleBlur}
@@ -158,7 +151,7 @@ export default function NewClothes() {
                     InputProps={{ className: "input-text-field" }}
                     name="brand"
                     type="text"
-                    placeholder="Product brand"
+                    label="Product brand"
                     value={formikClothes.values.brand}
                     onChange={formikClothes.handleChange}
                     onBlur={formikClothes.handleBlur}
@@ -175,7 +168,7 @@ export default function NewClothes() {
                     InputProps={{ className: "input-text-field" }}
                     name="price"
                     type="text"
-                    placeholder="Product price"
+                    label="Product price"
                     value={formikClothes.values.price}
                     onChange={formikClothes.handleChange}
                     onBlur={formikClothes.handleBlur}
@@ -193,7 +186,7 @@ export default function NewClothes() {
                     name="description"
                     type="text"
                     multiline
-                    placeholder="Product description"
+                    label="Product description"
                     value={formikClothes.values.description}
                     onChange={formikClothes.handleChange}
                     onBlur={formikClothes.handleBlur}
@@ -209,7 +202,7 @@ export default function NewClothes() {
                     className="text-field-form"
                     InputProps={{ className: "input-text-field" }}
                     name="gender"
-                    placeholder="Product description"
+                    label="Product description"
                     select
                     value={formikClothes.values.gender}
                     onChange={formikClothes.handleChange}

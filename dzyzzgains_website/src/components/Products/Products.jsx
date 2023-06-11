@@ -50,7 +50,12 @@ const Products = (props) => {
         filteredProducts.map((product) => (
           <Grid item key={product.id} xs={12} sm={6} md={6} lg={4}>
             {/* <Product item={product} addToCart={props.addToCart} /> */}
-            <Product item={product} addToCart={props.addToCart} />
+            <Product
+              item={product}
+              addToCart={props.addToCart}
+              addToFavourite={props.addToFavourite}
+              isAddedToFavourite={props.isAddedToFavourite}
+            />
           </Grid>
         ))}
     </Grid>
