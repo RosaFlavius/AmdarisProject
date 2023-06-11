@@ -11,6 +11,7 @@ namespace WebAPI.DTOs
         public string Description { get; set; }
         public float Price { get; set; }
         public string Img { get; set; }
+        public bool InStock { get; set; }
         public SupplementType TypeOfSupplement { get; set; }
         public ProductCategory Category { get => ProductCategory.Supplements; }
     }

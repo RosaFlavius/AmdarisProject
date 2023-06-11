@@ -5,10 +5,11 @@ import { DeleteOutline } from "@mui/icons-material";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { Grid } from "@mui/material";
+import { Button, Chip, Grid, IconButton } from "@mui/material";
 
 export default function ProductList() {
   const [components, setComponents] = useState([]);
+  const [isUpdated, setIsUpdated] = useState(false);
 
   const fetchProducts = async () => {
     const prod = await axios
@@ -18,16 +19,31 @@ export default function ProductList() {
   };
 
   const handleDelete = async (id) => {
-    const response = await axios
+    setIsUpdated(true);
+    await axios
       .delete(`https://localhost:7177/api/Product/${id}`)
       .catch((e) => console.log(e));
-    if (response) {
-    }
+    setIsUpdated(false);
+  };
+
+  const handleInStock = async (id) => {
+    setIsUpdated(true);
+    await axios
+      .patch("https://localhost:7177/api/Product/inStock/" + `${id}`)
+      .catch((e) => console.log(e));
+    setIsUpdated(false);
+  };
+  const handleOutOfStock = async (id) => {
+    setIsUpdated(true);
+    await axios
+      .patch("https://localhost:7177/api/Product/outOfStock/" + `${id}`)
+      .catch((e) => console.log(e));
+    setIsUpdated(false);
   };
 
   useEffect(() => {
     fetchProducts();
-  }, [components]);
+  }, [isUpdated]);
 
   const columns = [
     {
@@ -58,20 +74,52 @@ export default function ProductList() {
       },
     },
     {
-      field: "action",
-      headerName: "Action",
+      field: "inStock",
+      headerName: "In Stock",
       flex: 1,
       renderCell: (params) => {
         return (
-          <>
+          <Chip
+            label={params.row.inStock ? "Yes" : "No"}
+            className={params.row.inStock ? "chip-inStock" : "chip-outOfStock"}
+          />
+        );
+      },
+    },
+    {
+      field: "action",
+      headerName: "Action",
+      flex: 2,
+      renderCell: (params) => {
+        return (
+          <div>
             <Link to={"/admin/admin_product/" + params.row.id}>
-              <button className="productListEdit">Edit</button>
+              <Button variant="contained" className="productListEdit">
+                Edit
+              </Button>
             </Link>
-            <DeleteOutline
-              className="productListDelete"
-              onClick={() => handleDelete(params.row.id)}
-            />
-          </>
+            <IconButton>
+              <DeleteOutline
+                className="productListDelete"
+                onClick={() => handleDelete(params.row.id)}
+              />
+            </IconButton>
+            <Button
+              onClick={
+                !params.row.inStock
+                  ? () => handleInStock(params.row.id)
+                  : () => handleOutOfStock(params.row.id)
+              }
+              varaint="contained"
+              className={
+                !params.row.inStock
+                  ? "add-inStock-button"
+                  : "remove-fromStock-button"
+              }
+            >
+              {!params.row.inStock ? "Add In Stock" : "Remove From Stock"}
+            </Button>
+          </div>
         );
       },
     },
@@ -82,7 +130,7 @@ export default function ProductList() {
       <Grid item xs={12} sm={5} lg={3}>
         <Sidebar />
       </Grid>
-      <Grid item xs={12} sm={7} lg={8}>
+      <Grid item xs={12} sm={7} lg={9}>
         <DataGrid
           rows={components}
           disableSelectionOnClick

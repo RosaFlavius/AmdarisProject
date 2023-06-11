@@ -44,10 +44,19 @@ namespace Application.CommandHandlers.Email
                         Email = user.Email,
                         Name = user.FirstName + " " + user.LastName
                     });
+
                 }
+                await _notificationRepository.UpdateActiveNotification(i.NotificationId);
+
+            }
+            if(usersToBeNotified.Count == 0)
+            {
+                return null;
             }
             var email = GetEmailContent(product, usersToBeNotified);
             var response = await _emailService.SendInStockNotification(email);
+
+            
 
             return response;
         }
@@ -125,7 +134,7 @@ namespace Application.CommandHandlers.Email
                 </head>
                 <body>
                   <div class=""container"">
-                    <h1>Product: {product.Name} is back in stock!</h1>
+                    <h1>Product: {product.Name} {product.Brand} is back in stock!</h1>
                     <p>Dear customer,</p>
                     <p>We are pleased to inform you that the product you have been waiting for is now back in stock!</p>
                     <p>Hurry up and place your order now before it runs out again.</p>

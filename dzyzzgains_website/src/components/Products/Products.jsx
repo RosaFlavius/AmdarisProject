@@ -21,8 +21,7 @@ const Products = (props) => {
   const [supplementType, setSupplementType] = useState("");
   const [price, setPrice] = useState("");
   const [search, setSearch] = useState("");
-
-  let aux = [];
+  const [aux, setAux] = useState([]);
   let sw = 0;
 
   useEffect(() => {
@@ -30,7 +29,10 @@ const Products = (props) => {
   }, []);
 
   useEffect(() => {
-    aux = JSON.parse(JSON.stringify(filteredProducts));
+    setAux(JSON.parse(JSON.stringify(products)));
+  }, [products]);
+  useEffect(() => {
+    setAux(JSON.parse(JSON.stringify(filteredProducts)));
   }, [selected, size, gender, equipmentType, supplementType, search]);
 
   console.log(search);
@@ -42,6 +44,19 @@ const Products = (props) => {
       </Grid>
     );
   let filteredProducts = products;
+
+  switch (price) {
+    case "Ascending":
+      filteredProducts.sort((x, y) => x.price - y.price);
+      sw = 1;
+      break;
+    case "Descending":
+      filteredProducts.sort((x, y) => y.price - x.price);
+      sw = 1;
+      break;
+    default:
+      filteredProducts = aux;
+  }
 
   switch (selected) {
     case "Supplements":
@@ -59,10 +74,10 @@ const Products = (props) => {
 
   switch (gender) {
     case "Men":
-      filteredProducts = filteredProducts.filter((p) => p.gender === 1);
+      filteredProducts.filter((p) => p.gender === 1);
       break;
     case "Woman":
-      filteredProducts = filteredProducts.filter((p) => p.gender === 2);
+      filteredProducts.filter((p) => p.gender === 2);
       break;
     case "Kids":
       filteredProducts = filteredProducts.filter((p) => p.gender === 3);
@@ -159,24 +174,6 @@ const Products = (props) => {
       filteredProducts = filteredProducts;
   }
 
-  switch (price) {
-    case "Ascending":
-      filteredProducts.sort((x, y) => x.price - y.price);
-      sw = 1;
-      break;
-    case "Descending":
-      filteredProducts.sort((x, y) => y.price - x.price);
-      sw = 1;
-      break;
-    default:
-      if (sw === 1) {
-        filteredProducts = aux;
-        sw = 0;
-      } else {
-        filteredProducts = filteredProducts;
-      }
-  }
-
   filteredProducts = filteredProducts.filter((p) =>
     p.name.toLowerCase().includes(search.toLowerCase())
   );
@@ -185,41 +182,42 @@ const Products = (props) => {
     <Grid container spacing={3} className="container-products">
       <Grid item xs={12}>
         <Grid container spacing={3}>
-          <Grid item lg={2} md={9} sm={8} xs={6}>
+          <Grid item lg={2} md={4} sm={8} xs={12}>
             <SelectCategory setSelectedCategory={setSelected} />
           </Grid>
           {selected === "Clothes" ? (
             <>
-              <Grid item lg={2} md={9} sm={8} xs={6}>
+              <Grid item lg={2} md={4} sm={4} xs={12}>
                 <SelectGender setSelectedGender={setGender} />
               </Grid>
-              <Grid item lg={2} md={9} sm={8} xs={6}>
+              <Grid item lg={2} md={4} sm={4} xs={12}>
                 <SelectSize setSelectedSize={setSize} />
               </Grid>
             </>
           ) : selected === "Equipment" ? (
-            <Grid item lg={2} md={9} sm={8} xs={6}>
+            <Grid item lg={2} md={4} sm={4} xs={12}>
               <SelectEquipmentType
                 setSelectedEquipmentType={setEquipmentType}
               />
             </Grid>
           ) : selected === "Supplements" ? (
-            <Grid item lg={2} md={9} sm={8} xs={6}>
+            <Grid item lg={2} md={4} sm={4} xs={12}>
               <SelectSupplementsType
                 setSelectedSupplementsType={setSupplementType}
               />
             </Grid>
           ) : null}
-          <Grid item lg={2} md={9} sm={8} xs={6}>
+          <Grid item lg={2} md={4} sm={4} xs={12}>
             <SelectPrice setSelectedPrice={setPrice} />
           </Grid>
-          <Grid item lg={2} md={9} sm={8} xs={6}>
+          <Grid item lg={2} md={4} sm={4} xs={12}>
             <TextField
               id="outlined-basic"
               label="Search by name"
               variant="outlined"
               value={search}
               className="select-filter-style"
+              style={{ width: "100%" }}
               onChange={(event) => setSearch(event.target.value)}
             />
           </Grid>
@@ -227,7 +225,7 @@ const Products = (props) => {
       </Grid>
       {filteredProducts &&
         filteredProducts.map((product) => (
-          <Grid item key={product.id} xs={12} sm={6} md={6} lg={4}>
+          <Grid item key={product.id} xs={12} sm={12} md={6} lg={4}>
             <Product
               item={product}
               addToCart={props.addToCart}

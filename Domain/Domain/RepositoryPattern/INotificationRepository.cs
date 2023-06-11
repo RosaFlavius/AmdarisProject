@@ -11,7 +11,9 @@ namespace Domain.RepositoryPattern
     public interface INotificationRepository
     {
         public Task<NotificationRequest> CreateNotification(NotificationRequest notification);
-
         public Task<IEnumerable<NotificationRequest>> GetAllActiveNotificationsForProduct(Guid productId);
+        public Task<NotificationRequest> GetNotification(Guid notificationId);
+        public Task<NotificationRequest> UpdateActiveNotification(Guid notificationId);
+
     }
 }

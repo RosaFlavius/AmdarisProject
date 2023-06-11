@@ -1,4 +1,5 @@
 ﻿using Application.Commands;
+using Application.Commands.Email;
 using Application.Commands.Products;
 using Application.Queries;
 using AutoMapper;
@@ -79,11 +80,22 @@ namespace WebAPI.Controllers
         [HttpPatch("inStock/{productId}")]
         public async Task<IActionResult> UpdateInStockProduct(Guid productId)
         {
+
             var command = new UpdateInStockProductCommand
             {
                 Id = productId
             };
             var res = await _mediator.Send(command);
+
+            var commandSent = new SentNotificationEmailCommand
+            {
+                ProductId = productId
+            };
+            var responseSent = await _mediator.Send(commandSent);
+            if (responseSent == null)
+            {
+                return NoContent();
+            }
 
             return Ok(res);
         }

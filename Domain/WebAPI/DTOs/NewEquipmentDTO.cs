@@ -10,6 +10,7 @@ namespace WebAPI.DTOs
         public string Description { get; set; }
         public float Price { get; set; }
         public string Img { get; set; }
+        public bool InStock { get; set; }
         public EquipmentType TypeOfEquipment { get; set; }
         public ProductCategory Category { get => ProductCategory.Equipment; }
     }

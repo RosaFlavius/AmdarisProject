@@ -31,5 +31,24 @@ namespace Application.Repositories
         {
             return await _dbContext.Notifications.Where(active => active.IsUserNotified == false && active.ProductId == productId).ToListAsync();
         }
+
+        public async Task<NotificationRequest> GetNotification(Guid notificationId)
+        {
+            return await _dbContext.Notifications.FirstOrDefaultAsync(not => not.NotificationId == notificationId);
+        }
+
+        public async Task<NotificationRequest> UpdateActiveNotification(Guid notificationId)
+        {
+            var notification = await GetNotification(notificationId);
+            if (notification is null)
+            {
+                return null;
+            }
+            notification.IsUserNotified = true;
+            _dbContext.Notifications.Update(notification);
+
+            await _dbContext.SaveChangesAsync();
+            return notification;
+        }
     }
 }

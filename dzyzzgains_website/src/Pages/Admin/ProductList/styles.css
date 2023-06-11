@@ -6,14 +6,14 @@
   margin-right: 10px;
 }
 
-.productListEdit {
+.productListEdit.productListEdit {
   border: none;
-  border-radius: 10px;
+  border-radius: 5px;
   padding: 5px 10px;
-  background-color: #3bb077;
   color: white;
   cursor: pointer;
   margin-right: 20px;
+  font-weight: 500;
 }
 
 .productListDelete {
@@ -31,4 +31,39 @@
 .products-layout-data-grid {
   padding: 5px;
   height: 89vh;
+}
+
+.chip-inStock.chip-inStock {
+  width: 80%;
+  background-color: #afffc4;
+  font-size: 16px;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-weight: 500;
+  border: 2px solid #37b458;
+}
+.chip-outOfStock.chip-outOfStock {
+  width: 80%;
+  background-color: #ffb0b0;
+  font-size: 16px;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-weight: 500;
+  border: 2px solid #f04545;
+}
+.add-inStock-button.add-inStock-button {
+  width: 72%;
+  background-color: #afffc4;
+  color: black;
+  font-size: 13px;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-weight: 500;
+  border: 2px solid #37b458;
+}
+.remove-fromStock-button.remove-fromStock-button {
+  width: 60%;
+  background-color: #ffb0b0;
+  font-size: 13px;
+  color: black;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-weight: 500;
+  border: 2px solid #f04545;
 }
