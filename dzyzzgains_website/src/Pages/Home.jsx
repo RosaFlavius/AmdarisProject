@@ -10,7 +10,7 @@ function Home() {
   return (
     <div>
       <Navbar />
-      <Annoucement />
+      {/* <Annoucement /> */}
       <Slider />
       <Categories />
       <Newsletter />

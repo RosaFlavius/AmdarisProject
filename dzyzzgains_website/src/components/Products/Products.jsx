@@ -3,7 +3,8 @@ import { Typography, Grid } from "@mui/material";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import * as shoppingActions from "../../redux/Shop/shop_action";
-import Product from "../Product";
+// import Product from "../Product";
+import Product from "../Product/Product";
 import FilterDropdown from "../FilterDropdown/FilterDropdown";
 import "./products.styles.css";
 
@@ -46,11 +47,11 @@ const Products = (props) => {
     <>
       <div className="toolbar" />
       <Grid container>
-        <Grid item lg={2} md={3} sm={4} xs={6}>
+        {/* <Grid item lg={2} md={3} sm={4} xs={6}>
           <div className="dashboard_menu">
             <FilterDropdown selected={selected} setSelected={setSelected} />
           </div>
-        </Grid>
+        </Grid> */}
         <Grid item lg={12} md={9} sm={8} xs={6}>
           <Grid
             container
@@ -61,6 +62,7 @@ const Products = (props) => {
             {filteredProducts &&
               filteredProducts.map((product) => (
                 <Grid item key={product.id} xs={12} sm={6} md={4} lg={3}>
+                  {/* <Product item={product} addToCart={props.addToCart} /> */}
                   <Product item={product} addToCart={props.addToCart} />
                 </Grid>
               ))}
