@@ -7,12 +7,6 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: 48px;
-}
-.toolBar {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  padding: 0 8px;
-  min-height: 64px;
+  padding: 20px;
+  /* margin-top: 48px; */
 }

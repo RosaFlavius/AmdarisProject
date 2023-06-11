@@ -11,11 +11,9 @@ import { Grid } from "@mui/material";
 const Footer = () => {
   return (
     <Grid container className="container-footer">
-      <Grid item xs={4} className="details-container">
+      <Grid item md={4} xs={12} className="details-container">
         <h1>DZyzzGains</h1>
-        <p className="description">
-          If you want to know what's new, you can find us on:
-        </p>
+        <p className="description">What's new? You can find us on:</p>
         <div className="icon-container">
           <div
             className="icon-social-media"
@@ -37,12 +35,10 @@ const Footer = () => {
           </div>
         </div>
       </Grid>
-      <Grid item xs={4}>
-        <Grid className="image-container-footer">
-          <img src={LogoIMG} className="logo-image" />
-        </Grid>
+      <Grid item md={4} xs={12} className="image-container-footer">
+        <img src={LogoIMG} className="logo-image" />
       </Grid>
-      <Grid item xs={4} className="grid-contact-details grid-item ">
+      <Grid item md={4} xs={12} className="grid-contact-details">
         <Grid container className="contact-details-container">
           <Grid item xs={12}>
             <h3>Contact</h3>

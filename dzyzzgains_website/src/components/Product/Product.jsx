@@ -14,6 +14,11 @@ import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import "./product.styles.css";
 import { Link } from "react-router-dom";
+import { addToCart } from "../../redux/Shop/shop_action";
+import { useDispatch } from "react-redux";
+import { bindActionCreators } from "redux";
+import { connect } from "react-redux";
+import * as shoppingActions from "../../redux/Shop/shop_action";
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -26,11 +31,16 @@ const ExpandMore = styled((props) => {
   }),
 }));
 
-function Product({ item }) {
+function Product({ item, addToCart }) {
   const [expanded, setExpanded] = useState(false);
+  const dispatch = useDispatch();
 
-  const handleExpandClick = () => {
+  function handleExpandClick() {
     setExpanded(!expanded);
+  }
+
+  const handleClick = () => {
+    dispatch(addToCart({ ...item }));
   };
 
   return (
@@ -38,12 +48,22 @@ function Product({ item }) {
       className="card"
       sx={{ height: expanded ? "100%" : "430px", width: "100%" }}
     >
-      <CardHeader
-        style={{ backgroundColor: "white", padding: "32px" }}
-        titleTypographyProps={{ variant: "h5", color: "#2B2F42" }}
-        title={item.name}
-        subheader="September 14, 2016"
-      />
+      <div className="container-card-header">
+        <CardHeader
+          style={{ backgroundColor: "white", padding: "32px", width: "60%" }}
+          titleTypographyProps={{
+            variant: "h5",
+            fontWeight: "bold",
+            color: "#2B2F42",
+          }}
+          subheaderTypographyProps={{ fontSize: "14px" }}
+          title={item.name}
+          subheader={item.brand}
+        />
+        <div className="container-price">
+          <span className="text-price">{item.price.toFixed(2)}$</span>
+        </div>
+      </div>
       <CardMedia
         component="img"
         height="194"
@@ -51,20 +71,13 @@ function Product({ item }) {
         alt={item.name}
         style={{ objectFit: "contain" }}
       />
-      <CardContent>
-        <Typography variant="body2" color="text.secondary">
-          {item.price}
-        </Typography>
-      </CardContent>
       <CardActions disableSpacing>
         <IconButton>
           <FavoriteIcon />
         </IconButton>
-        <Link to={`/product/${item.id}`}>
-          <IconButton>
-            <ShoppingCartOutlinedIcon />
-          </IconButton>
-        </Link>
+        <IconButton onClick={handleClick}>
+          <ShoppingCartOutlinedIcon />
+        </IconButton>
         <ExpandMore
           expand={expanded}
           onClick={handleExpandClick}
@@ -76,14 +89,18 @@ function Product({ item }) {
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
-          <Typography paragraph>Method:</Typography>
-          <Typography paragraph>
-            Heat 1/2 cup of the broth in a pot until simmering, add saffron and
-            set aside for 10 minutes.
+          <Typography variant="h6" gutterBottom>
+            Description:
           </Typography>
+          <span style={{ color: "#696969" }}>{item.description}</span>
         </CardContent>
       </Collapse>
     </Card>
   );
 }
-export default Product;
+
+function mapDispatchToProps(dispatch) {
+  return { ...bindActionCreators(shoppingActions, dispatch) };
+}
+
+export default connect(mapDispatchToProps)(Product);
