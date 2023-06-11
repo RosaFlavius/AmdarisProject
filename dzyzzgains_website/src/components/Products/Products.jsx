@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import * as shoppingActions from "../../redux/Shop/shop_action";
 import Product from "../Product";
-import FilterDropdown from "../FilterDropdown";
+import FilterDropdown from "../FilterDropdown/FilterDropdown";
 import "./products.styles.css";
 
 const Products = (props) => {
