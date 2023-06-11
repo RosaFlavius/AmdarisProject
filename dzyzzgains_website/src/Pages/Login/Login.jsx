@@ -7,7 +7,7 @@ import {
   FormHelperText,
   Button,
 } from "@mui/material";
-import Navbar from "../../components/Navbar";
+import Navbar from "../../components/Navbar/Navbar";
 import { useForm, Controller } from "react-hook-form";
 import { joiResolver } from "@hookform/resolvers/joi";
 import "./stylesLogin.css";
