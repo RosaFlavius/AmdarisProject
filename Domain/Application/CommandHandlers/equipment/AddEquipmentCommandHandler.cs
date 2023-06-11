@@ -21,7 +21,7 @@ namespace Application.CommandHandlers.equipment
 
         public async Task<Equipment> Handle(AddEquipmentCommand request, CancellationToken cancellationToken)
         {
-            var product = new Equipment(request.TypeOfEquipment, request.Name, request.Description, request.Brand, request.Price, request.Img);
+            var product = new Equipment(request.TypeOfEquipment, request.Name, request.Description, request.Brand, request.Price, request.Img, request.InStock);
 
             _equipmentRepo.AddEquipment(product);
             await _equipmentRepo.SaveChangesAsync();

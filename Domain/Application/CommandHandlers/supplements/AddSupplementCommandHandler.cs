@@ -29,7 +29,8 @@ namespace Application.CommandHandlers
                 Brand = request.Brand,
                 Price = request.Price,
                 TypeOfSupplement = request.TypeOfSupplement,
-                Img = request.Img
+                Img = request.Img,
+                InStock = request.InStock,
             };
 
             _supplementRepo.AddSupplement(product);

@@ -64,5 +64,31 @@ namespace Application.Repositories
 
             return await _dbContext.SaveChangesAsync();
         }
+
+        public async Task<Product> UpdateInStockProduct(Guid Id)
+        {
+            var product = await GetProduct(Id);
+
+            product.InStock = true;
+
+            _dbContext.Products.Update(product);
+
+            await SaveChangesAsync();
+
+            return product;
+        }
+
+        public async Task<Product> UpdateOutOfStockProduct(Guid Id)
+        {
+            var product = await GetProduct(Id);
+
+            product.InStock = false;
+
+            _dbContext.Products.Update(product);
+
+            await SaveChangesAsync();
+
+            return product;
+        }
     }
 }

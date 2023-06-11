@@ -1,5 +1,8 @@
+using Application.Abstract;
 using Application.Commands;
 using Application.Repositories;
+using Application.Services;
+using Domain.ConfigDTOs;
 using Domain.RepositoryPattern;
 using Infrastructure.Data;
 using MediatR;
@@ -26,7 +29,10 @@ builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 builder.Services.AddScoped<IClothesRepository, ClothesRepository>();
 builder.Services.AddScoped<IEquipmentRepository, EquipmentRepository>();
 builder.Services.AddScoped<ISupplementRepository, SupplementRepository>();
+builder.Services.AddScoped<INotificationRepository, NotificationRepository>();
 
+builder.Services.Configure<EmailProviderConfig>(builder.Configuration.GetSection(nameof(EmailProviderConfig)));
+builder.Services.AddHttpClient<IEmailService, EmailProvider>();
 
 
 var app = builder.Build();

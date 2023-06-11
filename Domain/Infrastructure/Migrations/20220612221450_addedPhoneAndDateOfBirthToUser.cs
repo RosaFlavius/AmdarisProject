@@ -21,6 +21,7 @@ namespace Infrastructure.Migrations
                 type: "nvarchar(max)",
                 nullable: false,
                 defaultValue: "");
+
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

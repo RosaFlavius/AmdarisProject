@@ -27,7 +27,7 @@ namespace Application.Repositories
 
         public bool DeleteUser(Guid id)
         {
-            var user = _dbContext.Users.FirstOrDefault(item => item.Id == id);
+            var user = _dbContext.Users.FirstOrDefault(item => item.UserId == id);
             if (user != null)
             {
                 _dbContext.Remove(user);
@@ -38,7 +38,7 @@ namespace Application.Repositories
 
         public User UpdateUser(User item)
         {
-            var user = _dbContext.Users.FirstOrDefault(i => i.Id == item.Id);
+            var user = _dbContext.Users.FirstOrDefault(i => i.UserId == item.UserId);
             user = item;
             return user;
 
@@ -47,7 +47,7 @@ namespace Application.Repositories
 
         public async Task<User> GetUser(Guid id)
         {
-            var user = await _dbContext.Users.FirstOrDefaultAsync(item => item.Id == id);
+            var user = await _dbContext.Users.FirstOrDefaultAsync(item => item.UserId == id);
 
             if(user != null)
             {

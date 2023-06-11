@@ -23,11 +23,6 @@ namespace Application.QueryHandlers
             
         public async Task<User> Handle(GetUserQuery request, CancellationToken cancellationToken)
         {
-            var customer = new User
-            {
-                Id = Guid.NewGuid(),
-            };
-
             var result = await _userRepo.GetUser(request.Id);
             return await Task.FromResult(result);
         }

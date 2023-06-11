@@ -1,4 +1,5 @@
-﻿using Domain.Products;
+﻿using Domain.Mail;
+using Domain.Products;
 using Domain.Users;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -23,11 +24,12 @@ namespace Infrastructure.Data
         public DbSet<Equipment> Equipments { get; set; }
         public DbSet<Supplement> Supplements { get; set; }
         public DbSet<OrderProducts> OrderProducts { get; set; }
+        public DbSet<NotificationRequest> Notifications { get; set; }
         /*protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            //optionsBuilder.UseSqlServer("Server=DESKTOP-465R8PC\\SQLEXPRESS;Database=DZyzzGainsDatabase;Trusted_Connection=true");
-        }*/
-
+            optionsBuilder.UseSqlServer("Server=DESKTOP-465R8PC\\SQLEXPRESS;Database=DZyzzDatabaseLicenta;Trusted_Connection=true");
+        }
+*/
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             /*modelBuilder.Entity<Order>()
@@ -38,9 +40,11 @@ namespace Infrastructure.Data
                 op=>op.HasOne(x=>x.Order).WithMany().HasForeignKey(x=>x.OrderId)
                 );*/
 
-
+            
             modelBuilder.Entity<OrderProducts>()
                 .HasKey(scp => new { scp.OrderId, scp.ProductId });
+            modelBuilder.Entity<NotificationRequest>().HasKey(x => x.NotificationId);
+            /*modelBuilder.Entity<NotificationRequest>().Property(x => x.NotificationId).ValueGeneratedOnAdd();*/
 
         }
     }

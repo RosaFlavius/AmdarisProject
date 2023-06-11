@@ -31,6 +31,7 @@ namespace Application.CommandHandlers.clothes
             product.Size = request.Size;
             product.Gender = request.Gender;
             product.Img = request.Img;
+            product.InStock = request.InStock;
 
 
             var result = _clothesRepo.UpdateClothes(product);

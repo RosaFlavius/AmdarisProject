@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Domain.Mail;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -31,7 +32,7 @@ namespace Domain.Users
 
         
 
-        public Guid Id { get; set; } =  Guid.NewGuid();
+        public Guid UserId { get; set; } =  Guid.NewGuid();
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Email { get; set; }
@@ -42,6 +43,7 @@ namespace Domain.Users
         public string City { get; set; }
         public string Address { get; set; }
         public bool Admin { get; set; }
+        public ICollection<NotificationRequest> Notifications { get; set; }
 
 
     }

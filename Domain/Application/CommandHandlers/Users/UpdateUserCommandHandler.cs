@@ -23,7 +23,7 @@ namespace Application.CommandHandlers
         public async Task<User> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
         {
             var user = await _userRepo.GetUser(request.Id);
-            user.Id = request.Id;
+            user.UserId = request.Id;
             user.FirstName = request.FirstName;
             user.LastName = request.LastName;
             user.Email = request.Email;

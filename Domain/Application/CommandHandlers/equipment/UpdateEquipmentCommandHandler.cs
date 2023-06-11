@@ -31,8 +31,7 @@ namespace Application.CommandHandlers.equipment
             product.Price = request.Price;
             product.TypeOfEquipment = request.TypeOfEquipment;
             product.Img = request.Img;
-     
-
+            product.InStock = request.InStock;
 
             var result = _equipmentRepo.UpdateEquipment(product);
             await _equipmentRepo.SaveChangesAsync();

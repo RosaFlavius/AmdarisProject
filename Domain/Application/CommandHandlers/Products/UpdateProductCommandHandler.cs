@@ -31,6 +31,7 @@ namespace Application.CommandHandlers
             product.Category = request.Category;
             product.Id = request.Id;
             product.Img = request.Img;
+            product.InStock = request.InStock;
 
             Product result = _productRepo.UpdateProduct(product);
             await _productRepo.SaveChangesAsync();

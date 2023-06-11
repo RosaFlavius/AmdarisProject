@@ -11,7 +11,7 @@ namespace Domain.Products
     {
         
 
-        public Clothes(ClothesSize size, ClothesGender gender, string name, string description, string brand, float price, string img) : base(name, ProductCategory.Clothes, description, brand, price, img)
+        public Clothes(ClothesSize size, ClothesGender gender, string name, string description, string brand, float price, string img, bool inStock) : base(name, ProductCategory.Clothes, description, brand, price, img, inStock)
         {
             
             Size = size;

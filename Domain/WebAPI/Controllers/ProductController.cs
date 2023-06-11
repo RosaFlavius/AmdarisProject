@@ -1,9 +1,12 @@
 ﻿using Application.Commands;
+using Application.Commands.Products;
 using Application.Queries;
 using AutoMapper;
+using Domain.Products;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using WebAPI.DTOs;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace WebAPI.Controllers
 {
@@ -68,6 +71,31 @@ namespace WebAPI.Controllers
         [HttpPut("{productId}")]
         public async Task<IActionResult> UpdateProduct([FromBody] UpdateProductCommand command)
         {
+            var res = await _mediator.Send(command);
+
+            return Ok(res);
+        }
+
+        [HttpPatch("inStock/{productId}")]
+        public async Task<IActionResult> UpdateInStockProduct(Guid productId)
+        {
+            var command = new UpdateInStockProductCommand
+            {
+                Id = productId
+            };
+            var res = await _mediator.Send(command);
+
+            return Ok(res);
+        }
+
+        [HttpPatch("outOfStock/{productId}")]
+        public async Task<IActionResult> UpdateOutOfStockProduct(Guid productId)
+        {
+
+            var command = new UpdateOutOfStockProductCommand
+            {
+                Id = productId
+            };
             var res = await _mediator.Send(command);
 
             return Ok(res);

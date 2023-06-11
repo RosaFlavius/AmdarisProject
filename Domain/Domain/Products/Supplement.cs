@@ -15,7 +15,7 @@ namespace Domain.Products
 
         }
 
-        public Supplement(SupplementType typeOfSupplement, string name, string description, string brand, float price, string img) : base(name, ProductCategory.Supplements, description, brand, price, img)
+        public Supplement(SupplementType typeOfSupplement, string name, string description, string brand, float price, string img, bool inStock) : base(name, ProductCategory.Supplements, description, brand, price, img, inStock)
         {
             TypeOfSupplement = typeOfSupplement;
             if (string.IsNullOrEmpty(description))
@@ -30,6 +30,7 @@ namespace Domain.Products
                 throw new ArgumentNullException("Null_image");
             if (price <= 0)
                 throw new ArgumentOutOfRangeException("Wrong_PriceRange");
+           
             
         }
 
