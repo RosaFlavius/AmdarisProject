@@ -15,7 +15,7 @@ namespace Application.CommandHandlers.OrderProducts
 
         public async Task<Guid> Handle(AddOrderProductsCommand request, CancellationToken cancellationToken)
         {
-             _orderRepo.AddProductToOrder(request.ProductId, request.OrderId);
+             _orderRepo.AddProductToOrder(request.ProductId, request.OrderId, request.Quantity);
 
             await _orderRepo.SaveChangesAsync();
 

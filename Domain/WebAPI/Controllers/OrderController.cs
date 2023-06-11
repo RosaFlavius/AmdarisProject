@@ -1,5 +1,6 @@
 ﻿using Application.Commands.OrderProduct;
 using Application.Commands.Orders;
+using Application.DTOs;
 using Application.Queries.Orders;
 using AutoMapper;
 using MediatR;
@@ -86,6 +87,18 @@ namespace WebAPI.Controllers
             var res = await _mediator.Send(command);
 
             return Ok(res);
+        }
+
+        [HttpGet("api/products/{orderId}")]
+        public async Task<IActionResult> GetAllProductsByOrderId(Guid orderId)
+        {
+            var query = new GetAllProductsByOrderIdQuery
+            {
+                OrderId = orderId,
+            };
+
+            var result = await _mediator.Send(query);
+            return Ok(result);
         }
     }
 }

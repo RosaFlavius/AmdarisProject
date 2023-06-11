@@ -30,6 +30,7 @@ builder.Services.AddScoped<IClothesRepository, ClothesRepository>();
 builder.Services.AddScoped<IEquipmentRepository, EquipmentRepository>();
 builder.Services.AddScoped<ISupplementRepository, SupplementRepository>();
 builder.Services.AddScoped<INotificationRepository, NotificationRepository>();
+builder.Services.AddScoped<IOrderNotificationsRepository, OrderNotificationsRepository>();
 
 builder.Services.Configure<EmailProviderConfig>(builder.Configuration.GetSection(nameof(EmailProviderConfig)));
 builder.Services.AddHttpClient<IEmailService, EmailProvider>();
