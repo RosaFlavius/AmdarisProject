@@ -51,27 +51,20 @@ const Products = (props) => {
             <FilterDropdown selected={selected} setSelected={setSelected} />
           </div>
         </Grid>
-        <Grid item lg={10} md={9} sm={8} xs={6}>
-          <div clasName="container">
-            <Grid
-              container
-              justifyContent="center"
-              spacing={5}
-              style={{ height: "100 vh" }}
-              item
-              lg={10}
-              md={8}
-              sm={6}
-              xs={4}
-            >
-              {filteredProducts &&
-                filteredProducts.map((product) => (
-                  <Grid item key={product.id} xs={12} sm={6} md={4} lg={3}>
-                    <Product item={product} addToCart={props.addToCart} />
-                  </Grid>
-                ))}
-            </Grid>
-          </div>
+        <Grid item lg={12} md={9} sm={8} xs={6}>
+          <Grid
+            container
+            justifyContent="center"
+            spacing={3}
+            className="container-products"
+          >
+            {filteredProducts &&
+              filteredProducts.map((product) => (
+                <Grid item key={product.id} xs={12} sm={6} md={4} lg={3}>
+                  <Product item={product} addToCart={props.addToCart} />
+                </Grid>
+              ))}
+          </Grid>
         </Grid>
       </Grid>
     </>

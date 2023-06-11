@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import Announcement from "../components/Annoucement/Annoucement";
-import Footer from "../components/Footer";
+import Footer from "../components/Footer/Footer";
 import Navbar from "../components/Navbar";
 import Newsletter from "../components/Newsletter";
 import { useLocation } from "react-router-dom";
