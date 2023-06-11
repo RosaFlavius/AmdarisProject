@@ -9,19 +9,6 @@ import { teal } from "@mui/material/colors";
 import { logOut } from "../../redux/User/user_actions";
 import "./navbar.styles.css";
 
-const EmailDiv = styled.div`
-  color: #4db6ac;
-  font-size: 20px;
-  margin-bottom: 8px;
-`;
-
-const Right = styled.div`
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-`;
-
 const MenuItem = styled.div`
   font-size: 14px;
   cursor: pinter;
@@ -31,22 +18,16 @@ const MenuItem = styled.div`
 const ButtonContainer = styled.div`
   width: 100px;
 `;
-const Icon = styled.div`
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background-color: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.5s ease;
-  &:hover {
-    background-color: #e9f5f5;
-    transform: scale(1.1);
-  }
-`;
 
-function Navbar({ productsAddedToCart, isLoggedIn, logOut, email, admin }) {
+function Navbar({
+  productsAddedToCart,
+  isLoggedIn,
+  logOut,
+  firstName,
+  lastName,
+  email,
+  admin,
+}) {
   const [totalItems, setTotalItems] = useState(0);
   useEffect(() => {
     let items = 0;
@@ -57,23 +38,20 @@ function Navbar({ productsAddedToCart, isLoggedIn, logOut, email, admin }) {
   }, [productsAddedToCart, totalItems]);
   return (
     <Grid container spacing={3} className="container-navbar">
-      <Grid item xs={4} className="left-container grid-item">
-        <EmailDiv>{email}</EmailDiv>
+      <Grid item sm={4} xs={12} className="left-container grid-item">
+        <Link to={"/"} style={{ textDecoration: "none" }}>
+          <Button
+            size="large"
+            style={{
+              color: teal[300],
+              width: "100%",
+            }}
+          >
+            HOME
+          </Button>
+        </Link>
         <ButtonContainer>
-          {/* <Link to={"/"} style={{ textDecoration: "none" }}>
-            <Button
-              size="large"
-              style={{
-                color: teal[300],
-                width: "100%",
-              }}
-            >
-              HOME
-            </Button>
-          </Link> */}
-        </ButtonContainer>
-        <ButtonContainer>
-          {/* <Link to={"/products"} style={{ textDecoration: "none" }}>
+          <Link to={"/products"} style={{ textDecoration: "none" }}>
             <Button
               size="large"
               style={{
@@ -83,44 +61,44 @@ function Navbar({ productsAddedToCart, isLoggedIn, logOut, email, admin }) {
             >
               PRODUCTS
             </Button>
-          </Link> */}
+          </Link>
         </ButtonContainer>
       </Grid>
-      <Grid item xs={4} className="grid-item">
+      <Grid item sm={4} xs={12} className="grid-item">
         <h1 className="title-text">DZyzzGains</h1>
       </Grid>
-      {/* <Grid item xs={4} className="right-container grid-item">
+      <Grid item sm={4} xs={12} className="right-container grid-item">
+        <span className="user_text">
+          {firstName} {lastName[0]}.
+        </span>
         {!isLoggedIn ? (
           <>
-            <MenuItem>
-              <Link to={"/register"} style={{ textDecoration: "none" }}>
-                <Button
-                  size="large"
-                  style={{
-                    color: teal[300],
-                    width: "100%",
-                  }}
-                >
-                  REGISTER
-                </Button>
-              </Link>
-            </MenuItem>
-            <MenuItem>
-              <Link to={"/login"} style={{ textDecoration: "none" }}>
-                <Button
-                  size="large"
-                  style={{
-                    color: teal[300],
-                    width: "100%",
-                  }}
-                >
-                  LOG IN
-                </Button>
-              </Link>
-            </MenuItem>
+            <Link to={"/register"} style={{ textDecoration: "none" }}>
+              <Button
+                size="large"
+                style={{
+                  color: teal[300],
+                  width: "100%",
+                }}
+              >
+                REGISTER
+              </Button>
+            </Link>
+
+            <Link to={"/login"} style={{ textDecoration: "none" }}>
+              <Button
+                size="large"
+                style={{
+                  color: teal[300],
+                  width: "100%",
+                }}
+              >
+                LOG IN
+              </Button>
+            </Link>
           </>
         ) : (
-          <MenuItem>
+          <>
             <Link to={"/"} style={{ textDecoration: "none" }}>
               <Button
                 onClick={() => logOut(email)}
@@ -133,18 +111,18 @@ function Navbar({ productsAddedToCart, isLoggedIn, logOut, email, admin }) {
                 LOG OUT
               </Button>
             </Link>
-          </MenuItem>
+          </>
         )}
-        <MenuItem>
+        <>
           <Badge badgeContent={totalItems} color="primary">
-            <Icon>
+            <div className="cart-icon">
               <Link to={`/cart`}>
                 <ShoppingCartOutlinedIcon />
               </Link>
-            </Icon>
+            </div>
           </Badge>
-        </MenuItem>
-      </Grid> */}
+        </>
+      </Grid>
     </Grid>
   );
 }
@@ -154,6 +132,8 @@ const mapStateToProps = (state) => {
     productsAddedToCart: state.shopReducer.productsAddedToCart,
     isLoggedIn: state.userReducer.isLoggedIn,
     email: state.userReducer.email,
+    firstName: state.userReducer.firstName,
+    lastName: state.userReducer.lastName,
     admin: state.userReducer.admin,
   };
 };

@@ -54,7 +54,6 @@ export default function UserList() {
   const columns = [
     { field: "id", headerName: "ID", width: 90 },
     { field: "email", headerName: "Email", width: 200 },
-    { field: "password", headerName: "Password", width: 200 },
     {
       field: "firstName",
       headerName: "FirstName",
@@ -118,7 +117,6 @@ export default function UserList() {
 
   return (
     <div>
-      <Topbar />
       <div className="container">
         <Sidebar />
         <div className="userList">

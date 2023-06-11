@@ -45,21 +45,11 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddEquipment(NewEquipmentDTO product)
+        public async Task<IActionResult> AddEquipment([FromBody] AddEquipmentCommand command)
         {
-            var commandProduct = new AddEquipmentCommand
-            {
-                Name = product.Name,
-                Description = product.Description,
-                Brand = product.Brand,
-                Price = product.Price,
-                TypeOfEquipment = product.TypeOfEquipment,
-                Img = product.Img,
-            };
+            var res = await _mediator.Send(command);
 
-            await _mediator.Send(commandProduct);
-
-            return Ok(product);
+            return Ok(res);
         }
 
         [HttpDelete("{equipmentId}")]
@@ -76,23 +66,11 @@ namespace WebAPI.Controllers
         }
 
         [HttpPut("{equipmentId}")]
-        public async Task<IActionResult> UpdateEquipment(EquipmentDTO product, Guid equipmentId)
+        public async Task<IActionResult> UpdateEquipment([FromBody] UpdateEquipmentCommand command)
         {
+           var res =  await _mediator.Send(command);
 
-            var command = new UpdateEquipmentCommand
-            {
-                Id = equipmentId,
-                Name = product.Name,
-                Description = product.Description,
-                Brand = product.Brand,
-                Price = product.Price,
-                TypeOfEquipment = product.TypeOfEquipment,
-                Img = product.Img,
-
-            };
-            await _mediator.Send(command);
-
-            return Ok(equipmentId);
+            return Ok(res);
         }
     }
 }

@@ -58,7 +58,7 @@ namespace Application.Repositories
 
         public async Task<IEnumerable<Order>> GetAllOrders()
         {
-            return _dbContext.Orders;
+            return await _dbContext.Orders.ToListAsync();
         }
 
         public async Task<int> SaveChangesAsync()

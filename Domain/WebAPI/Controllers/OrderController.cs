@@ -45,16 +45,10 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddProduct(OrderDTO order)
+        public async Task<IActionResult> AddOrder([FromBody] AddOrderCommand command)
         {
-            var commandOrder = new AddOrderCommand
-            {
-                TotalPrice = order.TotalPrice,
-            };
-
-            await _mediator.Send(commandOrder);
-
-            return Ok(order);
+            var res = await _mediator.Send(command);
+            return Ok(res);
         }
 
         [HttpDelete("{orderId}")]
@@ -86,17 +80,12 @@ namespace WebAPI.Controllers
         }
 
         [HttpPatch]
-        public async Task<IActionResult> AddProductsToOrder(Guid orderId, Guid productId)
+        public async Task<IActionResult> AddProductsToOrder([FromBody] AddOrderProductsCommand command)
         {
-            var commandOrderProducts = new AddOrderProductsCommand
-            {
-                OrderId = orderId,
-                ProductId = productId,
-            };
+         
+            var res = await _mediator.Send(command);
 
-            await _mediator.Send(commandOrderProducts);
-
-            return Ok();
+            return Ok(res);
         }
     }
 }

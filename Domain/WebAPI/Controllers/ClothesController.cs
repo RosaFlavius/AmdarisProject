@@ -38,29 +38,19 @@ namespace WebAPI.Controllers
         public async Task<IActionResult> GetAllClothes()
         {
             var query = new GetAllClothesQuery();
-
             var result = await _mediator.Send(query);
             var dtoResult = _mapper.Map<List<ClothesDTO>>(result);
             return Ok(dtoResult);
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddClothes(NewClothesDTO product)
+        public async Task<IActionResult> AddClothes([FromBody] AddClothesCommand command)
         {
-            var commandProduct = new AddClothesCommand
-            {
-                Name = product.Name,
-                Description = product.Description,
-                Brand = product.Brand,
-                Price = product.Price,
-                Gender = product.Gender,
-                Size = product.Size,
-                Img = product.Img,
-            };
+            
 
-            await _mediator.Send(commandProduct);
+            var res = await _mediator.Send(command);
 
-            return Ok(product);
+            return Ok(res);
         }
 
         [HttpDelete("{clothesId}")]
@@ -77,24 +67,11 @@ namespace WebAPI.Controllers
         }
 
         [HttpPut("{clothesId}")]
-        public async Task<IActionResult> UpdateClothes(ClothesDTO product, Guid clothesId)
+        public async Task<IActionResult> UpdateClothes([FromBody] UpdateClothesCommand command)
         {
+            var res = await _mediator.Send(command);
 
-            var command = new UpdateClothesCommand
-            {
-                Id = clothesId,
-                Name = product.Name,
-                Description = product.Description,
-                Brand = product.Brand,
-                Price = product.Price,
-                Gender = product.Gender,
-                Size = product.Size,
-                Img = product.Img,
-
-            };
-            await _mediator.Send(command);
-
-            return Ok(clothesId);
+            return Ok(res);
         }
     }
 }
